@@ -1,0 +1,94 @@
+<nav class="bg-sky-600">
+  <div class="container mx-auto">
+    <div class="relative flex h-16 items-center justify-between">
+      <a class="text-white text-lg font-bold" href="#">Projet</a>
+     
+      <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
+        <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
+          <li class="nav-item  ml-3">
+            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/home">Home</a>
+          </li>
+          <li class="nav-item ml-3">
+            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/products">Page1</a>
+          </li>
+          <li class="nav-item ml-3">
+            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/customers">Page2</a>
+          </li>
+        </ul>
+        
+      </div>
+      <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
+        <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
+
+         
+          <li  class="ml-3 lg:ml">
+           
+            <a class="text-white nav-link">
+              <i class="bi bi-person-fill"></i>
+              {{authService.authentificateUser!.username}}
+            </a>
+          </li>
+          <li class="ml-3">
+            <a class="btn nav-link text-white" (click)="handleLogout()">
+              <i class="bi bi-box-arrow-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+     
+    </div>
+  </div>
+</nav>
+<div>
+  <nav id="navbar" class="nav-desktop">
+	
+		<ul>
+			<li class="hidden-link">
+				<a class="nav-link" routerLink="/admin/home">Accueil
+				</a>
+			</li>
+			<li>
+				<a class="nav-link" routerLink="/admin/products">Page1
+				</a>
+			</li>
+
+	
+
+		</ul>
+	</nav>
+</div>
+<div class="containerslide mx-auto px-4">
+  <div class="slide-container">
+    <div class="custom-slider fade" style="display:block">
+      <img class="slide-img" src="http://via.placeholder.com/2240x360">
+    </div>
+    <div class="custom-slider fade">
+      <img class="slide-img" src="http://via.placeholder.com/640x360">
+    </div>
+    <div class="custom-slider fade">
+      <img class="slide-img" src="http://via.placeholder.com/1140x360">
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+  </div>
+  
+  <br>
+  <div class="slide-dot">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+</div>
+<!---->
+
+
+
+
+
+<router-outlet>
+  
+</router-outlet>
+
+
+
+

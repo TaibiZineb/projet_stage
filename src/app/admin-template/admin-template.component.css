@@ -1,0 +1,50 @@
+.main-doc {
+	position: absolute;
+	margin-left: 310px;
+	padding: 7px 20px 20px 20px;
+	margin-bottom: 110px;
+}
+.containerslide{
+    width: 1170px;
+}
+#navbar {
+	position: fixed;
+	min-width: 280px;
+	top: 7%;
+	left: 0px;
+	width: 300px;
+	height: 100%;
+	border-right: 2px solid;
+	border-color: #787878;
+	padding-top: 10px;
+}
+
+#navbar ul {
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	font-size: 1.6rem;
+	letter-spacing: -0.2px;
+}
+
+#navbar li {
+	color: #787878;
+	border-top: 1px solid;
+	list-style: none;
+	position: relative;
+	width: 100%;
+	padding: 2px 0;
+}
+
+#navbar a {
+	display: block;
+	padding: 10px 30px;
+	color: #787878;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+
+
+

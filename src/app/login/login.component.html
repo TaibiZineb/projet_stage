@@ -1,0 +1,28 @@
+<div class="container mx-auto px-4">
+    <div class="grid grid-cols-6 gap-4">
+        <div class="col-start-2 col-span-4">
+            <div class="card">
+                <div class="card-header">
+                    Authentification
+                </div>
+                <div class="text-red-500" *ngIf="errorMessage">{{errorMessage}}</div>
+                <div class="card-body">
+                    <form [formGroup]="userFromGroup" (ngSubmit)="handleLogin()">
+                        <div class="mb-2">
+                            <label class="text-sm font-medium text-gray-700">Username</label>
+                            <input type="text" formControlName="username" class="mt-1 focus:ring-blue-500 focus:border-blue-300  w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
+                        </div>
+                        <div class="mb-2">
+                            <label class=" text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" formControlName="password" class="mt-1 focus:ring-blue-500 focus:border-blue-300 block w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                            Login
+                        </button>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
