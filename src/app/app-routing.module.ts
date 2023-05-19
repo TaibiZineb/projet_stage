@@ -9,18 +9,20 @@ import { HomeComponent } from './home/home.component';
 
 
 
+
 const routes: Routes = [
-  {path: 'login',component: LoginComponent},
-  {path: "", component: HomeComponent,canActivate : [AuthentificationGuard]},
-  {path: 'admin',component: AdminTemplateComponent, canActivate : [AuthentificationGuard],
-  children : [
-    {path: 'products', component: ProductsComponent},
-    {path: 'customers', component:CustomersComponent},
-    {path: 'home', component: HomeComponent},
-   ]},
-   
-  
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'admin/home', pathMatch: 'full' }, // Rediriger "/" vers "/home"
+  { path: 'admin', component: AdminTemplateComponent, canActivate: [AuthentificationGuard],
+    children: [
+      { path: 'products', component: ProductsComponent },
+      { path: 'customers', component: CustomersComponent },
+      { path: 'home', component: HomeComponent },
+    ]
+  },
+  { path: '**', redirectTo: 'admin/home' }, 
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

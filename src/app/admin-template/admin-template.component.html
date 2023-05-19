@@ -1,7 +1,8 @@
 <nav class="bg-sky-600">
-  <div class="container mx-auto">
+  <div class="container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <a class="text-white text-lg font-bold" href="#">Projet</a>
+      
      
       <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
@@ -17,12 +18,9 @@
         </ul>
         
       </div>
-      <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
+      <div class="hidden lg:flex lg:items-center">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
-
-         
           <li  class="ml-3 lg:ml">
-           
             <a class="text-white nav-link">
               <i class="bi bi-person-fill"></i>
               {{authService.authentificateUser!.username}}
@@ -38,29 +36,53 @@
      
     </div>
   </div>
+  <!-- <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+       
+        <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+         
+          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        
+          <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+  </div
+ 
+
+  
+  <div class="sm:hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+    
+      <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Accueil</a>
+      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Page 1</a>
+      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Page 2</a>
+
+    </div>
+  </div>-->
 </nav>
-<div class="navbarmenu">
-  <nav id="navbar" class="bg-sky-500 nav-desktop">
-	
-		<ul>
-			<li class="hidden-link">
-				<a class="nav-link text-white" routerLink="/admin/home">Accueil
-				</a>
-			</li>
-			<li>
-				<a class="nav-link text-white" routerLink="/admin/products">Page 1
-				</a>
-			</li>
-      <li>
-				<a class="nav-link text-white" routerLink="/admin/customers">Page 2
-				</a>
-			</li>
 
+<div class="navbarmenu flex h-auto">
+  <nav id="navbar" class="bg-sky-500 w-1/5 hidden lg:flex">
 	
-
+		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
+			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="text-white block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
+				</a>
+			</li>
+			<li class="border-t list-none relative w-full py-2">
+				<a class="block px-10 py-30 no-underline cursor-pointer text-white" routerLink="/admin/products">Page 1
+				</a>
+			</li>
+      <li class="border-t list-none relative w-full py-2">
+				<a class="block px-10 py-30 no-underline cursor-pointer text-white" routerLink="/admin/customers">Page 2
+				</a>
+			</li>
 		</ul>
 	</nav>
-  <div class="containerslide mx-auto px-4">
+  <div class="mx-auto px-4">
     <div class="slide-container">
       <div class="custom-slider fade" style="display:block">
         <img class="slide-img" src="http://via.placeholder.com/1240x360">
@@ -76,11 +98,12 @@
     <div class="slide-dot">
       <span class="dot" onclick="currentSlide(1)"></span>
       <span class="dot" onclick="currentSlide(2)"></span>
-      <span class="dot" onclick="currentSlide(3)"></span>
     </div>
   </div>
 </div>
-
+<router-outlet>
+  
+</router-outlet>
 <!--Footer-->
 <!-- Footer container -->
 <footer
@@ -231,9 +254,7 @@
 
 
 
-<router-outlet>
-  
-</router-outlet>
+
 
 
 

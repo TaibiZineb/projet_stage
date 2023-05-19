@@ -9,12 +9,6 @@
 .custom-slider { display: none; }
 .slide-container {
     position: relative;
-   /* margin: auto;
-    width: max-content;
-    position: relative;
-    margin: auto;
-    display: flex;
-    max-width: 1280px;*/
 }
 .prev, .next {
     cursor: pointer;
@@ -76,6 +70,6 @@
     to {opacity: 1}
 }
 
-.containerslide{
-    /*width: 70%;*/
+.containerbody{
+    width: 60%;
 }
