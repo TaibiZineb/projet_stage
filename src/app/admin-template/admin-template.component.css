@@ -4,20 +4,10 @@
 	padding: 7px 20px 20px 20px;
 	margin-bottom: 110px;
 }
-.containerslide{
-    width: 1170px;
+#navbar{
+	width: 20%;
 }
-#navbar {
-	position: fixed;
-	min-width: 280px;
-	top: 7%;
-	left: 0px;
-	width: 300px;
-	height: 100%;
-	border-right: 2px solid;
-	border-color: #787878;
-	padding-top: 10px;
-}
+
 
 #navbar ul {
 	height: 100vh;
@@ -28,7 +18,6 @@
 }
 
 #navbar li {
-	color: #787878;
 	border-top: 1px solid;
 	list-style: none;
 	position: relative;
@@ -39,12 +28,13 @@
 #navbar a {
 	display: block;
 	padding: 10px 30px;
-	color: #787878;
 	text-decoration: none;
 	cursor: pointer;
 }
-
-
+.navbarmenu{
+	
+	display: flex;
+}
 
 
 
