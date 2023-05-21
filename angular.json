@@ -33,7 +33,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
               "src/assets/css/flowbite.css",
-              "src/app/admin-template/admin-template.component.css"
+              "src/app/admin-template/admin-template.component.css",
+              "src/app/importer/importer.component.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
@@ -106,7 +107,8 @@
               "node_modules/tailwindcss/tailwind.css",
               "src/styles.css",
               "src/assets/css/flowbite.css",
-              "src/app/admin-template/admin-template.component.css"
+              "src/app/admin-template/admin-template.component.css",
+              "src/app/importer/importer.component.css"
             ],
             "scripts": [
 
