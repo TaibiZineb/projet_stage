@@ -9,8 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { HomeComponent } from './home/home.component';
-
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImporterComponent } from './importer/importer.component';
 
