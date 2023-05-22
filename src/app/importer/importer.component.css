@@ -1,48 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 
-.drag-area{
-  border: 2px dashed #5256ad;
-  height: 500px;
-  width: 700px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.file-upload {
+  background-color: #ffffff;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
-.drag-area.active{
-  border: 2px solid #5256ad;
-}
-.drag-area .icon{
-  font-size: 100px;
-  color: #000;
-}
-.drag-area header{
-  font-size: 30px;
-  font-weight: 500;
-  color: #000;
-}
-.drag-area span{
-  font-size: 25px;
-  font-weight: 500;
-  color: #000;
-  margin: 10px 0 15px 0;
-}
-.drag-area button{
-  padding: 10px 25px;
-  font-size: 20px;
-  font-weight: 500;
+
+.file-upload-btn {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #0078a5;
   border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #0078a5;
+  transition: all .2s ease;
   outline: none;
-  background: #fff;
-  color: #5256ad;
-  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.file-upload-btn:hover {
+  background: #0078a5;
+  color: #ffffff;
+  transition: all .2s ease;
   cursor: pointer;
 }
-.drag-area img{
-  height: 100%;
+
+.file-upload-btn:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  object-fit: cover;
-  border-radius: 5px;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-upload-wrap {
+  margin-top: 20px;
+  border: 4px dashed #0078a5;
+  position: relative;
+}
+
+.file-dropping,
+.file-upload-wrap:hover {
+  background-color: #8bb1c7;
+  border: 4px dashed #ffffff;
+}
+
+.title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #0078a5;
+  padding: 60px 0;
+}
+
+
+
+.remove-file {
+  width: 200px;
+  margin: 0;
+  color: #fff;
+  background: #6583c8;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #6583c8;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.remove-file:hover {
+  background: #6583c8;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.remove-file:active {
+  border: 0;
+  transition: all .2s ease;
 }

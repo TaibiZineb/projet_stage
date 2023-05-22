@@ -113,7 +113,9 @@
             "scripts": [
 
               "src/index.js",
-              "src/assets/js/flowbite.js"
+              "src/assets/js/flowbite.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+     
             ]
           }
         }

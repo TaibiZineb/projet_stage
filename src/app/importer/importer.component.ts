@@ -1,52 +1,76 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+// importer.component.ts
+import { Component,OnInit } from '@angular/core';
+
+
+
 
 @Component({
   selector: 'app-importer',
-  templateUrl: './importer.component.html',
-  styleUrls: ['./importer.component.css']
+  templateUrl: 'importer.component.html',
+  styleUrls: ['importer.component.css']
 })
-export class ImporterComponent {
-  @ViewChild('fileInput') fileInput!: ElementRef;
-  file: File | undefined;
+export class ImporterComponent implements OnInit {
+  
+  uploadedFileName!: string;
+  imageSrc!: string;
+  constructor() {}
 
-  browseFile() {
-    this.fileInput.nativeElement.click();
+  ngOnInit(): void {}
+  
+
+  triggerFileInput() {
+    const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
+    fileInput.click();
   }
 
-  onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.file = input.files[0];
-      this.uploadFile();
-    }
-  }
+  readURL(input: any) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
 
-  uploadFile() {
-    const dropArea = document.querySelector(".drag-area");
-    const dragText = dropArea?.querySelector("header");
-    if (dropArea && dragText) {
-      dropArea.classList.add("active");
-      dragText.textContent = "Release to Upload File";
-    }
+      reader.onload = (e: any) => {
+        const imageUploadWrap = document.querySelector('.image-upload-wrap');
+        const fileUploadContent = document.querySelector('.file-upload-content');
 
-    const fileType = this.file?.type;
-    const validExtensions = ["image/jpeg", "image/jpg", "image/png"];
-    if (fileType && validExtensions.includes(fileType)) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const fileURL = fileReader.result as string;
-        const imgTag = `<img src="${fileURL}" alt="">`;
-        if (dropArea) {
-          dropArea.innerHTML = imgTag;
+        if (imageUploadWrap) {
+          imageUploadWrap.classList.add('hidden');
         }
+
+        if (fileUploadContent) {
+          fileUploadContent.classList.remove('hidden');
+        }
+
+        this.imageSrc = e.target.result;
+        this.uploadedFileName = input.files[0].name;
       };
-      fileReader.readAsDataURL(this.file as Blob);
+
+      reader.readAsDataURL(input.files[0]);
     } else {
-      alert("This is not an Image File!");
-      if (dropArea && dragText) {
-        dropArea.classList.remove("active");
-        dragText.textContent = "Drag & Drop to Upload File";
-      }
+      this.removeUpload();
     }
   }
+
+  removeUpload() {
+    const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
+    fileInput.value = '';
+
+    const fileUploadContent = document.querySelector('.file-upload-content');
+    const imageUploadWrap = document.querySelector('.image-upload-wrap');
+
+    if (fileUploadContent) {
+      fileUploadContent.classList.add('hidden');
+    }
+
+    if (imageUploadWrap) {
+      imageUploadWrap.classList.remove('hidden');
+    }
+
+    this.uploadedFileName = '';
+    this.imageSrc = '';
+  }
+
+ 
 }
+
+
+ 
+
