@@ -95,6 +95,9 @@
     @media(max-width:1024px){
       .hamburger{
         display: block;
+        float: right;
+        right: 4%;
+        position: fixed;
       }
     
       .hamburger.active .bar:nth-child(2){
@@ -138,3 +141,33 @@
         width: 100%;
       }
     }
+@media(min-width:375px){
+  .prev, .next {
+    top: 30% ;
+  }
+          
+}
+@media(min-width:414px){
+  .prev, .next {
+    top: 22% ;
+  }
+      
+}
+
+@media(min-width:820px){
+  .prev, .next {
+    top: 16% ;
+  }
+      
+}
+@media(min-width:768px){
+  .prev, .next {
+    top: 18%;
+  }
+      
+}
+@media(min-width:1024px){
+  .prev, .next {
+    top: 50%;
+  }
+}
