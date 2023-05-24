@@ -54,10 +54,11 @@ export class CreeationCompteComponent implements OnInit{
         .from('Compte')
         .insert([formData])
         .then((response: any) => {
-          console.log('Enregistrement réussi :', response);
+          alert('Enregistrement réussi.');
           this.creationCompteForm.reset();
         })
         .catch((error: any) => {
+          alert('Erreur lors de l\'enregistrement.');
           console.error("Erreur lors de l'enregistrement :", error);
         });
     }
