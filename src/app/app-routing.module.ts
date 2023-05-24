@@ -7,13 +7,16 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { AuthentificationGuard } from './guards/authentification.guard';
 import { HomeComponent } from './home/home.component';
 import { ImporterComponent } from './importer/importer.component';
+import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
+
 
 
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'admin/home', pathMatch: 'full' }, // Rediriger "/" vers "/home"
+  { path: 'creationcompte', component: CreeationCompteComponent },
+  { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
   { path: 'admin', component: AdminTemplateComponent, canActivate: [AuthentificationGuard],
     children: [
       { path: 'importer', component: ImporterComponent },

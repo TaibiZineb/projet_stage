@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -11,6 +10,8 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImporterComponent } from './importer/importer.component';
+import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
+import { createClient } from '@supabase/supabase-js';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { ImporterComponent } from './importer/importer.component';
     CustomersComponent,
     LoginComponent,
     AdminTemplateComponent,
-    HomeComponent
+    HomeComponent,
+    CreeationCompteComponent,
+
   ],
   imports: [
     BrowserModule,
