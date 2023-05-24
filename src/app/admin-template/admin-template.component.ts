@@ -3,6 +3,7 @@ import { AuthentificationService } from '../services/authentification.service';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-admin-template',
   templateUrl: './admin-template.component.html',

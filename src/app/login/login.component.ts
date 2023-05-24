@@ -2,7 +2,8 @@ import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthentificationService } from '../services/authentification.service';
 import { AppUser } from '../model/user.model';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,25 +22,27 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.userFromGroup = this.fb.group({
-      username : this.fb.control(""),
+      Email : this.fb.control(""),
       password : this.fb.control("")
 
     })
   }
-  handleLogin(){
-    let username = this.userFromGroup.value.username;
+  handleLogin(): void{
+    let Email = this.userFromGroup.value.Email;
     let password = this.userFromGroup.value.password;
-    this.authService.login(username, password).subscribe({
-      next:(AppUser: AppUser)=>{
-        this.authService.authenticateUser(AppUser).subscribe({
-          next : (data:boolean)=>{
-            this.router.navigateByUrl("admin/home");
-          }
-        });
-      },
-      error : (err) =>{
+    this.authService.login(Email, password).then((observable: Observable<AppUser>) => {
+      observable.subscribe({
+        next: (appUser: AppUser) => {
+          this.authService.authenticateUser(appUser).subscribe({
+            next: (data: boolean) => {
+              this.router.navigateByUrl('admin/home');
+            }
+          });
+        },
+      error : (err: any) =>{
         this.errorMessage = err;
       }
-    })
-  }
+    });
+  });
+}
 }

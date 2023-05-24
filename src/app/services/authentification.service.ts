@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppUser } from '../model/user.model';
-import { UUID } from 'angular2-uuid';
 import { Observable, of, throwError } from 'rxjs';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root'
@@ -10,33 +10,56 @@ export class AuthentificationService {
 
   users : AppUser[] = [];
   authentificateUser : AppUser | undefined;
+  supabase!: SupabaseClient;
+  supabaseUrl!: string;
+  supabaseKey!: string;
 
   constructor() { 
-    "use strict";
-    this.users.push({userId : UUID.UUID(),username : "user1", password : "1234", roles : ["USER"]});
-    this.users.push({userId : UUID.UUID(),username : "user2", password : "1234", roles : ["USER"]});
-    this.users.push({userId : UUID.UUID(),username : "admin", password : "1234", roles : ["USER" ,"ADMIN"]});
+
+    this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
+    this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
+    this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     
   }
-  public login(username : string, password : string) : Observable<AppUser>{
-    let AppUser =  this.users.find(u =>  u.username == username);
-    if(!AppUser) return throwError(()=>new Error("User not found"));
-    if(AppUser.password != password){
-      return throwError(()=>new Error("Bad credentials"));
+
+  public async login(Email: string, password: string): Promise<Observable<AppUser>> {
+    const { data, error } = await this.supabase
+      .from('Compte')
+      .select()
+      .eq('Email', Email)
+      .single();
+
+    if (error) {
+      console.error('Error executing query:', error);
+      return throwError(() => new Error('An error occurred'));
     }
-    //localStorage.setItem('authenticated', 'true');
-    //sessionStorage.setItem('authenticated', 'true');
-    return of(AppUser);
-    
+
+    if (!data) {
+      return throwError(() => new Error('User not found'));
+    }
+
+    const user = data;
+    if (user['mot-de-passe'] !== password) {
+      return throwError(() => new Error('Mauvaises informations d\'identification'));
+    }
+
+    const appUser: AppUser = {
+      userId: user['userId'],
+      Email: user['Email'],
+      password: user['mot-de-passe'],
+      isDirecteurChecked: user['isDirecteur'],
+      isRhChecked: user['isRh'],
+    };
+
+    return of(appUser);
   }
+
   public authenticateUser(AppUser : AppUser) :Observable<boolean>{
     this.authentificateUser = AppUser;
-    localStorage.setItem("authUser", JSON.stringify({username : AppUser.username, roles : AppUser.roles, jwt:"JWT_TOKEN"}));
+    localStorage.setItem("authUser", JSON.stringify({username : AppUser.Email, isDirecteurCheked : AppUser.isDirecteurChecked, isRhCheked : AppUser.isRhChecked, jwt:"JWT_TOKEN"}));
     return of(true);
   }
-  public hasRole( role : string) : boolean{
-    return this.authentificateUser!.roles.includes(role);
-  }
+ 
   public logout(): Observable<boolean>{
     this.authentificateUser = undefined;
     localStorage.removeItem("authUser");
@@ -45,7 +68,5 @@ export class AuthentificationService {
   public isAuthenticated() : boolean{
     return this.authentificateUser!= undefined;
   }
-  
-  
- 
+
 }

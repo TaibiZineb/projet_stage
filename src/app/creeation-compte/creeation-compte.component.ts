@@ -12,6 +12,8 @@ export class CreeationCompteComponent implements OnInit{
   supabaseKey!: string;
   supabase: any;
   creationCompteForm!: FormGroup;
+  isDirecteurChecked: boolean = false;
+  isRHChecked: boolean = false;
 
   constructor( private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
@@ -27,6 +29,8 @@ export class CreeationCompteComponent implements OnInit{
       Num: [''],
       Email: [''],
       'mot-de-passe': [''],
+      isDirecteur: [''],
+      isRH: [''],
       Date_integration: [this.getCurrentDate()],
       pays: [''],
       ville: ['']
@@ -35,13 +39,16 @@ export class CreeationCompteComponent implements OnInit{
   getCurrentDate(): string {
     const today = new Date();
     const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Les mois commencent à partir de 0
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
     const day = today.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
   onSubmit(): void {
     if (this.creationCompteForm.valid) {
       const formData = this.creationCompteForm.value;
+      formData.isDirecteur = this.isDirecteurChecked;
+      formData.isRH = this.isRHChecked;
+
 
       this.supabase
         .from('Compte')
@@ -55,6 +62,7 @@ export class CreeationCompteComponent implements OnInit{
         });
     }
   }
+  
 }
 
 

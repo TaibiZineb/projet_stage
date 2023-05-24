@@ -21,7 +21,10 @@
           <li  class="ml-3 lg:ml">
             <a class="text-white nav-link">
               <i class="bi bi-person-fill"></i>
-              {{authService.authentificateUser!.username}}
+              <ng-container *ngIf="authService.authentificateUser">
+                <span *ngIf="authService.authentificateUser.isDirecteurChecked">Directeur</span>
+                <span *ngIf="authService.authentificateUser.isRhChecked">RH</span>
+            </ng-container>
             </a>
           </li>
           <li class="ml-3">

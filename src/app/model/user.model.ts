@@ -1,6 +1,8 @@
 export interface AppUser {
     userId : string;
-    username : string;
+    Email: string;
     password : string;
-    roles : String[];
+    isDirecteurChecked: boolean;
+    isRhChecked: boolean;
+
 }
