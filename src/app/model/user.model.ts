@@ -3,6 +3,7 @@ export interface AppUser {
     Email: string;
     password : string;
     isDirecteurChecked: boolean;
-    isRhChecked: boolean;
+    isRHChecked: boolean;
+    Nom_Societe: string;
 
 }

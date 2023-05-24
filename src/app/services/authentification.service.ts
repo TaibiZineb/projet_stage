@@ -48,7 +48,8 @@ export class AuthentificationService {
       Email: user['Email'],
       password: user['mot-de-passe'],
       isDirecteurChecked: user['isDirecteur'],
-      isRhChecked: user['isRh'],
+      isRHChecked: user['isRH'],
+      Nom_Societe: user['Nom_Societe']
     };
 
     return of(appUser);
@@ -56,7 +57,7 @@ export class AuthentificationService {
 
   public authenticateUser(AppUser : AppUser) :Observable<boolean>{
     this.authentificateUser = AppUser;
-    localStorage.setItem("authUser", JSON.stringify({username : AppUser.Email, isDirecteurCheked : AppUser.isDirecteurChecked, isRhCheked : AppUser.isRhChecked, jwt:"JWT_TOKEN"}));
+    localStorage.setItem("authUser", JSON.stringify({Email: AppUser.Email, isDirecteurCheked : AppUser.isDirecteurChecked, isRHCheked : AppUser.isRHChecked, Nom_Societe :AppUser.Nom_Societe, jwt:"JWT_TOKEN"}));
     return of(true);
   }
  
