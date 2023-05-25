@@ -3,6 +3,7 @@ import { AppUser } from '../model/user.model';
 import { Observable, of, throwError } from 'rxjs';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,7 +54,7 @@ export class AuthentificationService {
       nom: user['nom'],
       prenom: user['prenom'],
       num: user['Num'],
-      Date_integration: user['Date-integration'],
+      Date_integration: user['Date_integration'],
       pays: user['pays'],
       ville: user['ville'],
       genre: user['Genre']
