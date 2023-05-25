@@ -1,3 +1,116 @@
 <div class="containerbody mx-auto px-4 mb-6 relative">
     <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Gestion Compte</h1>
+    <div class="justify-center grid grid-cols-6 gap-4">
+        <div class="col-start-2 col-span-4">
+            <form class="w-full" [formGroup]="GestionCompteForm" (ngSubmit)="onSubmit()">
+                <!--Genre/sexe-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-genre">Genre</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>                                  
+                                <input formControlName="Genre" id="radio1" name="gender" value="homme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'homme'">
+                                <label for="radio1" class="ml-2 text-gray-700 text-sm">Homme</label>
+                            </div>
+                            <div>
+                                <input formControlName="Genre" id="radio2" name="gender" value="femme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'femme'">
+                                <label for="radio2" class="ml-2 text-gray-700 text-sm">Femme</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Nom & Prenom-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Nom </label>
+                        <input formControlName="nom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-nom" type="text" value="{{authService.authentificateUser?.nom}}">
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Prenom</label>
+                        <input formControlName="prenom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-prenom" type="text" value="{{authService.authentificateUser?.prenom}}">
+                    </div>
+                </div>
+                <!--Nom de la société-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Nom_société">Nom de la société</label>
+                        <input formControlName="Nom_Societe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-Nom_Societe" type="text" value="{{authService.authentificateUser?.Nom_Societe}}">
+                    </div>
+                </div>
+                <!--Numéro de téléphone-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Num">Numéro de téléphone</label>
+                        <input formControlName="Num" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-Num" type="tel" value="{{authService.authentificateUser?.num}}">
+                    </div>
+                </div>
+                <!--Email-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">E-mail</label>
+                        <input formControlName="Email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-email" type="email" value="{{authService.authentificateUser?.Email}}">
+                    </div>
+                </div>
+                <!--mot de Passe-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-mot-de-passe">Mot de passe</label>
+                        <input formControlName="mot-de-passe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-mot-de-passe" type="password" value="{{authService.authentificateUser?.password}}">
+                    </div>
+                </div>
+                <!--Fonction-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Fonction">Fonction</label>
+                    <div class="grid grid-cols-2 gap-4">
+                    <div>                                  
+                        <input formControlName="isDirecteur" name="role" value="Directeur" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                        <label for="isDirecteur" class="ml-2 text-gray-700 text-sm">Directeur</label>
+                    
+                    </div>
+                    <div>
+                        <input formControlName="isRH" name="role" value="RH" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                        <label for="isRH" class="ml-2 text-gray-700 text-sm">RH</label>
+                    
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <!--Date-->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-date">Date </label>
+                        <input formControlName="Date_integration" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" value="{{authService.authentificateUser?.Date_integration}}">
+                    </div>
+                </div>
+                <!--Pays & Ville-->
+                <div class="flex flex-wrap -mx-3 mb-2">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-pays">Pays</label>
+                        <input formControlName="pays" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-pays" type="text" value="{{authService.authentificateUser?.pays}}">
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-ville">Villle</label>
+                        <div class="relative">
+                            <select formControlName="ville" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ville">
+                                <option>Rabat</option>
+                                <option>Casablanca</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--Bouton-->
+                <div class="flex justify-center mt-4">
+                <button class="mr-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Confirmer</button> 
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<router-outlet>
+  
+</router-outlet>

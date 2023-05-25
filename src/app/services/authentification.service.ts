@@ -49,7 +49,14 @@ export class AuthentificationService {
       password: user['mot-de-passe'],
       isDirecteurChecked: user['isDirecteur'],
       isRHChecked: user['isRH'],
-      Nom_Societe: user['Nom_Societe']
+      Nom_Societe: user['Nom_Societe'],
+      nom: user['nom'],
+      prenom: user['prenom'],
+      num: user['Num'],
+      Date_integration: user['Date-integration'],
+      pays: user['pays'],
+      ville: user['ville'],
+      genre: user['Genre']
     };
 
     return of(appUser);
