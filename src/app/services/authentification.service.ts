@@ -31,11 +31,11 @@ export class AuthentificationService {
 
     if (error) {
       console.error('Error executing query:', error);
-      return throwError(() => new Error('An error occurred'));
+      return throwError(() => new Error('Une erreur s\'est produite.'));
     }
 
     if (!data) {
-      return throwError(() => new Error('User not found'));
+      return throwError(() => new Error('Utilisateur non trouvé.'));
     }
 
     const user = data;

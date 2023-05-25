@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImporterComponent } from './importer/importer.component';
 import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
 import { createClient } from '@supabase/supabase-js';
+import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { createClient } from '@supabase/supabase-js';
     AdminTemplateComponent,
     HomeComponent,
     CreeationCompteComponent,
+    GestionCompteComponent,
 
   ],
   imports: [

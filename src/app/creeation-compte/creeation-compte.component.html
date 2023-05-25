@@ -1,138 +1,129 @@
 
 <div class="bg-blue-200  mx-auto px-4 flex items-center justify-center">
   <div class="justify-center grid grid-cols-6 gap-4">
-      <div class="col-start-2 col-span-4">
-          <div class="card">
-              <div class="bg-blue-300 card-header">
-                  <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Créeation compte </h1>
+    <div class="col-start-2 col-span-4">
+      <div class="card">
+        <div class="bg-blue-300 card-header">
+          <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Créeation compte </h1>
         </div>
         <div class="card-body">
           <form class="w-full" [formGroup]="creationCompteForm" (ngSubmit)="onSubmit()">
+            <!--Genre/sexe-->
             <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full px-3">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-genre">
-                        Genre
-                    </label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>                                  
-                          <input formControlName="Genre" id="radio1" name="gender" value="homme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
-                          <label for="radio1" class="ml-2 text-gray-700 text-sm">Homme</label>
-                        </div>
-                        <div>
-                          <input formControlName="Genre" id="radio2" name="gender" value="femme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
-                          <label for="radio2" class="ml-2 text-gray-700 text-sm">Femme</label>
-                        </div>
-                    </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-genre">Genre</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>                                  
+                    <input formControlName="Genre" id="radio1" name="gender" value="homme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                    <label for="radio1" class="ml-2 text-gray-700 text-sm">Homme</label>
+                  </div>
+                  <div>
+                    <input formControlName="Genre" id="radio2" name="gender" value="femme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                    <label for="radio2" class="ml-2 text-gray-700 text-sm">Femme</label>
+                  </div>
+                </div>
                 </div>
             </div>
+            <!--Nom & Prenom-->
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                  Nom 
-                </label>
-                <input formControlName="nom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Nom">
-
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Nom </label>
+                <input formControlName="nom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-nom" type="text" placeholder="Nom">
+                <div *ngIf="creationCompteForm.get('nom')?.touched && creationCompteForm.get('nom')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
               </div>
               <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                  Prenom
-                </label>
-                <input formControlName="prenom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Prenom">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Prenom</label>
+                <input formControlName="prenom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-prenom" type="text" placeholder="Prenom">
+                <div *ngIf="creationCompteForm.get('prenom')?.touched && creationCompteForm.get('prenom')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+              </div>
             </div>
-            </div>
+            <!--Nom de la société-->
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full px-3">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Nomsociété">
-                    Nom de la société
-                  </label>
-                  <input formControlName="Nom_Societe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Nom de la société">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Nom_société">Nom de la société</label>
+                <input formControlName="Nom_Societe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-Nom_Societe" type="text" placeholder="Nom de la société">
+                <div *ngIf="creationCompteForm.get('Nom_Societe')?.touched && creationCompteForm.get('Nom_Societe')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
               </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full px-3">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-num">
-                    Numéro de téléphone
-                  </label>
-                  <input formControlName="Num" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="tel" placeholder="0600.000.000">
-
-              </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full px-3">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
-                    E-mail
-                  </label>
-                  <input formControlName="Email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="email" placeholder="Adresse e-mail">
-
-              </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                  Mot de passe
-                </label>
-                <input formControlName="mot-de-passe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************">
-
-              </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-genre">
-                    Fonction
-                </label>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>                                  
-                      <input formControlName="isDirecteur" name="role" value="Directeur" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [(ngModel)]="isDirecteurChecked">
-                      <label for="checkbox1" class="ml-2 text-gray-700 text-sm">Directeur</label>
-                    </div>
-                    <div>
-                      <input formControlName="isRH" name="role" value="RH" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [(ngModel)]="isRHChecked">
-                      <label for="checkbox2" class="ml-2 text-gray-700 text-sm">RH</label>
-                    </div>
-                </div>
             </div>
+            <!--Numéro de téléphone-->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Num">Numéro de téléphone</label>
+                <input formControlName="Num" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-Num" type="tel" placeholder="0600.000.000">
+                <div *ngIf="creationCompteForm.get('Num')?.touched && creationCompteForm.get('Num')?.errors?.['pattern']" class="text-red-500">Veuillez entrer un numéro de téléphone valide dans le format demandé (ex. 0600.000.000).</div>
               </div>
-              <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full px-3">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-date">
-                    Date 
-                  </label>
-                  <input formControlName="Date_integration" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" [value]="getCurrentDate()">
-
+            </div>
+            <!--Email-->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">E-mail</label>
+                <input formControlName="Email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-email" type="email" placeholder="Adresse e-mail">
+                <div *ngIf="creationCompteForm.get('Email')?.touched && creationCompteForm.get('Email')?.errors?.['email']" class="text-red-500 text-xs italic">Veuillez entrer une adresse email valide.</div>
+              </div>
+            </div>
+            <!--mot de Passe-->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-mot-de-passe">Mot de passe</label>
+                <input formControlName="mot-de-passe" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-mot-de-passe" type="password" placeholder="******************">
+                <div *ngIf="creationCompteForm.get('mot-de-passe')?.touched && creationCompteForm.get('mot-de-passe')?.errors?.['pattern']" class="text-red-500 text-xs italic">
+                  Veuillez entrer un mot de passe valide avec au moins 8 caractères, contenant au moins une lettre majuscule, une lettre minuscule et un chiffre.
                 </div>
               </div>
-              <div class="flex flex-wrap -mx-3 mb-2">
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-                    Pays
-                  </label>
-                  <input formControlName="pays" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Maroc">
-                </div>
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-                    Villle
-                  </label>
-                  <div class="relative">
-                    <select formControlName="ville" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                      <option>Rabat</option>
-                      <option>Casablanca</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
+            </div>
+            <!--Fonction-->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Fonction">Fonction</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>                                  
+                    <input formControlName="isDirecteur" name="role" value="Directeur" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [(ngModel)]="isDirecteurChecked">
+                    <label for="isDirecteur" class="ml-2 text-gray-700 text-sm">Directeur</label>
+                   
                   </div>
-
+                  <div>
+                    <input formControlName="isRH" name="role" value="RH" type="checkbox" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [(ngModel)]="isRHChecked">
+                    <label for="isRH" class="ml-2 text-gray-700 text-sm">RH</label>
+                   
+                  </div>
                 </div>
               </div>
+            </div>
+            <!--Date-->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-date">Date </label>
+                <input formControlName="Date_integration" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" [value]="getCurrentDate()">
 
-              <div class="flex justify-center mt-4">
-                  <button class="mr-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                    Confirmer
-                  </button>
-                  <a class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" aria-current="page" routerLink="/login">
-                    Login
-                </a>
               </div>
+            </div>
+            <!--Pays & Ville-->
+            <div class="flex flex-wrap -mx-3 mb-2">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-pays">Pays</label>
+                <input formControlName="pays" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-pays" type="text" placeholder="Maroc">
+                <div *ngIf="creationCompteForm.get('pays')?.touched && creationCompteForm.get('pays')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est Obligatoire.</div>
+              </div>
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-ville">Villle</label>
+                <div class="relative">
+                  <select formControlName="ville" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ville">
+                    <option>Rabat</option>
+                    <option>Casablanca</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
+                  <div *ngIf="creationCompteForm.get('ville')?.touched && creationCompteForm.get('ville')?.errors?.['required']" class="text-red-500 text-xs italic">La ville est obligatoire.</div>
+                </div>
+
+              </div>
+            </div>
+            <!--Bouton-->
+            <div class="flex justify-center mt-4">
+              <button class="mr-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Confirmer</button>
+              <a class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" aria-current="page" routerLink="/login">Login</a>
+            </div>
           </form>
         </div>
       </div>

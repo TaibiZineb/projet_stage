@@ -1,10 +1,10 @@
-<nav class="bg-sky-600 ">
-  <div class=" container mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+<nav class="bg-sky-600">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="hidden lg:flex relative flex h-16 items-center justify-between">
       <a class="hidden lg:flex text-white text-lg font-bold" routerLink="/admin/home">Projet</a>
       <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
         <ul class="flex flex-col lg:flex-row max-lg:flex-row list-none lg:ml-auto mt-3">
-          <li class="nav-item  ml-3">
+          <li class="nav-item ml-3">
             <a class="nav-link text-white active" aria-current="page" routerLink="/admin/home">Home</a>
           </li>
           <li class="nav-item ml-3">
@@ -14,19 +14,25 @@
             <a class="nav-link text-white active" aria-current="page" routerLink="/admin/customers">Page 2</a>
           </li>
         </ul>
-        
       </div>
       <div class="hidden lg:flex lg:items-center">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
-          <li  class="ml-3 lg:ml">
-            <a class="text-white nav-link">
-              <i class="bi bi-person-fill"></i>
-              <ng-container *ngIf="authService.authentificateUser">
-                <span *ngIf="authService.authentificateUser.isDirecteurChecked">Directeur</span>
-                <span *ngIf="authService.authentificateUser.isRHChecked">RH</span>
-              </ng-container>/
-              {{authService.authentificateUser?.Nom_Societe}}
-
+          <li class="ml-3 lg:ml dropdown">
+            <a class="nav-link">
+              <a class="nav-link text-white dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item"  aria-current="page" routerLink="/admin/gestion">Compte</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" aria-current="page" routerLink="/admin/home">Autre Action</a></li>
+              </ul>
+              <a class="text-white" href="#">
+                <!--  <ng-container *ngIf="authService.authentificateUser">
+                  <span *ngIf="authService.authentificateUser.isDirecteurChecked">Directeur</span>
+                  <span *ngIf="authService.authentificateUser.isRHChecked">RH</span>
+                </ng-container>-->
+              
+                {{authService.authentificateUser?.Nom_Societe}}
+              </a>
             </a>
           </li>
           <li class="ml-3">
@@ -36,34 +42,31 @@
           </li>
         </ul>
       </div>
-     
     </div>
   </div>
-
- 
-    <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex">
-      <nav class="navbar">
-        <a href="#" class="text-white text-lg font-bold">Projet.</a>
-        <ul class="nav-menu bg-sky-300">
-          <li class="nav-item">
-            <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/importer">Importer</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/customers">Page 2</a>
-          </li>
-        </ul>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </nav>
-    </div>
- 
+  <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex">
+    <nav class="navbar">
+      <a href="#" class="text-white text-lg font-bold">Projet.</a>
+      <ul class="nav-menu bg-sky-300">
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/importer">Importer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/customers">Page 2</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </div>
 </nav>
+
 
 <div class="navbarmenu flex h-auto">
   <nav id="navbar" class="bg-sky-500 w-1/5 hidden lg:flex">

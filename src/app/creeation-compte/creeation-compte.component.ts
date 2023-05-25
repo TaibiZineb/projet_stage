@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 
 @Component({
@@ -21,20 +21,21 @@ export class CreeationCompteComponent implements OnInit{
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
   }
   ngOnInit(): void {
-
+    const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     this.creationCompteForm = this.formBuilder.group({
       Genre: [''],
-      nom: [''],
-      prenom: [''],
-      Nom_Societe: [''],
-      Num: [''],
-      Email: [''],
-      'mot-de-passe': ['',],
-      isDirecteur: [''],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      Nom_Societe: ['',Validators.required],
+      Num: ['',Validators.pattern(telephonePattern)],
+      Email: ['',Validators.email],
+      'mot-de-passe': ['',Validators.pattern(passwordPattern)],
+      isDirecteur: [false, Validators.requiredTrue],
       isRH: [''],
-      Date_integration: [this.getCurrentDate()],
+      Date_integration: [''],
       pays: [''],
-      ville: ['']
+      ville: ['',Validators.required]
     });
   }
   getCurrentDate(): string {

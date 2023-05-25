@@ -8,6 +8,7 @@ import { AuthentificationGuard } from './guards/authentification.guard';
 import { HomeComponent } from './home/home.component';
 import { ImporterComponent } from './importer/importer.component';
 import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
+import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'importer', component: ImporterComponent },
       { path: 'customers', component: CustomersComponent },
       { path: 'home', component: HomeComponent },
+      { path: 'gestion', component: GestionCompteComponent },
     ]
   },
   { path: '**', redirectTo: 'admin/home' }, 
