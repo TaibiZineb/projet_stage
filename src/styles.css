@@ -83,15 +83,12 @@
       margin: 5px auto;
       -webkit-transition: all 0.3s ease;
       transition: all 0.3s ease;
-      background-color: white;
     }
     
     @media(max-width:1024px){
       .hamburger{
         display: block;
-        float: right;
-        right: 4%;
-        position: fixed;
+        margin-left: auto;
       }
     
       .hamburger.active .bar:nth-child(2){
@@ -107,7 +104,6 @@
       .nav-menu{
         position: fixed;
         left: -100%;
-        top: 42px;
         gap: 0;
         flex-direction: column;
         width: 100%;
@@ -137,26 +133,32 @@
     }
 @media(min-width:375px){
   .prev, .next {
-    top: 30% ;
+    top: 42% ;
+  }
+          
+}
+@media(min-width:390px){
+  .prev, .next {
+    top: 32% ;
   }
           
 }
 @media(min-width:414px){
   .prev, .next {
-    top: 22% ;
+    top: 31% ;
   }
       
 }
 
 @media(min-width:820px){
   .prev, .next {
-    top: 16% ;
+    top: 23% ;
   }
       
 }
 @media(min-width:768px){
   .prev, .next {
-    top: 18%;
+    top: 28%;
   }
       
 }

@@ -1,25 +1,20 @@
-<nav class="bg-sky-400">
+<!--<nav class="bg-sky-500 border-gray-200">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="hidden lg:flex relative h-16 items-center justify-between">
       <a class="hidden lg:flex text-white text-lg font-bold" routerLink="/admin/home">Projet</a>
       <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
         <ul class="flex flex-col lg:flex-row max-lg:flex-row list-none lg:ml-auto mt-3">
           <li class="ml-3 mb-px mr-1">
-            <a class="inline-block {{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/home" routerLinkActive="active">Home</a>
+            <a class="inline-block { hover:text-slate-300" aria-current="page" routerLink="/admin/home" routerLinkActive="active">Home</a>
           </li>
-          <li class="mb-px mr-1 ml-3">
-            <a class="inline-block {{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/importer">Importer</a>
-          </li>
-          <li class="mb-px mr-1 ml-3">
-            <a class="inline-block {{router.isActive('/admin/compte',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/compte">Compte</a>
-          </li>
+
         </ul>
       </div>
       <div class="hidden lg:flex lg:items-center">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto mt-3">
           <li class="ml-3 lg:ml dropdown">
             <a class="nav-link">
-              <a class="nav-link text-white dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+            
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item"  aria-current="page" routerLink="/admin/compte">Compte</a></li>
                 <li><hr class="dropdown-divider"></li>
@@ -29,24 +24,55 @@
                 <!--  <ng-container *ngIf="authService.authentificateUser">
                   <span *ngIf="authService.authentificateUser.isDirecteurChecked">Directeur</span>
                   <span *ngIf="authService.authentificateUser.isRHChecked">RH</span>
-                </ng-container>-->
-              
-                {{authService.authentificateUser?.Nom_Societe}}
+                </ng-container>
               </a>
             </a>
           </li>
-          <li class="ml-3">
-            <a class="btn nav-link text-white" (click)="handleLogout()">
-              <i class="bi bi-box-arrow-right"></i>
-            </a>
-          </li>
+        
         </ul>
       </div>
     </div>
   </div>
-  <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex">
+
+</nav>
+-->
+
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+      <a routerLink="/admin/home" class="flex items-center">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Logo" />
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-600">Projet</span>
+      </a>
+      <div class="flex items-center">
+        <a class="text-sm  text-cyan-600 hover:underline" aria-current="page" routerLink="/admin/compte">
+          <i class="bi bi-person-fill"></i>
+        </a>
+        <a class="text-sm  text-cyan-600  hover:underline">
+            {{authService.authentificateUser?.Nom_Societe}}
+        </a>
+        <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:underline" (click)="handleLogout()">
+          <i class="bi bi-box-arrow-right"></i></a>
+      </div>
+  </div>
+</nav>
+<nav class="bg-gray-50 dark:bg-gray-700">
+  <div class="hidden lg:flex max-w-screen-xl px-4 py-3 mx-auto">
+      <div class="flex items-center">
+          <ul class="flex border-b flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
+              <li>
+                <a aria-current="page" routerLink="/admin/home" class="{{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Home</a>
+              </li>
+              <li>
+                <a aria-current="page" routerLink="/admin/importer" class="{{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Importer</a>
+              </li>
+              <li>
+                  <a aria-current="page" routerLink="/admin/compte" class="{{router.isActive('/admin/compte',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Compte</a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex bg-gray-100">
     <nav class="navbar">
-      <a href="#" class="text-white text-lg font-bold">Projet.</a>
       <ul class="nav-menu bg-sky-300">
         <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
@@ -63,29 +89,27 @@
         
       </ul>
       <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <span class="bar bg-blue-600"></span>
+        <span class="bar bg-blue-600"></span>
+        <span class="bar bg-blue-600"></span>
       </div>
     </nav>
   </div>
 </nav>
-
-
 <div class="navbarmenu flex">
-  <menu class="bg-sky-500 hidden lg:flex fixed scroll-pl-6">
+  <menu class="bg-gray-50 hidden lg:flex">
 	
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
 			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
-				<a class="text-white block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
+				<a class="{{router.isActive('/admin/home',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
 				</a>
 			</li>
 			<li class="border-t list-none relative w-full py-2">
-				<a class="block px-10 py-30 no-underline cursor-pointer text-white" routerLink="/admin/importer">Importer
+				<a class="{{router.isActive('/admin/importer',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/importer">Importer
 				</a>
 			</li>
       <li class="border-t list-none relative w-full py-2">
-				<a class="block px-10 py-30 no-underline cursor-pointer text-white" routerLink="/admin/compte">Compte
+				<a class="{{router.isActive('/admin/compte',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/compte">Compte
 				</a>
 			</li>
 		</ul>
@@ -110,6 +134,8 @@
     </div>
   </div>
 </div>
+
+
 <router-outlet>
   
 </router-outlet>
