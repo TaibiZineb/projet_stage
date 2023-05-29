@@ -9,7 +9,7 @@ import { CreeationCompteComponent } from './creeation-compte/creeation-compte.co
 import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
-import { CreationConnecteComponent } from './creation-connecte/creation-connecte.component';
+
 
 
 
@@ -24,7 +24,6 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'gestion', component: GestionCompteComponent },
       { path: 'compte', component: CompteComponent },
-      { path: 'creationC', component: CreationConnecteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       
     ]

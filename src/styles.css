@@ -4,12 +4,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-
-
-.custom-slider { display: none; }
-.slide-container {
-    position: relative;
-}
 .prev, .next {
     cursor: pointer;
     position: absolute;

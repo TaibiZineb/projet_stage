@@ -1,17 +1,17 @@
-<nav class="bg-sky-600">
+<nav class="bg-sky-400">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-    <div class="hidden lg:flex relative flex h-16 items-center justify-between">
+    <div class="hidden lg:flex relative h-16 items-center justify-between">
       <a class="hidden lg:flex text-white text-lg font-bold" routerLink="/admin/home">Projet</a>
       <div class="hidden lg:flex lg:items-center" id="navbarSupportedContent">
         <ul class="flex flex-col lg:flex-row max-lg:flex-row list-none lg:ml-auto mt-3">
-          <li class="nav-item ml-3">
-            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/home">Home</a>
+          <li class="ml-3 mb-px mr-1">
+            <a class="inline-block {{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/home" routerLinkActive="active">Home</a>
           </li>
-          <li class="nav-item ml-3">
-            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/importer">Importer</a>
+          <li class="mb-px mr-1 ml-3">
+            <a class="inline-block {{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/importer">Importer</a>
           </li>
-          <li class="nav-item ml-3">
-            <a class="nav-link text-white active" aria-current="page" routerLink="/admin/compte">Compte</a>
+          <li class="mb-px mr-1 ml-3">
+            <a class="inline-block {{router.isActive('/admin/compte',true) ? 'rounded border-l border-t border-r bg-sky-600 text-sky-800' : 'border-none text-slate-100'}} hover:text-slate-300" aria-current="page" routerLink="/admin/compte">Compte</a>
           </li>
         </ul>
       </div>
@@ -72,8 +72,8 @@
 </nav>
 
 
-<div class="navbarmenu flex h-auto">
-  <nav id="navbar" class="bg-sky-500 w-1/5 hidden lg:flex">
+<div class="navbarmenu flex">
+  <menu class="bg-sky-500 hidden lg:flex fixed scroll-pl-6">
 	
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
 			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
@@ -89,18 +89,18 @@
 				</a>
 			</li>
 		</ul>
-	</nav>
+  </menu>
   <!--Slider/caroussel-->
   <div class="mx-auto px-4 w-85">
-    <div class="slide-container">
-      <div class="custom-slider fade" style="display:block">
+    <div class="slide-container relative">
+      <div class="custom-slider fade">
         <img class="slide-img" src="http://via.placeholder.com/1440x360">
       </div>
-      <div class="custom-slider fade">
+      <div class="custom-slider fade hidden">
         <img class="slide-img" src="http://via.placeholder.com/1140x360">
       </div>
-      <a class="prev " onclick="plusSlides(-1)">❮</a>
-      <a class="next " onclick="plusSlides(1)">❯</a>
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
     </div>
     
     <br>

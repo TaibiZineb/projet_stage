@@ -13,7 +13,8 @@ import { createClient } from '@supabase/supabase-js';
 import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
-import { CreationConnecteComponent } from './creation-connecte/creation-connecte.component';
+import { RouterModule, Routes } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -25,15 +26,14 @@ import { CreationConnecteComponent } from './creation-connecte/creation-connecte
     CreeationCompteComponent,
     GestionCompteComponent,
     CompteComponent,
-    InfoCompteComponent,
-    CreationConnecteComponent,
+    InfoCompteComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

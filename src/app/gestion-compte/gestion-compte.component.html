@@ -9,11 +9,11 @@
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-genre">Genre</label>
                         <div class="grid grid-cols-2 gap-4">
                             <div>                                  
-                                <input formControlName="Genre" id="radio1" name="gender" value="homme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'homme'">
+                                <input [formControl]="genreControl" id="radio1" name="gender" value="homme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'homme'">
                                 <label for="radio1" class="ml-2 text-gray-700 text-sm">Homme</label>
                             </div>
                             <div>
-                                <input formControlName="Genre" id="radio2" name="gender" value="femme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'femme'">
+                                <input [formControl]="genreControl" id="radio2" name="gender" value="femme" type="radio" class="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" [checked]="genre === 'femme'">
                                 <label for="radio2" class="ml-2 text-gray-700 text-sm">Femme</label>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">E-mail</label>
-                        <input formControlName="Email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-email" type="email" value="{{authService.authentificateUser?.Email}}">
+                        <input formControlName="Email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="email" value="{{authService.authentificateUser?.Email}}">
                     </div>
                 </div>
                 <!--mot de Passe-->
@@ -89,7 +89,7 @@
                 <div class="flex flex-wrap -mx-3 mb-2">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-pays">Pays</label>
-                        <input formControlName="pays" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-pays" type="text" value="{{authService.authentificateUser?.pays}}">
+                        <input formControlName="pays" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value="{{authService.authentificateUser?.pays}}">
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-ville">Villle</label>
@@ -107,7 +107,7 @@
                 </div>
                 <!--Bouton-->
                 <div class="flex justify-center mt-4">
-                    <button class="mr-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Confirmer</button> 
+                    <button class="mr-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Confirmer</button>
                     <a class="bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded" routerLink="/admin/compte">
                         Retour à la page Compte
                     </a>
@@ -116,6 +116,4 @@
         </div>
     </div>
 </div>
-<router-outlet>
-  
-</router-outlet>
+

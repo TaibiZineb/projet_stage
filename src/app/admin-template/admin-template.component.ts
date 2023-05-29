@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { AuthentificationService } from '../services/authentification.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 
 
 
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AdminTemplateComponent implements OnInit{
 
-  constructor(public authService : AuthentificationService, private router : Router){}
+  constructor(public authService : AuthentificationService, public router : Router){}
 
   ngOnInit(): void {
     const hamburger = document.querySelector(".hamburger");
