@@ -1,22 +1,26 @@
-<div class="containerbody mx-auto px-4 mb-6 relative">
-  <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Importer</h1>
-  <div class="file-upload w-50 selection:bg-white mx-auto p-20">
-    <button class="file-upload-btn m-0 text-white bg-blue-500 border-none p-3 rounded-md border-b-4 border-blue-500 transition-all duration-200 ease-in-out outline-none uppercase font-bold" type="button" (click)="triggerFileInput()">Ajouter Fichier</button>
-  
-    <div class="file-upload-wrap">
-      <input class="file-upload-input" type='file' (change)="readURL($event.target)" accept=".pdf,.docx" />
-      <div class="drag-text">
-        <h3 class="font-light uppercase text-blue-500 py-6">Veuillez télécharger uniquement des documents au format 'pdf', 'docx'.</h3>
+<div class="flex">
+  <div class="hidden lg:flex w-1/12"></div>
+  <div class="w-11/12 mx-auto px-4 mb-6 relative">
+    <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Importer</h1>
+    <div class="file-upload selection:bg-slate-100 mx-auto p-20">
+      <button class="file-upload-btn m-0 text-white bg-blue-500 border-none p-3 rounded-md border-b-4 border-blue-500 transition-all duration-200 ease-in-out outline-none uppercase font-bold" type="button" (click)="triggerFileInput()">Ajouter Fichier</button>
+    
+      <div class="file-upload-wrap">
+        <input class="file-upload-input" type='file' (change)="readURL($event.target)" accept=".pdf,.docx" />
+        <div class="drag-text">
+          <h3 class="font-light uppercase text-blue-500 py-6">Veuillez télécharger uniquement des documents au format 'pdf', 'docx'.</h3>
+        </div>
       </div>
-    </div>
-    <div class="file-upload-content text-center">
-      
-      <div class="title-wrap">
-        <button type="button" (click)="removeUpload()" class="remove-file">Supprimer <span class="image-title">{{ uploadedFileName }}</span></button>
+      <div class="file-upload-content text-center">
+        
+        <div class="title-wrap">
+          <button type="button" (click)="removeUpload()" class="remove-file">Supprimer <span class="image-title">{{ uploadedFileName }}</span></button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
 

@@ -1,34 +1,37 @@
 
-<div class="containerbody mx-auto px-4 mb-6 relative">
-    <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Compte</h1>
-    <section class="flex flex-wrap justify-center mx-auto">
-        <div class="w-full sm:w-6/12 lg:w-3/12 ml-3 my-4">
-            <section class="bg-cyan-300 rounded-lg shadow-md p-4 justify-center mx-auto">
-                <div class="p-4 justify-center mx-auto flex">
-                    <a class="text-stone-400 justify-center mx-auto" routerLink="/admin/Infocompte">
-                        <i class="bi bi-person-fill"></i>
-                    </a>
-                </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold text-center">Afficher Les iformations</h3>
-                </div>
-            </section>
-        </div>
-        <div class="w-full sm:w-6/12 lg:w-3/12 ml-3 my-4">
-            <section class="bg-cyan-300 rounded-lg shadow-md p-4 justify-center mx-auto">
-                <div class="p-4 justify-center mx-auto flex">
-                    <a class="text-stone-400 justify-center mx-auto" routerLink="/admin/gestion">
-                        <i class="bi bi-pencil-fill"></i>
-                    </a>
-                </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold text-center">Modification des Information</h3>
-                </div>
-            </section>
-        </div>
-    
-    
-    </section>
+<div class="flex">
+    <div class="hidden lg:flex w-1/12"></div>
+    <div class="w-11/12 mx-auto px-4 mb-6 relative">
+        <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Compte</h1>
+        <section class="flex flex-wrap justify-center mx-auto">
+            <div class="w-full sm:w-6/12 lg:w-3/12 ml-3 my-4">
+                <section class="bg-cyan-300 rounded-lg shadow-md p-4 justify-center mx-auto">
+                    <div class="p-4 justify-center mx-auto flex">
+                        <a class="text-stone-400 justify-center mx-auto" routerLink="/admin/Infocompte">
+                            <i class="bi bi-person-fill"></i>
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-center">Afficher Les iformations</h3>
+                    </div>
+                </section>
+            </div>
+            <div class="w-full sm:w-6/12 lg:w-3/12 ml-3 my-4">
+                <section class="bg-cyan-300 rounded-lg shadow-md p-4 justify-center mx-auto">
+                    <div class="p-4 justify-center mx-auto flex">
+                        <a class="text-stone-400 justify-center mx-auto" routerLink="/admin/gestion">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-center">Modification des Information</h3>
+                    </div>
+                </section>
+            </div>
+        
+        
+        </section>
+    </div>
 </div>
 <router-outlet>
   
