@@ -1,9 +1,12 @@
-<div class="bg-blue-200 mx-auto px-4 flex items-center justify-center h-screen">
-    <div class="justify-center grid grid-cols-6 gap-4">
+<div class="bg-blue-200 mx-auto px-3 flex items-center h-screen flex-wrap">
+    <div class="w-5/12 mx-auto px-3 mb-4 relative">
+        <p class="text-xl text-center font-bold text-gray-800">"La visualisation des CVs avec des mots-clés pertinents permet de filtrer rapidement les candidats qualifiés."</p>
+    </div>
+    <div class="grid grid-cols-6 gap-4">
         <div class="col-start-2 col-span-4">
             <div class="card">
                 <div class="bg-blue-300 card-header">
-                    <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Authentification </h1>
+                    <h1 class="text-4xl text-center font-bold text-gray-800 mb-2">Authentification </h1>
                 </div>
                 <div class="text-red-500" *ngIf="errorMessage">{{errorMessage}}</div>
                 <div class="card-body">
@@ -30,7 +33,5 @@
             </div>
         </div>
     </div>
-    <div>
-
-    </div>
+    
 </div>

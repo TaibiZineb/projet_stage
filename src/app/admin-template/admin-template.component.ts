@@ -10,10 +10,11 @@ import { Router, RouterModule, Routes } from '@angular/router';
   styleUrls: ['./admin-template.component.css']
 })
 export class AdminTemplateComponent implements OnInit{
-
+  currentDate!: string;
   constructor(public authService : AuthentificationService, public router : Router){}
-
+ 
   ngOnInit(): void {
+    this.getDate();
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
 
@@ -38,6 +39,14 @@ export class AdminTemplateComponent implements OnInit{
     })
   }
 
+
+
+
+
+  getDate() {
+    const today = new Date();
+    this.currentDate = today.toLocaleDateString('fr-FR');
+  }
 
 
 

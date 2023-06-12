@@ -14,6 +14,7 @@ import { GestionCompteComponent } from './gestion-compte/gestion-compte.componen
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { RouterModule, Routes } from '@angular/router';
+import { VisualisationComponent } from './visualisation/visualisation.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { RouterModule, Routes } from '@angular/router';
     CreeationCompteComponent,
     GestionCompteComponent,
     CompteComponent,
-    InfoCompteComponent
+    InfoCompteComponent,
+    VisualisationComponent
 
   ],
   imports: [
