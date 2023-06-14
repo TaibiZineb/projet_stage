@@ -1,8 +1,242 @@
 
 <div class="flex">
-    <div class="hidden lg:flex  w-1/12"></div>
-    <div class="w-11/12 mx-auto px-4 mb-6 relative">
-            <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
+  <div class="hidden lg:flex  w-1/12"></div>
+  <div class="w-11/12 mx-auto px-4 mb-6 relative">
+    <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
+      <div class="mx-auto px-4 mb-6 relative">
+        <div class="w-1/2 bg-slate-100 p-4 mt-2">
+          <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-person-fill p-2"></i>Détails du candidat</h2>
+            <form class="w-full" [formGroup]="visualisationForm">
+              <!--Nom & Prenom-->
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Nom </label>
+                    <input formControlName="nom" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-nom" type="text" placeholder="Nom">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Prenom</label>
+                  <input formControlName="prenom" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-prenom" type="text" placeholder="Prenom">
+                </div>
+              </div>
+              <!--Email & Phone-->
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Email</label>
+                  <input formControlName="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-emil" type="text" placeholder="Email">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Téléphone</label>
+                  <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
+                </div>
+              </div>
+              <!--Eôle & Années d'expérience-->
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Rôle</label>
+                  <input formControlName="role" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-role" type="text" placeholder="Rôle">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Années d'expérience</label>
+                  <input formControlName="Annéesexpérience" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="text" placeholder="Années d'expérience">
+                </div>
+              </div>
+              <h2 class="text-cyan-600 p-4 mt-2"><i class="bi-briefcase-fill p-2"></i>Historique professionnel</h2>
+              <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300">
+                <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Stage
+                </summary>
+                <div class="accordion__content px-3 py-1">
+                  <!--Nom de l'entreprise & Intitulé du poste-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Nom de l'entreprise</label>
+                        <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Intitulé du poste</label>
+                        <input formControlName="Intituléposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste">
+                      </div>
+                  </div>
+                    <!--Email & Phone-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Email</label>
+                        <input formControlName="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-emil" type="text" placeholder="Email">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Téléphone</label>
+                        <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
+                      </div>
+                  </div>
+                    <!--Date debut & fin-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date de début</label>
+                        <input formControlName="Datedébut" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datedébut" type="date" placeholder="">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Date de fin</label>
+                        <input formControlName="Datefin" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="date" placeholder="">
+                      </div>
+                    </div>
+                    <!--Description-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full  px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Description</label>
+                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
+                          </div>
+                  </div>
+                </div>
+                <div class="container-inner">
+                  <div class="tab-container">
+                    <!-- Tab 1 -->
+                    <div class="tab-accordian">
+                      <div class="titleWrapper">
+                        <h3>Ajouter nouveau</h3>
+                        <div class="collapse-icon">
+                          <div class="acc-close"></div>
+                          <div class="acc-open"></div>
+                        </div>
+                      </div>
+                      <div id="descwrapper" class="desWrapper">
+                        <p>Fraud prevention can be the bane of some businesses, but also invisible to others. High chargeback rates are a clear indicator of fraudulent attacks, but some can go undetected until you implement a system.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                
+                
+              </details> 
+              <details class="accordion p-2 mt-2 border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300">
+                <summary class="accordion__title plus cursor-pointer text-lg font-bold text-gray-700  relative">Ajouter nouveau
+                </summary>
+                <div class="accordion__content px-3 py-1">
+                  <!--Nom de l'entreprise & Intitulé du poste-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Nom de l'entreprise</label>
+                        <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Intitulé du poste</label>
+                        <input formControlName="Intituléposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste">
+                      </div>
+                  </div>
+                    <!--Email & Phone-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Email</label>
+                        <input formControlName="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-emil" type="text" placeholder="Email">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Téléphone</label>
+                        <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
+                      </div>
+                  </div>
+                    <!--Date debut & fin-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date de début</label>
+                        <input formControlName="Datedébut" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datedébut" type="date" placeholder="">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Date de fin</label>
+                        <input formControlName="Datefin" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="date" placeholder="">
+                      </div>
+                    </div>
+                    <!--Description-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full  px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Description</label>
+                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
+                    </div>
+                  </div>
+                </div>
+             
+                
+                
+                
+                
+              </details>   
+              <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-mortarboard-fill p-2"></i>Éducation</h2>
+              <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1">
+                <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">École/Faculté
+                </summary>
+                <div class="accordion__content px-3 py-1">
+                <!--Ecole-->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Ecole</label>
+                      <input formControlName="Nomecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomecole" type="text" placeholder="Nom de l'ecole ou la faculté">
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Diplôme</label>
+                      <input formControlName="Diplôme" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplôme" type="text" placeholder="Diplôme">
+                    </div>
+                  </div>
+                  <!--ville & date debut & date fin -->
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Ville</label>
+                      <input formControlName="ville" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-ville" type="text" placeholder="ville">
+                    </div>
+                    <div class="w-full md:w-1/3 px-3">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Date debut</label>
+                      <input formControlName="ecoleDateD" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-ecoleDateD" type="date">
+                    </div>
+                    <div class="w-full md:w-1/3 px-3">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Date fin</label>
+                      <input formControlName="ecoleDateF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-ecoleDateF" type="date">
+                    </div>
+                  </div>
+                </div>
+              </details>
+              <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-mortarboard-fill p-2"></i>Compétences</h2>
+             
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Meilleures compétences</label>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <input formControlName="compétence2" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-compétences" type="text" placeholder="compétence 1">
+                  </div>
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <input formControlName="compétences2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-compétences" type="text" placeholder="compétence 2">
+                  </div>
+              </div>
+              <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-mortarboard-fill p-2"></i>Langues</h2>
+              <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Langues
+                </summary>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">langue</label>
+                    <input formControlName="langue" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-Mcompétences" type="text" placeholder="langue">
+                  </div>
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
+                    <input formControlName="niveau" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-niveau" type="text" placeholder="niveau">
+                  </div>
+                </div>
+              </details>
+              <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-mortarboard-fill p-2"></i>Certificats</h2>
+              <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Certificats
+                </summary>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Certificat</label>
+                    <input formControlName="cerificat" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-certificat" type="text" placeholder="certificat">
+                  </div>
+                  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date</label>
+                    <input formControlName="date" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-date" type="date">
+                  </div>
+                </div>
+              
+              </details>
+
+      
+        </form>
             
     </div>
 </div>
