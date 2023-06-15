@@ -65,6 +65,16 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       }
     }
   }
+  ajouterBlocCopet() {
+    const blocExistant = document.querySelector(".blocksCopet") as HTMLElement;
+    if (blocExistant) {
+      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
+      const containerCopet = document.getElementById("containerCopet");
+      if (containerCopet) {
+        containerCopet.appendChild(nouveauBloc);
+      }
+    }
+  }
 }
   
 
