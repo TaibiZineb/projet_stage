@@ -4,7 +4,7 @@
   <div class="w-11/12 mx-auto px-4 mb-6 relative">
     <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
       <div class="mx-auto px-4 mb-6 relative">
-        <div class="w-1/2 bg-slate-100 p-4 mt-2">
+        <div class="w-full sm:w-1/2 bg-slate-100 p-4 mt-2">
           <h2 class="text-cyan-600 p-4 mt-2"><i class="bi bi-person-fill p-2"></i>Détails du candidat</h2>
             <form class="w-full" [formGroup]="visualisationForm">
               <!--Nom & Prenom-->
@@ -45,7 +45,7 @@
               <div id="container">
                 <div class="blocks">
                   <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300">
-                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Stage
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage
                     </summary>
                     <div class="accordion__content px-3 py-1">
                       <!--Nom de l'entreprise & Intitulé du poste-->
@@ -98,9 +98,7 @@
               <div id="containerEdu">
                 <div class="blocksEdu">
                   <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1">
-                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">
-                      École/Faculté
-                    </summary>
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">École/Faculté</summary>
                     <div class="accordion__content px-3 py-1">
                       <!-- École -->
                       <div class="flex flex-wrap -mx-3 mb-6">
@@ -165,7 +163,7 @@
               <div id="containerLang">
                 <div class="blocksLang">
                   <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
-                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Langues
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Langues
                     </summary>
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
@@ -186,7 +184,7 @@
               <div id="containerCertif">
                 <div class="blocksCertif">
                   <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
-                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative">Certificats
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Certificats
                     </summary>
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
