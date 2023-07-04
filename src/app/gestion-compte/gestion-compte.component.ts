@@ -30,18 +30,15 @@ export class GestionCompteComponent implements OnInit{
     const user = data;
     this.GestionCompteForm = this.formBuilder.group({
   
-      genreControl : new FormControl(this.authService.authentificateUser?.genre),
+     
       Email: user['Email'],
       password: user['mot-de-passe'],
-      isDirecteurChecked: user['isDirecteur'],
-      isRHChecked: user['isRH'],
+      
       Nom_Societe: user['Nom_Societe'],
       nom: user['nom'],
       prenom: user['prenom'],
       num: user['Num'],
-      Date_integration: user['Date_integration'],
-      pays: user['pays'],
-      ville: user['ville'],
+     
     });
     
 
@@ -49,25 +46,21 @@ export class GestionCompteComponent implements OnInit{
   onSubmit(): void{
     const formData = {
     
-      genre: this.GestionCompteForm.value.genre,
+      
       nom: this.GestionCompteForm.value.nom,
       prenom: this.GestionCompteForm.value.prenom,
       Nom_Socete: this.GestionCompteForm.value.Nom_Socete,
       Num: this.GestionCompteForm.value.Num,
       Email: this.GestionCompteForm.value.Email,
       password: this.GestionCompteForm.value.password,
-      isDirecteur: this.GestionCompteForm.value.isDirecteur,
-      isRH: this.GestionCompteForm.value.isRH,
-      Date_integration : this.GestionCompteForm.value.Date_integration,
-      pays: this.GestionCompteForm.value.pays,
-      ville: this.GestionCompteForm.value.ville,
+      
 
 
 
 
     };
     this.supabase
-        .from('Compte')
+        .from('User')
         .update([formData])
         .then((response: any) => {
           console.log('Enregistrement réussi :', response);

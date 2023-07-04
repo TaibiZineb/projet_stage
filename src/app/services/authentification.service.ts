@@ -25,9 +25,9 @@ export class AuthentificationService {
 
   public async login(Email: string, password: string): Promise<Observable<AppUser>> {
     const { data, error } = await this.supabase
-      .from('Compte')
+      .from('User')
       .select()
-      .eq('Email', Email)
+      .eq('email', Email)
       .single();
 
     if (error) {
@@ -40,24 +40,20 @@ export class AuthentificationService {
     }
 
     const user = data;
-    if (user['mot-de-passe'] !== password) {
+    if (user['Mot_Passe'] !== password) {
       return throwError(() => new Error('Mauvaises informations d\'identification'));
     }
 
     const appUser: AppUser = {
       userId: user['userId'],
-      Email: user['Email'],
-      password: user['mot-de-passe'],
-      isDirecteurChecked: user['isDirecteur'],
-      isRHChecked: user['isRH'],
+      Email: user['email'],
+      password: user['Mot_Passe'],
+      
       Nom_Societe: user['Nom_Societe'],
-      nom: user['nom'],
-      prenom: user['prenom'],
+      nom: user['Nom'],
+      prenom: user['Prenom'],
       num: user['Num'],
-      Date_integration: user['Date_integration'],
-      pays: user['pays'],
-      ville: user['ville'],
-      genre: user['Genre']
+     
     };
 
     return of(appUser);
@@ -65,7 +61,7 @@ export class AuthentificationService {
 
   public authenticateUser(AppUser : AppUser) :Observable<boolean>{
     this.authentificateUser = AppUser;
-    localStorage.setItem("authUser", JSON.stringify({Email: AppUser.Email, isDirecteurCheked : AppUser.isDirecteurChecked, isRHCheked : AppUser.isRHChecked, Nom_Societe :AppUser.Nom_Societe, jwt:"JWT_TOKEN"}));
+    localStorage.setItem("authUser", JSON.stringify({Email: AppUser.Email,  Nom_Societe :AppUser.Nom_Societe, jwt:"JWT_TOKEN"}));
     return of(true);
   }
  
