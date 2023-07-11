@@ -17,6 +17,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     CompteComponent,
     InfoCompteComponent,
     VisualisationComponent
+
 
   ],
   imports: [

@@ -1,10 +1,11 @@
 import { Component,OnInit, AfterViewInit, OnDestroy, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthentificationService } from '../services/authentification.service';
+
 import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-declare const gapi: any;
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ declare const gapi: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
+
+ 
   userFromGroup!: FormGroup;
   errorMessage : any;
   
@@ -20,8 +22,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
               private authService : AuthentificationService,
-              private router : Router,
-              private ngZone: NgZone
+              private router : Router
+             
               ){}
 
   ngOnInit(): void {
@@ -52,6 +54,9 @@ export class LoginComponent implements OnInit {
       }
     });
   });
+  }
+  signIn():void{
+    
   }
   
   
