@@ -1,4 +1,4 @@
-<div class="bg-blue-200 mx-auto px-3 flex items-center h-screen flex-wrap">
+<div class="bg-blue-200 mx-auto px-3 flex items-center flex-wrap  min-h-screen justify-center">
     <div class="w-5/12 mx-auto px-3 mb-4 relative">
         <p class="text-xl text-center font-bold text-gray-800">"La visualisation des CVs avec des mots-clés pertinents permet de filtrer rapidement les candidats qualifiés."</p>
     </div>
@@ -10,6 +10,7 @@
                 </div>
                 <div class="text-red-500" *ngIf="errorMessage">{{errorMessage}}</div>
                 <div class="card-body">
+                    <p class="">Connectez-vous et accédez à votre Tableau de bord</p>
                     <form [formGroup]="userFromGroup" (ngSubmit)="handleLogin()">
                         <div class="mb-2">
                             <label class="text-sm font-medium text-gray-700">Email</label>
@@ -28,8 +29,22 @@
                             </a>
                         </div>
                     </form>
+                    <div class="flex flex-wrap my-4 justify-center  bg-blue-500 hover:bg-blue-700 rounded-md shadow-md active:bg-blue-600">
+                        <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
+                            <div class="google-icon-wrapper  bg-white">
+                                <img class="google-icon " src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                            </div>
+                            <div class="py-2 px-5 rounded my-2 ml-1">
+                                <p class="btn-text text-white text-sm"><b>Connectez-vous Avec Google</b></p>
+                            </div>
+                            
+                            <div id="my-signin2"></div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
