@@ -1,7 +1,7 @@
 import { Component,OnInit, AfterViewInit, OnDestroy, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthentificationService } from '../services/authentification.service';
-
+import { SupabaseClientService } from '../services/supabase-client.service';
 import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -14,7 +14,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 })
 export class LoginComponent implements OnInit {
 
- 
+  supabase!: SupabaseClient;
   userFromGroup!: FormGroup;
   errorMessage : any;
   
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
               private authService : AuthentificationService,
-              private router : Router
+              private router : Router,
+              private supabaseClient : SupabaseClientService
              
               ){}
 
@@ -55,10 +56,16 @@ export class LoginComponent implements OnInit {
     });
   });
   }
-  signIn():void{
-    
+  signIn(){
+    const signInWithOAuth = async () => {
+      const { data, error } = await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+      redirectTo: "/login",
+      },
+      });
+      };
+      
+      signInWithOAuth();
   }
-  
-  
-
 }
