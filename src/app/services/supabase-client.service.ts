@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient,SupabaseClientOptions } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +12,16 @@ export class SupabaseClientService {
  
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
   }
-  signIn():void{
-    this.supabase.auth
-    .signInWithOAuth({
-      provider: "google",
+  signIn(){
+    const signInWithOAuth = async () => {
+      const { data, error } = await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
       options: {
-        redirectTo: "/login",
+      redirectTo: "/",
       },
-    })
-    .then((res:any) => {
-      window.location.href = res.url;
-    })
-    .catch((err) => console.log(err));
+      });
+      };
+      
+      signInWithOAuth();
   }
 }

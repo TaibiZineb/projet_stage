@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, 
               private authService : AuthentificationService,
               private router : Router,
-              private supabaseClient : SupabaseClientService
+              private supabaseAuth: SupabaseClientService
              
               ){}
 
@@ -57,15 +57,7 @@ export class LoginComponent implements OnInit {
   });
   }
   signIn(){
-    const signInWithOAuth = async () => {
-      const { data, error } = await this.supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-      redirectTo: "/login",
-      },
-      });
-      };
-      
-      signInWithOAuth();
+    this.supabaseAuth.signIn();
   }
+  
 }
