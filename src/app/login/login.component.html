@@ -8,22 +8,18 @@
                 <div class="bg-blue-300 card-header">
                     <h1 class="text-4xl text-center font-bold text-gray-800 mb-2">Authentification </h1>
                 </div>
-                <div class="text-red-500" *ngIf="errorMessage">{{errorMessage}}</div>
                 <div class="card-body">
                     <p class="">Connectez-vous et accédez à votre Tableau de bord</p>
-                   
-                        <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
-                            <div class="flex flex-wrap bg-blue-200 hover:bg-blue-500 rounded my-2 ml-1">
-                                <div class="py-2 px-4 my-2">
+                    <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
+                        <div class="flex flex-wrap bg-blue-200 hover:bg-blue-500 rounded my-2 ml-1">
+                            <div class="py-2 px-4 my-2">
                                     <svg width="1rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_49046_15711)"><path d="M19.5338 10.1871C19.5338 9.3677 19.4673 8.76976 19.3234 8.14969H9.9668V11.848H15.4589C15.3482 12.7671 14.7503 14.1512 13.4215 15.0812L13.4029 15.2051L16.3613 17.4969L16.5663 17.5173C18.4486 15.7789 19.5338 13.221 19.5338 10.1871Z" fill="#4285F4"></path><path d="M9.96671 19.9314C12.6574 19.9314 14.9163 19.0455 16.5662 17.5175L13.4215 15.0814C12.5799 15.6682 11.4505 16.0779 9.96671 16.0779C7.33134 16.0779 5.09461 14.3395 4.29727 11.9366L4.1804 11.9466L1.10419 14.3273L1.06396 14.4391C2.70276 17.6946 6.06897 19.9314 9.96671 19.9314Z" fill="#34A853"></path><path d="M4.29724 11.9366C4.08685 11.3166 3.9651 10.6521 3.9651 9.96565C3.9651 9.27908 4.08685 8.61473 4.28617 7.99466L4.28059 7.8626L1.16586 5.44366L1.06395 5.49214C0.388534 6.84305 0.000976562 8.36008 0.000976562 9.96565C0.000976562 11.5712 0.388534 13.0882 1.06395 14.4391L4.29724 11.9366Z" fill="#FBBC05"></path><path d="M9.96664 3.85339C11.8379 3.85339 13.1002 4.66171 13.82 5.33721L16.6325 2.5911C14.9052 0.985527 12.6573 3.05176e-05 9.96664 3.05176e-05C6.06893 3.05176e-05 2.70274 2.23675 1.06396 5.49217L4.28618 7.99469C5.09458 5.59186 7.33129 3.85339 9.96664 3.85339Z" fill="#EB4335"></path></g><defs><clipPath id="clip0_49046_15711"><rect width="19.544" height="20" fill="white"></rect></clipPath></defs></svg>
-                                </div>
-                                <button class=" text-white font-bold py-2 px-4 rounded my-2 text-sm" type="submit" (click)="signIn()">Connectez Avec Google</button>
                             </div>
+                            <button class=" text-white font-bold py-2 px-4 rounded my-2 text-sm" type="submit" (click)="signIn()">Connectez Avec Google</button>
                         </div>
-                   
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

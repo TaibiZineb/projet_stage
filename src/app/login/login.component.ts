@@ -1,11 +1,7 @@
-import { Component,OnInit, AfterViewInit, OnDestroy, ElementRef, NgZone, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Component,OnInit } from '@angular/core';
 import { SupabaseClientService } from '../services/supabase-client.service';
-import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-login',
@@ -15,23 +11,14 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 export class LoginComponent implements OnInit {
 
   supabase!: SupabaseClient;
-  userFromGroup!: FormGroup;
-  errorMessage : any;
+
   
-
-
-  constructor(private fb: FormBuilder, 
-              
+  constructor( 
               private router : Router,
               private supabaseAuth: SupabaseClientService
-             
               ){}
 
-  ngOnInit(): void {
-    
-   
-   
-  }
+  ngOnInit(): void { }
  
 
 
