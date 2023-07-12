@@ -6,11 +6,11 @@ import { createClient, SupabaseClient,SupabaseClientOptions } from '@supabase/su
 })
 export class SupabaseClientService {
   supabase!: SupabaseClient;
-  supabaseUrl!: 'https://mljtanxsvdnervhrjnbs.supabase.co';
+  supabaseUrl!: '';
   supabaseKey!: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
   constructor() { 
  
-    this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    this.supabase = createClient('https://mljtanxsvdnervhrjnbs.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY');
   }
   signIn(){
     const signInWithOAuth = async () => {
@@ -21,7 +21,6 @@ export class SupabaseClientService {
       },
       });
       };
-      
       signInWithOAuth();
   }
 }

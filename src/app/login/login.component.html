@@ -12,36 +12,12 @@
                 <div class="card-body">
                     <p class="">Connectez-vous et accédez à votre Tableau de bord</p>
                     <form [formGroup]="userFromGroup" (ngSubmit)="handleLogin()">
-                        <div class="mb-2">
-                            <label class="text-sm font-medium text-gray-700">Email</label>
-                            <input type="text" formControlName="Email" class="mt-1 focus:ring-blue-500 focus:border-blue-300  w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
-                        </div>
-                        <div class="mb-2">
-                            <label class=" text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" formControlName="password" class="mt-1 focus:ring-blue-500 focus:border-blue-300 block w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
-                        </div>
-                        <div class="flex flex-wrap my-4 justify-center">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">
-                                Login
-                            </button>
-                            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 ml-1" aria-current="page" routerLink="/creationcompte">
-                                Créer Compte
-                            </a>
+                        <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
+                            <div class="bg-blue-500 hover:bg-blue-700rounded my-2 ml-1">
+                                <button class=" text-white font-bold py-2 px-4 rounded my-2 text-sm" type="submit" (click)="signIn()">Connectez Avec Google</button>
+                            </div>
                         </div>
                     </form>
-                    <div class="flex flex-wrap my-4 justify-center  bg-blue-500 hover:bg-blue-700 rounded-md shadow-md active:bg-blue-600">
-                        <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
-                            <div class="google-icon-wrapper  bg-white">
-                                <img class="google-icon " src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-                            </div>
-                            <div class="py-2 px-5 rounded my-2 ml-1">
-                                <button class="btn-text text-white text-sm" type="submit" (click)="signIn()">Connectez Avec Google</button>
-                            </div>
-                            
-                            
-                            
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
