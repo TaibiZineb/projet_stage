@@ -1,23 +1,30 @@
-import { Component,OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component,OnInit, AfterViewInit, OnDestroy, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthentificationService } from '../services/authentification.service';
+import { SupabaseClientService } from '../services/supabase-client.service';
 import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
-  
+export class LoginComponent implements OnInit {
+
+  supabase!: SupabaseClient;
   userFromGroup!: FormGroup;
   errorMessage : any;
+  
+
 
   constructor(private fb: FormBuilder, 
               private authService : AuthentificationService,
-              private router : Router
+              private router : Router,
+              private supabaseAuth: SupabaseClientService
+             
               ){}
 
   ngOnInit(): void {
@@ -26,7 +33,11 @@ export class LoginComponent implements OnInit{
       password : this.fb.control("")
 
     })
+   
+   
   }
+ 
+
   handleLogin(): void{
     let Email = this.userFromGroup.value.Email;
     let password = this.userFromGroup.value.password;
@@ -44,5 +55,9 @@ export class LoginComponent implements OnInit{
       }
     });
   });
-}
+  }
+  signIn(){
+    this.supabaseAuth.signIn();
+  }
+  
 }

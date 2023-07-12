@@ -24,9 +24,9 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   ngOnInit(): void {
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
-      nom: ['',Validators.required],
-      prenom: ['',Validators.required],
-      email: ['',Validators.email],
+      nomCandidat: ['',Validators.required],
+      prenomCandidat: ['',Validators.required],
+      emailCandidat: ['',Validators.email],
       telephone: ['',Validators.pattern(telephonePattern)],
       role: ['',Validators.required],
       Annéesexpérience: [''],
@@ -37,7 +37,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       description:[''],
       Nom_ecole:[''],
       Diplome:[''],
-      Ville:[''],
+      VilleE:[''],
       DatedebutF:[''],
       datefinF:[''],
       titre_comp:[''],
@@ -111,9 +111,9 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
         .from('candidat')
         .insert([
           {
-            nom: formData.nom,
-            prenom: formData.prenom,
-            email: formData.email,
+            nomCandidat: formData.nomCandidat,
+            prenomCandidat: formData.prenomCandidat,
+            emailCandidat: formData.emailCandidat,
             telephone: formData.telephone,
             role: formData.role,
             Annéesexpérience: formData.Anneesexperience
@@ -155,7 +155,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
             Nom_ecole: formData.Nom_ecole,
             DatedebutF: formData.DatedebutF,
             Diplome: formData.Diplome,
-            Ville: formData.Ville,
+            VilleE: formData.VilleE,
             datefinF: formData.datefinF
           }
         ])

@@ -1,60 +1,39 @@
 <div class="flex">
   <div class="hidden lg:flex w-1/12 px-4 py-3"></div>
   <div class="mx-auto px-4 mb-6 relative overflow-x-auto" >
-      <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Information sur le compte</h1>
-      <table class="bg-cyan-300 w-full text-sm text-left text-gray-500">
-          <thead class="bg-blue-700 text-xs text-sky-100 uppercase">
-            <tr>
-              <th class="px-6 py-3">Genre</th>
-              <th class="px-6 py-3">Nom</th>
-              <th class="px-6 py-3">Prenom</th>
-              <th class="px-6 py-3">Nom de la société</th>
-              <th class="px-6 py-3">Numéro de téléphone</th>
-              <th class="px-6 py-3">E-mail</th>
-              <th class="px-6 py-3">Mot de Passe</th>
-              <th class="px-6 py-3">Fonction</th>
-              <th class="px-6 py-3">Date d'integration</th>
-              <th class="px-6 py-3">Pays</th>
-              <th class="px-6 py-3">Ville</th>
-              <th class="px-6 py-3">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="text-xs text-gray-700 uppercase bg-sky-200 ">
-              <td class="px-6 py-4">{{authService.authentificateUser?.genre}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.nom}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.prenom}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.Nom_Societe}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.num}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.Email}}</td>
-              <td class="px-6 py-3">**********</td>
-              <td class="px-6 py-3"> 
-                <ng-container *ngIf="authService.authentificateUser">
-                  <span *ngIf="authService.authentificateUser.isDirecteurChecked">Directeur</span>
-                  <span *ngIf="authService.authentificateUser.isRHChecked">RH</span>
-                </ng-container>
-              </td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.Date_integration | date:'yyyy-MM-dd'}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.pays}}</td>
-              <td class="px-6 py-3">{{authService.authentificateUser?.ville}}</td>
-              <td class="px-6 py-3">
-                  <a class="justify-center mx-auto bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" routerLink="/admin/gestion">
-                      <i class="bi bi-pencil-fill"></i>
-                  </a>
-              </td>
-              
-            </tr>
-          
-          </tbody>
-      </table>
-      <div class="flex justify-center mt-4">
-          <a class="justify-center mx-auto bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded" routerLink="/admin/compte">
-              Retour à la page Compte
-          </a>
-      </div>
+    <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Information sur le compte</h1>
+    <table class=" w-full text-sm text-left text-gray-500">
+      <thead class="bg-blue-700 text-xs text-sky-100 ">
+        <tr class="uppercase">
+          <th class="px-6 py-3">Nom</th>
+          <th class="px-6 py-3">Prenom</th>
+          <th class="px-6 py-3">Nom de la société</th>
+          <th class="px-6 py-3">Numéro de téléphone</th>
+          <th class="px-6 py-3">E-mail</th>
+          <th class="px-6 py-3">Mot de Passe</th>
+          <th class="px-6 py-3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-xs text-gray-700 bg-sky-200 ">
+          <td class="px-6 py-3">{{authService.authentificateUser?.nom}}</td>
+          <td class="px-6 py-3">{{authService.authentificateUser?.prenom}}</td>
+          <td class="px-6 py-3">{{authService.authentificateUser?.Nom_Societe}}</td>
+          <td class="px-6 py-3">{{authService.authentificateUser?.num}}</td>
+          <td class="px-6 py-3">{{authService.authentificateUser?.Email}}</td>
+          <td class="px-6 py-3">**********</td>
+          <td class="px-6 py-3">
+            <a class="justify-center mx-auto bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" routerLink="/admin/gestion"> <i class="bi bi-pencil-fill"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex justify-center mt-4">
+      <a class="justify-center mx-auto bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded" routerLink="/admin/compte">
+        Retour à la page Compte</a>
+    </div>
   </div>
 </div>
-
 <router-outlet>
   
 </router-outlet>

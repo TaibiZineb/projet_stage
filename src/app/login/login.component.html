@@ -1,4 +1,4 @@
-<div class="bg-blue-200 mx-auto px-3 flex items-center h-screen flex-wrap">
+<div class="bg-blue-200 mx-auto px-3 flex items-center flex-wrap  min-h-screen justify-center">
     <div class="w-5/12 mx-auto px-3 mb-4 relative">
         <p class="text-xl text-center font-bold text-gray-800">"La visualisation des CVs avec des mots-clés pertinents permet de filtrer rapidement les candidats qualifiés."</p>
     </div>
@@ -10,28 +10,17 @@
                 </div>
                 <div class="text-red-500" *ngIf="errorMessage">{{errorMessage}}</div>
                 <div class="card-body">
+                    <p class="">Connectez-vous et accédez à votre Tableau de bord</p>
                     <form [formGroup]="userFromGroup" (ngSubmit)="handleLogin()">
-                        <div class="mb-2">
-                            <label class="text-sm font-medium text-gray-700">Email</label>
-                            <input type="text" formControlName="Email" class="mt-1 focus:ring-blue-500 focus:border-blue-300  w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
+                        <div class="google-btn w-260px sm:w-auto md:w-64 lg:w-80 xl:w-96 rounded">
+                            <div class="bg-blue-500 hover:bg-blue-700rounded my-2 ml-1">
+                                <button class=" text-white font-bold py-2 px-4 rounded my-2 text-sm" type="submit" (click)="signIn()">Connectez Avec Google</button>
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <label class=" text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" formControlName="password" class="mt-1 focus:ring-blue-500 focus:border-blue-300 block w-full shadow-sm sm:text-sm border-gray-100 rounded-md">
-                        </div>
-                        <div class="flex flex-wrap my-4 justify-center">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">
-                                Login
-                            </button>
-                            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 ml-1" aria-current="page" routerLink="/creationcompte">
-                                Créer Compte
-                            </a>
-                        </div>
-                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>

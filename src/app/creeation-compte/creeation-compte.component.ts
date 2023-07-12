@@ -24,36 +24,29 @@ export class CreeationCompteComponent implements OnInit{
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     this.creationCompteForm = this.formBuilder.group({
-      Genre: [''],
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
+     
+      Nom: ['', Validators.required],
+      Prenom: ['', Validators.required],
       Nom_Societe: ['',Validators.required],
       Num: ['',Validators.pattern(telephonePattern)],
-      Email: ['',Validators.email],
-      'mot-de-passe': ['',Validators.pattern(passwordPattern)],
-      isDirecteur: [false, Validators.requiredTrue],
-      isRH: [''],
-      Date_integration: [''],
-      pays: [''],
-      ville: ['',Validators.required]
+      email: ['',Validators.email],
+      'Mot_Passe': ['',Validators.pattern(passwordPattern)],
+      
     });
   }
+  /*
   getCurrentDate(): string {
     const today = new Date();
     const year = today.getFullYear();
     const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
     const day = today.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
-  }
+  }*/
   onSubmit(): void {
     if (this.creationCompteForm.valid) {
       const formData = this.creationCompteForm.value;
-      formData.isDirecteur = this.isDirecteurChecked;
-      formData.isRH = this.isRHChecked;
-
-
       this.supabase
-        .from('Compte')
+        .from('User')
         .insert([formData])
         .then((response: any) => {
           console.log('Enregistrement réussi :', response);
