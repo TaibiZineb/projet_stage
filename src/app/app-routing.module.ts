@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { AuthentificationGuard } from './guards/authentification.guard';
+import { GoogleauthentificationGuard } from './guards/googleauthentification.guard';
 import { HomeComponent } from './home/home.component';
 import { ImporterComponent } from './importer/importer.component';
 import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
