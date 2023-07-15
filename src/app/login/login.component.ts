@@ -1,11 +1,7 @@
-import { Component,OnInit, AfterViewInit, OnDestroy, ElementRef, NgZone, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthentificationService } from '../services/authentification.service';
+import { Component,OnInit } from '@angular/core';
 import { SupabaseClientService } from '../services/supabase-client.service';
-import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-login',
@@ -15,47 +11,17 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 export class LoginComponent implements OnInit {
 
   supabase!: SupabaseClient;
-  userFromGroup!: FormGroup;
-  errorMessage : any;
+
   
-
-
-  constructor(private fb: FormBuilder, 
-              private authService : AuthentificationService,
+  constructor( 
               private router : Router,
               private supabaseAuth: SupabaseClientService
-             
               ){}
 
-  ngOnInit(): void {
-    this.userFromGroup = this.fb.group({
-      Email : this.fb.control(""),
-      password : this.fb.control("")
-
-    })
-   
-   
-  }
+  ngOnInit(): void { }
  
 
-  handleLogin(): void{
-    let Email = this.userFromGroup.value.Email;
-    let password = this.userFromGroup.value.password;
-    this.authService.login(Email, password).then((observable: Observable<AppUser>) => {
-      observable.subscribe({
-        next: (appUser: AppUser) => {
-          this.authService.authenticateUser(appUser).subscribe({
-            next: (data: boolean) => {
-              this.router.navigateByUrl('admin/home');
-            }
-          });
-        },
-      error : (err: any) =>{
-        this.errorMessage = err;
-      }
-    });
-  });
-  }
+
   signIn(){
     this.supabaseAuth.signIn();
   }
