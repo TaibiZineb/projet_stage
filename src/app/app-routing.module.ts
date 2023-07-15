@@ -7,7 +7,7 @@ import { AuthentificationGuard } from './guards/authentification.guard';
 import { HomeComponent } from './home/home.component';
 import { ImporterComponent } from './importer/importer.component';
 import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
-import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
+
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
     children: [
       { path: 'importer', component: ImporterComponent },
       { path: 'home', component: HomeComponent },
-      { path: 'gestion', component: GestionCompteComponent },
+
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'visualisation', component: VisualisationComponent },

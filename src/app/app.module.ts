@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImporterComponent } from './importer/importer.component';
 import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
 import { createClient } from '@supabase/supabase-js';
-import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
+
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -27,7 +27,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     AdminTemplateComponent,
     HomeComponent,
     CreeationCompteComponent,
-    GestionCompteComponent,
+
     CompteComponent,
     InfoCompteComponent,
     VisualisationComponent
