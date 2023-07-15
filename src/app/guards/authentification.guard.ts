@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { Session } from '@supabase/gotrue-js';
 
@@ -25,4 +26,6 @@ export class AuthentificationGuard implements CanActivate {
 
   }
 
+
 }
+
