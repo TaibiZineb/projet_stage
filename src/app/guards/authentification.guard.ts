@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthentificationService } from '../services/authentification.service';
+import { SupabaseClientService } from '../services/supabase-client.service';
+import { Session } from '@supabase/gotrue-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationGuard implements CanActivate {
-  constructor(private authService : AuthentificationService, private router: Router){
+  constructor(private authService: SupabaseClientService, private router: Router) {
 
   }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let authenticated = this.authService.isAuthenticated();
-    //let  authenticated = sessionStorage.getItem('authenticated');
-    if (authenticated == false){
-      this.router.navigateByUrl("/login");
-      return false;
-    }
-    else{
-      return true;
-    }
-    
+    return this.authService.getSession().then((session: Session | null) => {
+      if (!session) {
+        this.router.navigateByUrl("/login");
+        return false;
+      }
+      else
+        return true
+    });
+
   }
-  
+
 }
