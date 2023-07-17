@@ -9,13 +9,13 @@ import { Session } from '@supabase/gotrue-js';
   providedIn: 'root'
 })
 export class AuthentificationGuard implements CanActivate {
-  constructor(private authService: SupabaseClientService, private router: Router) {
+  constructor(private supabaseAuth: SupabaseClientService, private router: Router) {
 
   }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.getSession().then((session: Session | null) => {
+    return this.supabaseAuth.getSession().then((session: Session | null) => {
       if (!session) {
         this.router.navigateByUrl("/login");
         return false;

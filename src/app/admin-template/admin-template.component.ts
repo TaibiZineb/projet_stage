@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { AuthentificationService } from '../services/authentification.service';
+import { SupabaseClientService } from '../services/supabase-client.service';
 import { Router, RouterModule, Routes } from '@angular/router';
-
+import { Session } from '@supabase/gotrue-js';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { Router, RouterModule, Routes } from '@angular/router';
 })
 export class AdminTemplateComponent implements OnInit{
   currentDate!: string;
-  constructor(public authService : AuthentificationService, public router : Router){}
+  constructor(public supabaseAuth : SupabaseClientService, public router : Router){}
  
   ngOnInit(): void {
     this.getDate();
@@ -28,16 +28,11 @@ export class AdminTemplateComponent implements OnInit{
       navMenu?.classList.remove("active");
     }));
   }
-
+  handleLogout(): void {
+    this.supabaseAuth.handleLogout();
+  }
   
 
-  handleLogout(){
-    this.authService.logout().subscribe({
-      next :(data:boolean)=>{
-        this.router.navigateByUrl("/login");
-      }
-    })
-  }
 
 
 

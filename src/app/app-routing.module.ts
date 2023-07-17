@@ -3,11 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { AuthentificationGuard } from './guards/authentification.guard';
-
 import { HomeComponent } from './home/home.component';
 import { ImporterComponent } from './importer/importer.component';
-import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
-
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
@@ -19,7 +16,6 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'creationcompte', component: CreeationCompteComponent },
   { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
   { path: 'admin', component: AdminTemplateComponent, canActivate: [AuthentificationGuard],
     children: [
@@ -32,7 +28,7 @@ const routes: Routes = [
       
     ]
   },
-  { path: '**', redirectTo: 'admin/home' }, 
+  { path: '**', redirectTo: 'login' }, 
 ];
 
 
