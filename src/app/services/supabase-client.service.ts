@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { createClient, Session, SupabaseClient, SupabaseClientOptions } from '@supabase/supabase-js';
+import { createClient, SupabaseClient, SupabaseClientOptions } from '@supabase/supabase-js';
+import { Session } from '@supabase/gotrue-js';
+import {  Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupabaseClientService {
   supabase!: SupabaseClient;
+  supabaseAuth: any;
 
-  constructor() {
+  constructor(private router: Router) {
 
     this.supabase = createClient('https://mljtanxsvdnervhrjnbs.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY');
   }
@@ -16,7 +19,7 @@ export class SupabaseClientService {
       const { data, error } = await this.supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: "/",
+          redirectTo: "/", 
         },
       });
     };
@@ -37,6 +40,15 @@ export class SupabaseClientService {
         return null;
       });
 
+  }
+  handleLogout(): void {
+    this.supabaseAuth.supabase.auth.signOut()
+      .then(() => {
+        this.router.navigateByUrl('/login');
+      })
+      .catch((error: any) => {
+        console.error('Erreur lors de la déconnexion:', error);
+      });
   }
   
 
