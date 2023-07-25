@@ -14,10 +14,6 @@ import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { RouterModule, Routes } from '@angular/router';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

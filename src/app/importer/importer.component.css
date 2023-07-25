@@ -1,7 +1,6 @@
 
 .file-upload-btn:hover {
-  background: #0078a5;
-  color: #ffffff;
+
   transition: all .2s ease;
   cursor: pointer;
 }
@@ -22,14 +21,14 @@
 
 .file-upload-wrap {
   margin-top: 20px;
-  border: 4px dashed #0078a5;
+  border: 4px dashed #87CEEB;
   position: relative;
 }
 
 .file-dropping,
 .file-upload-wrap:hover {
-  background-color: #8bb1c7;
-  border: 4px dashed #ffffff;
+
+  border: 4px dashed #87CEEB;
 }
 
 .title-wrap {
@@ -40,11 +39,11 @@
   width: 200px;
   margin: 0;
   color: #fff;
-  background: #0078a5;
+  background: #87CEEB;
   border: none;
   padding: 10px;
   border-radius: 4px;
-  border-bottom: 4px solid #0078a5;
+  border-bottom: 4px solid #87CEEB;
   transition: all .2s ease;
   outline: none;
   text-transform: uppercase;
@@ -52,8 +51,7 @@
 }
 
 .remove-file:hover {
-  background: #0078a5;
-  color: #ffffff;
+
   transition: all .2s ease;
   cursor: pointer;
 }

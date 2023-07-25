@@ -1,7 +1,8 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { Session } from '@supabase/gotrue-js';
+import { AppUser } from '../model/user.model';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -11,13 +12,22 @@ import { Session } from '@supabase/gotrue-js';
 })
 export class AdminTemplateComponent implements OnInit{
   currentDate!: string;
+  users : AppUser[] = [];
+  authentificateUser : AppUser | undefined;
   constructor(public supabaseAuth : SupabaseClientService, public router : Router){}
  
   ngOnInit(): void {
     this.getDate();
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
+    this.supabaseAuth.getUsersFromDatabase().subscribe(
+      (users: AppUser[]) => {
+        this.users = users;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des utilisateurs:', error);
+      }
+    );
     hamburger?.addEventListener("click", () => {
       hamburger.classList.toggle("active");
       navMenu?.classList.toggle("active");
@@ -27,6 +37,7 @@ export class AdminTemplateComponent implements OnInit{
       hamburger?.classList.remove("active");
       navMenu?.classList.remove("active");
     }));
+    
   }
   handleLogout(): void {
     this.supabaseAuth.handleLogout();
