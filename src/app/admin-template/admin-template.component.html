@@ -26,6 +26,9 @@
                 <a aria-current="page" routerLink="/admin/home" class="{{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Home</a>
               </li>
               <li>
+                <a aria-current="page" routerLink="/admin/dashboard" class="{{router.isActive('/admin/dashboard',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Tableau de bord</a>
+              </li>
+              <li>
                 <a aria-current="page" routerLink="/admin/importer" class="{{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Importer</a>
               </li>
               <li>
@@ -42,6 +45,9 @@
       <ul class="nav-menu bg-sky-300">
         <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/dashboard">Tableau de bord</a>
         </li>
         <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/importer">Importer</a>
@@ -66,6 +72,10 @@
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
 			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
 				<a class="{{router.isActive('/admin/home',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
+				</a>
+			</li>
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord
 				</a>
 			</li>
 			<li class="border-t list-none relative w-full py-2">

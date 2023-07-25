@@ -8,6 +8,9 @@ import { ImporterComponent } from './importer/importer.component';
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+
 
 
 
@@ -21,7 +24,7 @@ const routes: Routes = [
     children: [
       { path: 'importer', component: ImporterComponent },
       { path: 'home', component: HomeComponent },
-
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'visualisation', component: VisualisationComponent },
