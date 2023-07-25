@@ -9,17 +9,11 @@
        
         <a class="text-sm  text-cyan-600 hover:text-slate-300 border-collapse" aria-current="page" routerLink="/admin/compte">
           <svg width="17px" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9.5" cy="9.19141" r="8" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M4.16675 15.1675C4.27341 13.555 6.30762 11.1914 9.50385 11.1914C12.622 11.1914 14.7286 13.441 14.8296 15.0702" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 10.1914C11.1569 10.1914 12.5 8.84826 12.5 7.19141C12.5 5.53455 11.1569 4.19141 9.5 4.19141C7.84315 4.19141 6.5 5.53455 6.5 7.19141C6.5 8.84826 7.84315 10.1914 9.5 10.1914Z" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <p>Profil</p>
+          <!--<p class="text-sm  text-cyan-600 hover:text-slate-300"> {{ authentificateUser?.email }}</p>-->
+          <p class="text-sm  text-cyan-600 hover:text-slate-300">{{ authentificateUser?.prenom }} {{ authentificateUser?.nom }}</p>
         </a>
-        {{supabaseAuth.authentificateUser?.nom}}test
-        <div *ngFor="let user of users">
-          <p>Email: {{ user.email }}</p>
-          <p>Prénom: {{ user.prenom }}</p>
-          <p>Nom: {{ user.nom }}</p>
-          test2
-        </div>
         <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:text-slate-300 border-separate" routerLink="login" (click)="handleLogout()">
-          <svg color="#72849A" width="17px" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_49077_15969)"><path d="M4.65625 8.31982H15.5665" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.9297 4.97607L15.5665 8.32098L11.9297 11.6659" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.0377 13.5256V14.7531C11.0377 15.1794 10.6888 15.525 10.2584 15.525H1.94581C1.51541 15.525 1.1665 15.1794 1.1665 14.7531V1.63079C1.1665 1.20448 1.51541 0.858887 1.94581 0.858887H10.2584C10.6888 0.858887 11.0377 1.20448 11.0377 1.63079V2.85889" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_49077_15969"><rect width="16" height="16" fill="white" transform="translate(0.5 0.192261)"></rect></clipPath></defs></svg><p>Se déconnecter</p>
+          <svg color="#72849A" width="17px" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_49077_15969)"><path d="M4.65625 8.31982H15.5665" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.9297 4.97607L15.5665 8.32098L11.9297 11.6659" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.0377 13.5256V14.7531C11.0377 15.1794 10.6888 15.525 10.2584 15.525H1.94581C1.51541 15.525 1.1665 15.1794 1.1665 14.7531V1.63079C1.1665 1.20448 1.51541 0.858887 1.94581 0.858887H10.2584C10.6888 0.858887 11.0377 1.20448 11.0377 1.63079V2.85889" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_49077_15969"><rect width="16" height="16" fill="white" transform="translate(0.5 0.192261)"></rect></clipPath></defs></svg>
         </a>
           
       </div>
