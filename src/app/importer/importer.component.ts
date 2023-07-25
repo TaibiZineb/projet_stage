@@ -7,7 +7,7 @@ import { Component,OnInit } from '@angular/core';
 export class ImporterComponent implements OnInit {
   
   uploadedFileName!: string;
-  imageSrc!: string;
+  isFileUploaded: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}
@@ -23,18 +23,16 @@ export class ImporterComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        const imageUploadWrap = document.querySelector('.image-upload-wrap');
+      
         const fileUploadContent = document.querySelector('.file-upload-content');
 
-        if (imageUploadWrap) {
-          imageUploadWrap.classList.add('hidden');
-        }
+       
 
         if (fileUploadContent) {
           fileUploadContent.classList.remove('hidden');
         }
 
-        this.imageSrc = e.target.result;
+        this.isFileUploaded = true;
         this.uploadedFileName = input.files[0].name;
       };
 
@@ -49,18 +47,16 @@ export class ImporterComponent implements OnInit {
     fileInput.value = '';
 
     const fileUploadContent = document.querySelector('.file-upload-content');
-    const imageUploadWrap = document.querySelector('.image-upload-wrap');
+ 
 
     if (fileUploadContent) {
       fileUploadContent.classList.add('hidden');
     }
-
-    if (imageUploadWrap) {
-      imageUploadWrap.classList.remove('hidden');
-    }
+    this.isFileUploaded = false;
+   
 
     this.uploadedFileName = '';
-    this.imageSrc = '';
+   
   }
 
  

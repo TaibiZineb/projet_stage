@@ -11,12 +11,6 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 
-
-
-
-
-
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
