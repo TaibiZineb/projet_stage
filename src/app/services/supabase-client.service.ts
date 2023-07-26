@@ -60,10 +60,12 @@ export class SupabaseClientService {
         console.log('Données utilisateur fournies par Google:', user);
         const fullName = user.user_metadata.full_name || '';
         const email = user.email || '';
+        const photo = user.user_metadata.picture || '';
         return {
           email: email,
           prenom: fullName.split(' ')[0],
           nom: fullName.split(' ')[1] || '',
+          photo:photo
         };
       } else {
           return null;
@@ -87,7 +89,7 @@ export class SupabaseClientService {
   public authenticateUser(AppUser : AppUser) :Observable<boolean>{
     this.authentificateUser = AppUser;
       if (AppUser.email) {
-      localStorage.setItem("authUser", JSON.stringify({ email: AppUser.email, prenom: AppUser.prenom, nom:AppUser.nom, jwt: "JWT_TOKEN" }));
+      localStorage.setItem("authUser", JSON.stringify({ email: AppUser.email, prenom: AppUser.prenom, nom:AppUser.nom ,jwt: "JWT_TOKEN" }));
       return of(true);
     } else {
       console.error("L'objet AppUser doit avoir une propriété 'email'");
