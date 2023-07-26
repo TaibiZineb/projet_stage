@@ -14,6 +14,7 @@ import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { RouterModule, Routes } from '@angular/router';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CompteComponent,
     InfoCompteComponent,
     VisualisationComponent,
-    DashboardComponent
+    DashboardComponent,
+    WorkspaceComponent
 
 
   ],

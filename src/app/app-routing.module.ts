@@ -9,6 +9,7 @@ import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'visualisation', component: VisualisationComponent },
+      { path: 'Workspace', component: WorkspaceComponent },
       
     ]
   },
