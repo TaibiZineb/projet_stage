@@ -26,29 +26,14 @@
 </nav>
 <nav class="bg-gray-100">
   <div class="hidden lg:flex max-w-screen-xl px-4 py-3 mx-auto">
-      <div class="flex items-center">
-          <ul class="flex border-b flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
-              <li>
-                <a aria-current="page" routerLink="/admin/home" class="{{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Home</a>
-              </li>
-              <li>
-                <a aria-current="page" routerLink="/admin/dashboard" class="{{router.isActive('/admin/dashboard',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Tableau de bord</a>
-              </li>
-              <li>
-                <a aria-current="page" routerLink="/admin/importer" class="{{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Importer</a>
-              </li>
-              <li>
-                  <a aria-current="page" routerLink="/admin/compte" class="{{router.isActive('/admin/compte',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Compte</a>
-              </li>
-              <li>
-                <a aria-current="page" routerLink="/admin/visualisation" class="{{router.isActive('/admin/visualisation',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Visualisation CVs</a>
-            </li>
-          </ul>
-      </div>
+      
   </div>
   <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex bg-gray-100">
     <nav class="navbar">
       <ul class="nav-menu bg-sky-300">
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">CV Template</a>
+        </li>
         <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
         </li>
@@ -73,9 +58,17 @@
     </nav>
   </div>
 </nav>
-<div class="navbarmenu flex">
+<div class="navbarmenu flex flex-wrap mx-auto">
   <menu class="bg-gray-100 hidden lg:flex">
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/cvtemplate',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/cvtemplate">CV Template
+				</a>
+			</li>
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/workspace',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/workspace">Workspace
+				</a>
+			</li>
 			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
 				<a class="{{router.isActive('/admin/home',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
 				</a>
@@ -99,34 +92,13 @@
 
 		</ul>
   </menu>
-  <!--Slider/caroussel-->
-  <div class="mx-auto w-screen">
-    <div class="slide-container relative">
-      <div class="custom-slider fade">
-        <img class="slide-img" src="http://via.placeholder.com/1440x360">
-      </div>
-      <div class="custom-slider fade hidden">
-        <img class="slide-img" src="http://via.placeholder.com/1140x360">
-      </div>
-      <a class="prev" onclick="plusSlides(-1)">❮</a>
-      <a class="next" onclick="plusSlides(1)">❯</a>
-    </div>
-    
-    <br>
-    <div class="slide-dot">
-      <span class="dot" onclick="currentSlide(1)"></span>
-      <span class="dot" onclick="currentSlide(2)"></span>
+  <div class="flex flex-wrap ">
+    <div class="px-4 mb-6 relative text-right">
+      <p id="box">{{ currentDate }}</p>
     </div>
   </div>
-</div>
-<div class="flex flex-wrap justify-between items-center">
-  <div class="w-1/12"></div>
-  <div class="px-4 mb-6 relative text-right justify-end">
-    <p id="box">{{ currentDate }}</p>
-  </div>
-</div>
 
-
+</div>
 
 <router-outlet>
   
