@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { Session } from '@supabase/gotrue-js';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationGuard implements CanActivate {
   constructor(private supabaseAuth: SupabaseClientService, private router: Router) {
-
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,9 +20,6 @@ export class AuthentificationGuard implements CanActivate {
       else
         return true
     });
-
   }
-
-
 }
 
