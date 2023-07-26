@@ -14,7 +14,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'admin/workspace', pathMatch: 'full' },
   { path: 'admin', component: AdminTemplateComponent, canActivate: [AuthentificationGuard],
     children: [
       { path: 'importer', component: ImporterComponent },
@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'visualisation', component: VisualisationComponent },
-      { path: 'Workspace', component: WorkspaceComponent },
+      { path: 'workspace', component: WorkspaceComponent },
       
     ]
   },
