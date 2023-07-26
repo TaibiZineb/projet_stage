@@ -44,7 +44,7 @@ export class WorkspaceComponent {
         this.WorkspaceForm.reset();
 
         // Redirect to another page
-        this.router.navigateByUrl('/admin/home'); // Replace 'another-page' with the actual route you want to navigate to.
+        this.router.navigateByUrl('/admin/cvtemplate'); // Replace 'another-page' with the actual route you want to navigate to.
       } catch (error) {
         alert('Erreur lors de l\'enregistrement.');
         console.error('Erreur lors de l\'enregistrement :', error);

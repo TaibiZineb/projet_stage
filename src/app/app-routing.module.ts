@@ -10,11 +10,12 @@ import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'admin/workspace', pathMatch: 'full' },
+  { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
   { path: 'admin', component: AdminTemplateComponent, canActivate: [AuthentificationGuard],
     children: [
       { path: 'importer', component: ImporterComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'visualisation', component: VisualisationComponent },
       { path: 'workspace', component: WorkspaceComponent },
+      { path: 'cvtemplate', component: CVtemplateComponent },
       
     ]
   },
