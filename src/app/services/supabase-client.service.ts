@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AppUser } from '../model/user.model';
 import { from, Observable, of, throwError } from 'rxjs';
 import { map,catchError } from 'rxjs/operators';
+import { Role } from '../model/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -62,6 +63,7 @@ export class SupabaseClientService {
         const email = user.email || '';
         const photo = user.user_metadata.picture || '';
         return {
+          id: user.id,
           email: email,
           prenom: fullName.split(' ')[0],
           nom: fullName.split(' ')[1] || '',
@@ -77,6 +79,8 @@ export class SupabaseClientService {
       })
     );
   }
+
+  
   handleLogout(): void {
     this.supabase.auth.signOut()
       .then(() => {
@@ -96,5 +100,77 @@ export class SupabaseClientService {
       return throwError("L'objet AppUser doit avoir une propriété 'email'");
     }
   }
- 
+  async getRoleById(roleName: string): Promise<Role | null> {
+    try {
+      const { data, error } = await this.supabase.from('Role').select('*').eq('idRole', roleName).single();
+      if (error) {
+        console.error('Erreur lors de la récupération du rôle :', error);
+        return null;
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du rôle :', error);
+      return null;
+    }
+  }
+  async insertWorkspaceWithUserRole(userId: string, workspaceId: number, roleId: number): Promise<any> {
+    try {
+      // Insérer les données dans la table UserRoleWorkspace
+      const { data: userRoleWorkspace, error: userRoleWorkspaceError } = await this.supabase
+        .from('UserRoleWorkspace')
+        .insert([
+          {
+            id_users: userId,
+            idRole: roleId,
+            idWorkspace: workspaceId
+          }
+        ]);
+      if (userRoleWorkspaceError) {
+        console.error('Erreur lors de l\'insertion dans UserRoleWorkspace :', userRoleWorkspaceError);
+        return null;
+      } else {
+        return userRoleWorkspace;
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'insertion dans UserRoleWorkspace :', error);
+      return null;
+    }
+  }
+  async getRoleByName(roleName: string): Promise<Role | null> {
+    try {
+      const { data, error } = await this.supabase.from('Role').select('*').eq('designationRole', roleName).single();
+      if (error) {
+        console.error('Erreur lors de la récupération du rôle :', error);
+        return null;
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du rôle :', error);
+      return null;
+    }
+  }
+  async insertWorkspace(nomEspace: string): Promise<any> {
+    try {
+      const response = await this.supabase.from('Workspace').insert([{ nomEspace }]);
+      if (response.error) {
+        console.error('Erreur lors de l\'enregistrement du workspace:', response.error);
+        return { data: null, error: response.error }; // Retourne un objet avec data: null
+      }
+  
+      const data = response.data;
+      if (data) {
+        return { data: data, error: null }; // Retourne un objet avec data
+      } else {
+        console.error('Erreur lors de l\'enregistrement du workspace : Aucune donnée renvoyée');
+        return { data: null, error: 'Aucune donnée renvoyée' }; // Retourne un objet avec data: null
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement du workspace:', error);
+      return { data: null, error: error }; // Retourne un objet avec data: null
+    }
+  }
+  
+  
 }
