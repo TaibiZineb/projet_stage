@@ -1,0 +1,29 @@
+<div class="flex">
+    <div class="hidden lg:flex w-1/6 px-4 py-3"></div>
+    <div class="w-6/7 mx-auto px-4 mb-6 relative">
+        <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Créer un espace de travail</h1>
+        <form class="w-full" [formGroup]="WorkspaceForm" (ngSubmit)="onSubmitW()">
+            <section class="bg-slat-100 rounded-lg shadow-md p-4 justify-center mx-auto">
+                <div class="justify-center mx-auto">
+                    <label for="">*Nom de votre espace de travail</label>
+                    <input formControlName="nomEspace" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" placeholder="Nom de l'espace de travail">
+                    <div *ngIf="WorkspaceForm.get('nomEspace')?.touched && WorkspaceForm.get('nomEspace')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                </div>
+                <div class="justify-center mx-auto text-center">
+                    <button type="submit" class="bg-blue-500 btn text-gray-950 hover:text-slate-700 py-3 px-4 mb-3 hover:border-2 hover:border-blue-500 hover:bg-white justify-center text-center font-bold rounded text-sm" >
+                        <svg class="justify-center mx-auto flex flex-row" color="#BDBDBB" width="1em" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8H4.18182H8ZM8 8V4.18182V8ZM8 8H11.8182H8ZM8 8V11.8182V8ZM8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8C15 11.866 11.866 15 8 15Z" stroke="#BDBDBB" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <p>Créer un espace de travail</p>
+                    </button>
+                </div>
+                <p class="justify-center mx-auto text-center">OU</p>
+                <div class="justify-center mx-auto text-center">
+                    <button class="border-zinc-300 border-2 text-slate-400 hover:border-blue-500 justify-center text-center py-3 px-4 mb-3 font-bold rounded text-sm" type="submit">
+                        <svg class="justify-center mx-auto flex flex-row" width="1rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.6665 8.66648C6.95281 9.04923 7.31808 9.36594 7.73754 9.59511C8.157 9.82428 8.62084 9.96056 9.0976 9.9947C9.57437 10.0288 10.0529 9.96006 10.5007 9.793C10.9486 9.62594 11.3552 9.36453 11.6932 9.02648L13.6932 7.02648C14.3004 6.39781 14.6363 5.5558 14.6288 4.68181C14.6212 3.80782 14.2706 2.97178 13.6526 2.35375C13.0345 1.73573 12.1985 1.38516 11.3245 1.37757C10.4505 1.36997 9.60851 1.70595 8.97984 2.31315L7.83317 3.45315" stroke="#455560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.33347 7.33332C9.04716 6.95057 8.68189 6.63387 8.26243 6.40469C7.84297 6.17552 7.37913 6.03924 6.90237 6.0051C6.4256 5.97095 5.94707 6.03974 5.49924 6.2068C5.0514 6.37386 4.64472 6.63527 4.3068 6.97332L2.3068 8.97332C1.69961 9.60199 1.36363 10.444 1.37122 11.318C1.37881 12.192 1.72938 13.028 2.3474 13.646C2.96543 14.2641 3.80147 14.6146 4.67546 14.6222C5.54945 14.6298 6.39146 14.2938 7.02013 13.6867L8.16013 12.5467" stroke="#455560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <p>Rejoindre l'espace de travail existant</p>
+                    </button>
+                </div>
+            
+            </section>
+        </form>
+    </div>
+</div>

@@ -3,12 +3,16 @@
   <div class="w-11/12 mx-auto px-4 mb-6 relative">
     <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Importer</h1>
     <div class="file-upload selection:bg-slate-100 mx-auto p-20">
-      <button class="file-upload-btn m-0 text-white bg-blue-500 border-none p-3 rounded-md border-b-4 border-blue-500 transition-all duration-200 ease-in-out outline-none uppercase font-bold" type="button" (click)="triggerFileInput()">Ajouter Fichier</button>
-    
       <div class="file-upload-wrap">
         <input class="file-upload-input" type='file' (change)="readURL($event.target)" accept=".pdf,.docx" />
         <div class="drag-text">
-          <h3 class="font-light uppercase text-blue-500 py-6">Veuillez télécharger uniquement des documents au format 'pdf', 'docx'.</h3>
+          <div class="p-4 justify-center mx-auto flex">
+            <svg width="1rem" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.5095 10.4558L10.2849 13.669C8.50401 15.4437 5.61659 15.4437 3.83568 13.669C2.05477 11.8944 2.05477 9.01724 3.83568 7.24264L9.21005 1.8873C10.3973 0.704233 12.3223 0.704233 13.5095 1.8873C14.6968 3.07037 14.6968 4.9885 13.5095 6.17157L8.67261 10.9914C8.07898 11.5829 7.1165 11.5829 6.52287 10.9914C5.92923 10.3998 5.92923 9.44078 6.52287 8.84924L9.21005 6.17157L11.2156 4.16598" stroke="#0080FF" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+      
+          <h3 class="font-light uppercase text-blue-500 py-6 justify-center text-center">Cliquez ou faites glisser votre CV pour le télécharger</h3>
+          <p class="mt-2 font-semibold justify-center text-center p-4">Prise en charge d'un seul téléchargement. </p>
+          <p class="justify-center text-center p-4">Veuillez télécharger uniquement des documents au format 'pdf', 'docx'.</p>
         </div>
       </div>
       <div class="file-upload-content text-center">

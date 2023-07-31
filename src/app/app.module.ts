@@ -8,17 +8,14 @@ import { AdminTemplateComponent } from './admin-template/admin-template.componen
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ImporterComponent } from './importer/importer.component';
-import { CreeationCompteComponent } from './creeation-compte/creeation-compte.component';
 import { createClient } from '@supabase/supabase-js';
-import { GestionCompteComponent } from './gestion-compte/gestion-compte.component';
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
 import { RouterModule, Routes } from '@angular/router';
 import { VisualisationComponent } from './visualisation/visualisation.component';
-
-
-
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
+import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,11 +23,12 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     LoginComponent,
     AdminTemplateComponent,
     HomeComponent,
-    CreeationCompteComponent,
-    GestionCompteComponent,
     CompteComponent,
     InfoCompteComponent,
-    VisualisationComponent
+    VisualisationComponent,
+    DashboardComponent,
+    WorkspaceComponent,
+    CVtemplateComponent
 
 
   ],

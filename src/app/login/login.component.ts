@@ -11,8 +11,6 @@ import { SupabaseClient } from '@supabase/supabase-js';
 export class LoginComponent implements OnInit {
 
   supabase!: SupabaseClient;
-
-  
   constructor( 
               private router : Router,
               private supabaseAuth: SupabaseClientService
@@ -24,6 +22,12 @@ export class LoginComponent implements OnInit {
 
   signIn(){
     this.supabaseAuth.signIn();
+    this.supabaseAuth.supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        this.router.navigateByUrl('/admin/home');
+      }
+    });
   }
+
   
 }

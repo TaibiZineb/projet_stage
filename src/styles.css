@@ -4,6 +4,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+
 .prev, .next {
     cursor: pointer;
     position: absolute;

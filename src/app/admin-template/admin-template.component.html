@@ -6,41 +6,39 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-600">Projet</span>
       </a>
       <div class="flex items-center">
-        <a class="text-sm  text-cyan-600 hover:underline" aria-current="page" routerLink="/admin/compte">
-          <i class="bi bi-person-fill"></i>
+       
+        <a class="text-sm  text-cyan-600 hover:text-slate-300 border-collapse" aria-current="page" routerLink="/admin/compte">
+          <!--<svg width="17px" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9.5" cy="9.19141" r="8" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M4.16675 15.1675C4.27341 13.555 6.30762 11.1914 9.50385 11.1914C12.622 11.1914 14.7286 13.441 14.8296 15.0702" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 10.1914C11.1569 10.1914 12.5 8.84826 12.5 7.19141C12.5 5.53455 11.1569 4.19141 9.5 4.19141C7.84315 4.19141 6.5 5.53455 6.5 7.19141C6.5 8.84826 7.84315 10.1914 9.5 10.1914Z" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>--> 
+          <img class="imagep rounded-full mr-6 object-cover"  [src]="authentificateUser?.photo" alt="Photo de profil">
+          <!--<p class="text-sm  text-cyan-600 hover:text-slate-300"> {{ authentificateUser?.email }}</p>-->
+          <p class="text-sm  text-cyan-600 hover:text-slate-300">
+            {{ authentificateUser?.prenom }} {{ authentificateUser?.nom }}
+          </p>
+          
+      
         </a>
-        <a class="text-sm  text-cyan-600  hover:underline">
-            {{authService.authentificateUser?.Nom_Societe}}
+        <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:text-slate-300 border-separate" routerLink="login" (click)="handleLogout()">
+          <svg color="#72849A" width="17px" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_49077_15969)"><path d="M4.65625 8.31982H15.5665" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.9297 4.97607L15.5665 8.32098L11.9297 11.6659" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.0377 13.5256V14.7531C11.0377 15.1794 10.6888 15.525 10.2584 15.525H1.94581C1.51541 15.525 1.1665 15.1794 1.1665 14.7531V1.63079C1.1665 1.20448 1.51541 0.858887 1.94581 0.858887H10.2584C10.6888 0.858887 11.0377 1.20448 11.0377 1.63079V2.85889" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_49077_15969"><rect width="16" height="16" fill="white" transform="translate(0.5 0.192261)"></rect></clipPath></defs></svg>
         </a>
-        <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:underline" (click)="handleLogout()">
-          <i class="bi bi-box-arrow-right"></i></a>
+          
       </div>
   </div>
 </nav>
 <nav class="bg-gray-100">
   <div class="hidden lg:flex max-w-screen-xl px-4 py-3 mx-auto">
-      <div class="flex items-center">
-          <ul class="flex border-b flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
-              <li>
-                <a aria-current="page" routerLink="/admin/home" class="{{router.isActive('/admin/home',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300" aria-current="page">Home</a>
-              </li>
-              <li>
-                <a aria-current="page" routerLink="/admin/importer" class="{{router.isActive('/admin/importer',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Importer</a>
-              </li>
-              <li>
-                  <a aria-current="page" routerLink="/admin/compte" class="{{router.isActive('/admin/compte',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Compte</a>
-              </li>
-              <li>
-                <a aria-current="page" routerLink="/admin/visualisation" class="{{router.isActive('/admin/visualisation',true) ? 'rounded border-l border-t border-r text-cyan-600' : 'border-none text-sky-300 '}} hover:underline hover:text-slate-300">Visualisation CVs</a>
-            </li>
-          </ul>
-      </div>
+      
   </div>
   <div class="subcontainer hidden max-sm:block max-md:block max-lg:flex bg-gray-100">
     <nav class="navbar">
       <ul class="nav-menu bg-sky-300">
         <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">CV Template</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/dashboard">Tableau de bord</a>
         </li>
         <li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/importer">Importer</a>
@@ -60,11 +58,23 @@
     </nav>
   </div>
 </nav>
-<div class="navbarmenu flex">
+<div class="navbarmenu flex flex-wrap mx-auto">
   <menu class="bg-gray-100 hidden lg:flex">
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/cvtemplate',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/cvtemplate">CV Template
+				</a>
+			</li>
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/workspace',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/workspace">Workspace
+				</a>
+			</li>
 			<li class="hidden-link h-auto border-t list-none relative w-full py-2">
 				<a class="{{router.isActive('/admin/home',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/home">Accueil
+				</a>
+			</li>
+      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord
 				</a>
 			</li>
 			<li class="border-t list-none relative w-full py-2">
@@ -82,34 +92,13 @@
 
 		</ul>
   </menu>
-  <!--Slider/caroussel-->
-  <div class="mx-auto w-screen">
-    <div class="slide-container relative">
-      <div class="custom-slider fade">
-        <img class="slide-img" src="http://via.placeholder.com/1440x360">
-      </div>
-      <div class="custom-slider fade hidden">
-        <img class="slide-img" src="http://via.placeholder.com/1140x360">
-      </div>
-      <a class="prev" onclick="plusSlides(-1)">❮</a>
-      <a class="next" onclick="plusSlides(1)">❯</a>
-    </div>
-    
-    <br>
-    <div class="slide-dot">
-      <span class="dot" onclick="currentSlide(1)"></span>
-      <span class="dot" onclick="currentSlide(2)"></span>
+  <div class="flex flex-wrap ">
+    <div class="px-4 mb-6 relative text-right">
+      <p id="box">{{ currentDate }}</p>
     </div>
   </div>
-</div>
-<div class="flex flex-wrap justify-between items-center">
-  <div class="w-1/12"></div>
-  <div class="px-4 mb-6 relative text-right justify-end">
-    <p id="box">{{ currentDate }}</p>
-  </div>
-</div>
 
-
+</div>
 
 <router-outlet>
   

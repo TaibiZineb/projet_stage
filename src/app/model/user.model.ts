@@ -1,9 +1,16 @@
 export interface AppUser {
-    userId : string;
-    Email: string;
-    password : string;
-    Nom_Societe: string;
-    nom: string;
+    id: string; 
+    email: string;
     prenom:string;
-    num: string;
+    nom: string;
+    photo:string;
+}
+export interface Role {
+    idRole: number;
+    designationRole: string;
+}
+export interface Workspace {
+    idWorkspace: number;
+    nomEspace: string;
+    icon: string;
 }
