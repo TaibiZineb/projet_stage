@@ -22,4 +22,3 @@ export class AuthentificationGuard implements CanActivate {
     });
   }
 }
-
