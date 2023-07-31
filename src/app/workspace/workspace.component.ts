@@ -9,19 +9,14 @@ import { SupabaseClientService } from '../services/supabase-client.service';
   styleUrls: ['./workspace.component.css']
 })
 export class WorkspaceComponent {
-  supabase!: SupabaseClient;
   supabaseAuth: any;
   workspaceName!: string;
   WorkspaceForm!: FormGroup;
 
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private supabaseClientService: SupabaseClientService
-              ) {
-    this.supabase = createClient(
-      'https://mljtanxsvdnervhrjnbs.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY'
-    );
+    private formBuilder: FormBuilder,
+    private supabaseClientService: SupabaseClientService
+  ) {
     this.workspaceName = '';
   }
   ngOnInit(): void {
@@ -57,10 +52,10 @@ export class WorkspaceComponent {
               }
               try {
                 // Insertion dans la table "UserRoleWorkspace"
-                console.log('Inserting UserRoleWorkspace:', currentUser.id, workspace[0].idWorkspace, roleInfo.idRole);
+                console.log('Inserting UserRoleWorkspace:', currentUser.id, workspace.idWorkspace, roleInfo.idRole);
                 const userRoleWorkspaceResponse = await this.supabaseClientService.insertWorkspaceWithUserRole(
                   currentUser.id,
-                  workspace[0].idWorkspace,
+                  workspace.idWorkspace,
                   roleInfo.idRole
                 );
                 console.log('UserRoleWorkspace:', userRoleWorkspaceResponse);
@@ -79,7 +74,7 @@ export class WorkspaceComponent {
           console.error('Aucune donnée renvoyée lors de l\'enregistrement.');
           alert('Aucune donnée renvoyée lors de l\'enregistrement.');
         }
-  
+
       } catch (error) {
         console.error('Erreur lors de l\'enregistrement :', error);
         alert('Erreur lors de l\'enregistrement.');
@@ -89,7 +84,7 @@ export class WorkspaceComponent {
     }
     console.log('Fin de onSubmitW()');
   }
-  
+
 
 
 }
