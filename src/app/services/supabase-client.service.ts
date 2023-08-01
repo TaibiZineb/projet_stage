@@ -178,4 +178,22 @@ export class SupabaseClientService {
       return { error };
     }
   }
+  async checkUserHasWorkspace(userId: string): Promise<boolean> {
+    try {
+      const { data: userWorkspaces, error } = await this.supabase
+        .from('UserRoleWorkspace')
+        .select()
+        .eq('id_user', userId);
+
+      if (error) {
+        console.error('Error while checking user workspaces:', error);
+        return false;
+      }
+
+      return userWorkspaces.length > 0;
+    } catch (error) {
+      console.error('Error while checking user workspaces:', error);
+      return false;
+    }
+  }
 }
