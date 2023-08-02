@@ -30,12 +30,12 @@ export class AuthentificationGuard implements CanActivate {
       const hasWorkspace = await this.supabaseAuth.checkUserHasWorkspace(session.user.id);
       if (hasWorkspace) {
         console.log('User has a workspace, redirecting to admin/dashboard');
-        this.router.navigate(['/admin/dashboard']);
+        return true; // L'utilisateur a un espace de travail, on lui permet l'accès à la route demandée.
       } else {
         console.log('User does not have a workspace, redirecting to admin/workspace');
-        this.router.navigate(['/admin/workspace']);
+        this.router.navigate(['/admin/workspace']); // L'utilisateur n'a pas d'espace de travail, on le redirige vers la page de création d'espace de travail.
+        return false;
       }
-      return true;
     }
   }
 }

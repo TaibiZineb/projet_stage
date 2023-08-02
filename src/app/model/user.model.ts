@@ -12,5 +12,16 @@ export interface Role {
 export interface Workspace {
     idWorkspace: number;
     nomEspace: string;
+    icon: string; 
+  }
+  export interface WorkspaceData {
+    idWorkspace: number;
+    nomEspace: string;
     icon: string;
+  }
+export interface UserRoleWorkspace {
+    id_user: string;
+    idRole: number;
+    idWorkspace: number;
 }
+
