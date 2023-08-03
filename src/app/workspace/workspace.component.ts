@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SupabaseClientService } from '../services/supabase-client.service';
+import { WorkspaceService } from '../services/workspace.service';
 @Component({
   selector: 'app-workspace',
   templateUrl: './workspace.component.html',
@@ -15,7 +16,8 @@ export class WorkspaceComponent {
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
-    private supabaseClientService: SupabaseClientService
+    private supabaseClientService: SupabaseClientService,
+    private workspaceService: WorkspaceService
   ) {
     this.workspaceName = '';
   }
@@ -63,12 +65,15 @@ export class WorkspaceComponent {
                   console.error('Erreur lors de l\'insertion dans UserRoleWorkspace:', userRoleWorkspaceResponse.error);
                 } else {
                   console.log('Données insérées avec succès dans UserRoleWorkspace:', userRoleWorkspaceResponse);
+
+                  this.workspaceService.setWorkspace(userRoleWorkspaceResponse);
+                  this.router.navigateByUrl('/admin/cvtemplate');
                 }
               } catch (error) {
                 console.error('Erreur lors de l\'insertion dans UserRoleWorkspace:', error);
               }
             }
-            this.router.navigateByUrl('/admin/cvtemplate');
+
           }
         } else {
           console.error('Aucune donnée renvoyée lors de l\'enregistrement.');
