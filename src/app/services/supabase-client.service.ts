@@ -130,21 +130,17 @@ export class SupabaseClientService {
   }
   async insertWorkspace(nomEspace: string): Promise<any> {
     console.log('nom Espace:', nomEspace);
-
     try {
       const response: PostgrestSingleResponse<any> = await this.supabase.from('Workspace').insert({ nomEspace }).select().single();
       console.log('Response from Supabase:', response);
-
       if (response === null) {
         console.error('Supabase response is null.');
         return null;
       }
-
       if (response.hasOwnProperty('error') && response.error) {
         console.error('Erreur lors de l\'enregistrement du workspace:', response.error);
         return { error: response.error };
       }
-
       console.log('Données enregistrées avec succès dans Workspace');
       return response;
     } catch (error) {
@@ -183,24 +179,43 @@ export class SupabaseClientService {
         .eq('id_user', userId);
   
       if (error) {
-        console.error('Error while checking user workspaces:', error);
+        console.error('Erreur lors de la vérification de l\'espace de travail de l\'utilisateur:', error);
         return false;
       }
       return userWorkspaces.length > 0;
     } catch (error) {
-      console.error('Error while checking user workspaces:', error);
+      console.error('Erreur lors de la vérification de l\'espace de travail de l\'utilisateur:', error);
       return false;
     }
   }
-    async getWorkspaceByUserId(userId: string): Promise<Workspace | null> {
+  async getWorkspaceByUserId(userId: string): Promise<Workspace | null> {
     try {
       console.log('Début de la fonction getWorkspaceByUserId');
       console.log('ID de l\'utilisateur :', userId);
-      const { data, error } = await this.supabase
+  
+      const { data: userWorkspaces, error: workspaceError } = await this.supabase
         .from('UserRoleWorkspace')
-        .select('Workspace(idWorkspace, nomEspace, icon)')
-        .eq('id_user', userId)
+        .select('idWorkspace')
+        .eq('id_user', userId);
+  
+      if (workspaceError) {
+        console.error('Erreur lors de la récupération de l\'espace de l\'utilisateur :', workspaceError);
+        return null;
+      }
+  
+      if (userWorkspaces.length === 0) {
+        console.error('Aucun espace de travail associé à cet utilisateur.');
+        return null;
+      }
+  
+      const workspaceIds = userWorkspaces.map((userWorkspace) => userWorkspace.idWorkspace);
+  
+      const { data, error } = await this.supabase
+        .from('Workspace')
+        .select('idWorkspace, nomEspace, icon')
+        .in('idWorkspace', workspaceIds)
         .limit(1);
+  
       console.log('Data from Supabase:', data);
       console.log('Error from Supabase:', error);
   
@@ -209,9 +224,8 @@ export class SupabaseClientService {
         return null;
       }
   
-      if (data && data.length > 0 && data[0]?.Workspace) {
-        const workspaceData: WorkspaceData = data[0].Workspace[0];
-  
+      if (data && data.length > 0) {
+        const workspaceData: WorkspaceData = data[0];
         if (workspaceData) {
           const workspace: Workspace = {
             idWorkspace: workspaceData.idWorkspace,
@@ -233,4 +247,7 @@ export class SupabaseClientService {
       return null;
     }
   }
+  
+  
+  
 }

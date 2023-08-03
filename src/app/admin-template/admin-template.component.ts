@@ -16,7 +16,6 @@ export class AdminTemplateComponent implements OnInit{
   constructor(public supabaseAuth : SupabaseClientService, public router : Router){
     this.authentificateUser = null;
   }
- 
   async ngOnInit(): Promise<void>{
     this.getDate();
     const hamburger = document.querySelector(".hamburger");
@@ -41,15 +40,12 @@ export class AdminTemplateComponent implements OnInit{
       hamburger?.classList.remove("active");
       navMenu?.classList.remove("active");
     }));
-    
   }
   handleLogout(): void {
     this.supabaseAuth.handleLogout();
   }
-  
   getDate() {
     const today = new Date();
     this.currentDate = today.toLocaleDateString('fr-FR');
   }
-
 }
