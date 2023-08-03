@@ -1,36 +1,36 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { AppUser,Workspace } from '../model/user.model';
+import { AppUser, Workspace } from '../model/user.model';
 import { map, catchError } from 'rxjs/operators';
+import { WorkspaceService } from '../services/workspace.service';
 @Component({
   selector: 'app-admin-template',
   templateUrl: './admin-template.component.html',
   styleUrls: ['./admin-template.component.css']
 })
-export class AdminTemplateComponent implements OnInit{
+export class AdminTemplateComponent implements OnInit {
   currentDate!: string;
   users: AppUser[] = [];
   authentificateUser: AppUser | null = null;
   userWorkspace: Workspace | null = null;
-  constructor(public supabaseAuth : SupabaseClientService, public router : Router){
+  constructor(public supabaseAuth: SupabaseClientService, public router: Router, private workspaceService: WorkspaceService) {
     this.authentificateUser = null;
   }
-  async ngOnInit(): Promise<void>{
+  async ngOnInit(): Promise<void> {
     this.getDate();
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
     const user: AppUser | null | undefined = await this.supabaseAuth.getCurrentUser().toPromise();
     if (user !== null && user !== undefined) {
       this.authentificateUser = user;
+      this.userWorkspace = await this.supabaseAuth.getWorkspaceByUserId(user.id);
       console.log('Utilisateur connecté :', this.authentificateUser);
-      try {
-        const workspace: Workspace | null = await this.supabaseAuth.getWorkspaceByUserId(user.id);
-        this.userWorkspace = workspace;
-        console.log('Espace de l\'utilisateur :', this.userWorkspace);
-      } catch (error) {
-        console.error('Erreur lors de la récupération de l\'espace de l\'utilisateur:', error);
-      }
+      this.workspaceService.registerCallback(async (workspace: Workspace) => {
+        console.log("this.workspaceService.registerCallback+" + JSON.stringify(workspace))
+        this.userWorkspace = await this.supabaseAuth.getWorkspaceByUserId(user.id);;
+        console.log("this.workspaceService.registerCallback+" + JSON.stringify(this.userWorkspace))
+      });
     }
     hamburger?.addEventListener("click", () => {
       hamburger.classList.toggle("active");
