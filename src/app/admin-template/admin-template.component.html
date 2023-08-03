@@ -6,7 +6,6 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-600">Projet</span>
       </a>
       <div class="flex items-center">
-       
         <a class="text-sm  text-cyan-600 hover:text-slate-300 border-collapse" aria-current="page" routerLink="/admin/compte">
           <img class="imagep rounded-full mr-6 object-cover"  [src]="authentificateUser?.photo" alt="Photo de profil">
           <p class="text-sm  text-cyan-600 hover:text-slate-300">
@@ -59,7 +58,7 @@
   <menu class="bg-gray-100 hidden lg:flex">
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
       <li class="hidden-link h-auto border-t list-none relative w-full py-2">
-        <svg color="#000" width="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.9725 6.68253V18.4205C20.9725 19.0911 20.3994 19.6348 19.6925 19.6348H9.45247C8.74555 19.6348 8.17247 19.0911 8.17247 18.4205V3.84905C8.17247 3.17842 8.74555 2.63477 9.45247 2.63477H16.7058L20.9725 6.68253Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.7725 22.6348H6.3439C5.58648 22.6348 4.97247 22.0635 4.97247 21.3588L4.98665 5.63477" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.7058 2.63477V5.43477C16.7058 6.09751 17.2789 6.63477 17.9858 6.63477H20.9725" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <svg width="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.9725 6.68253V18.4205C20.9725 19.0911 20.3994 19.6348 19.6925 19.6348H9.45247C8.74555 19.6348 8.17247 19.0911 8.17247 18.4205V3.84905C8.17247 3.17842 8.74555 2.63477 9.45247 2.63477H16.7058L20.9725 6.68253Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.7725 22.6348H6.3439C5.58648 22.6348 4.97247 22.0635 4.97247 21.3588L4.98665 5.63477" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.7058 2.63477V5.43477C16.7058 6.09751 17.2789 6.63477 17.9858 6.63477H20.9725" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord
 				</a>
 			</li>

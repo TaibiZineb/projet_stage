@@ -4,4 +4,218 @@
     <div class="w-6/7 mx-auto px-4 mb-6 relative">
         <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Templates</h1>
     </div>
+    <section class="container" #ref>
+        <div class="wrapper templateId2 bg-gray-200" id="cv">
+          <table class="table_class header_table">
+            <tbody>
+              <tr>
+                <td class="candidate_details">
+                  <ng-container>
+                    <h2 class="h2">
+                      candidateDetails.FirstName
+                    </h2>
+                  </ng-container>
+                  <ng-container >
+                    <h2 class="h2">
+                      candidateDetails.LastName
+                    </h2>
+                  </ng-container>
+                  <h3 class="h3">candidateDetails.Rol</h3>
+                  <h3 style="margin-top: 5px; color: #616a73; font-weight: 400; font-size: 16px;">
+                    candidateDetails.YearsOfExperience 
+                  </h3>
+                  <br />
+                </td>
+                <td class="logo">
+                  <!-- <img height="28px" /> -->
+                  <img />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <hr class="horizontal_line" />
+      
+          <table class="table_class table_container">
+            <tbody>
+              <tr>
+                <td class="leftpart">
+                  <table class="table_class">
+                    <tbody>
+                      <ng-container >
+                        <tr>
+                          <th class="th_title" style="padding-bottom: 20px;">T O P &nbsp; S K I L L S</th>
+                        </tr>
+                        <tr class="top_skills">
+                          <td>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td class="top_skills_value">topskill.Name</td>
+                                  
+                                </tr>
+                                <tr>
+                                  <td class="top_skills_value">topskill.Name</td>
+                                </tr>
+                                
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </ng-container>
+      
+                      <ng-container >
+                        <tr>
+                          <th class="th_title" style="padding-top: 25px;">E M P L O Y M E N T &nbsp; H I S T O R Y</th>
+                        </tr>
+                        <ng-container >
+                          <tr>
+                            <td>
+                              <table  class="table_class" style="width: 90%;">
+                                <tbody>
+                                  <tr>
+                                    <th class="heading">position.PositionTitle </th>
+                                  </tr>
+                                  <tr>
+                                    <td class="employer_name">position.CompanyName </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="employment_duration">position.StartDate + ' - ' + position.EndDate </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <div class="employment_history">position.Description </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+      
+                      <ng-container >
+                        <tr class="tr_title">
+                          <th class="th_title">E D U C A T I O N</th>
+                        </tr>
+                        <ng-container >
+                          <tr>
+                            <td>
+                              <table >
+                                <tbody>
+                                  <tr>
+                                    <th class="heading">edu.Degree </th>
+                                  </tr>
+                                  <tr>
+                                    <td class="employer_name">edu.School || '' </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="edu_duration">edu.StartDate + ' ' + edu.EndDate + ' ' + edu.City </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="rightpart">
+                  <table class="table_class" style="background-color: #FBFBFB; padding: 0 10px 10px;">
+                    <tbody>
+                      <tr>
+                        <td><ng-container>
+                            <table class="other_skills table_class">
+                              <tbody>
+                                <tr class="tr_title">
+                                  <th class="th_title">O T H E R &nbsp; S K I L L S</th>
+                                </tr>
+                                <ng-container >
+                                  <tr>
+                                    <td>
+                                      <table  class="table_class">
+                                        <tbody>
+                                          <ul class="top_skills_table_ul ul_class">
+                                            <li class="top_skills_table_li li_class">
+                                              topskill.Name 
+                                            </li>
+                                          </ul>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </ng-container>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <ng-container>
+                            <table class="table_class">
+                              <tbody>
+                                <tr>
+                                  <th class="th_title">L A N G U A G E S</th>
+                                </tr>
+                                <ng-container >
+                                  <tr>
+                                    <td>
+                                      <table >
+                                        <tbody>
+                                          <tr>
+                                            <th class="heading">lang.Name </th>
+                                          </tr>
+                                          <tr>
+                                            <td class="rightpart_text" >lang.Level </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </ng-container>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <ng-container >
+                            <table class="table_class">
+                              <tbody>
+                                <tr>
+                                  <th class="th_title">C E R T I F I C A T I O N S</th>
+                                </tr>
+                                <ng-container >
+                                  <tr >
+                                    <td>
+                                      <table class="table_class">
+                                        <tbody>
+                                          <tr>
+                                            <th class="heading" lang="en">certif.Name</th>
+                                          </tr>
+                                          <tr>
+                                            <td>certif.Date </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </ng-container>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      
 </div>
