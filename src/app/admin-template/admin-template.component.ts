@@ -31,7 +31,6 @@ export class AdminTemplateComponent implements OnInit {
         this.userWorkspace = await this.supabaseAuth.getWorkspaceByUserId(user.id);;
         console.log("this.workspaceService.registerCallback+" + JSON.stringify(this.userWorkspace))
       });
-
     }
     hamburger?.addEventListener("click", () => {
       hamburger.classList.toggle("active");
