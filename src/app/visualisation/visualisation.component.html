@@ -57,9 +57,52 @@
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
               </div>
+                <div id="container">
+                  <div class="blocks">
+                    <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
+                      <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage
+                      </summary>
+                      <div class="accordion__content px-3 py-1">
+                        <!--Nom de l'entreprise & Intitulé du poste-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
+                            <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
+                         
+                          </div>
+                          <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
+                            <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste">
+                            <div *ngIf="visualisationForm.get('Intituleposte')?.touched && visualisationForm.get('Intituleposte')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                          </div>
+                        </div>
+                        <!--Date debut & fin-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Date de début</label>
+                            <input formControlName="Datedebut" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datedebut" type="date" placeholder="">
+                         
+                          </div>
+                          <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">*Date de fin</label>
+                            <input formControlName="Datefin" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="date" placeholder="">
+                            
+                          </div>
+                        </div>
+                        <!--Description-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full  px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Description</label>
+                            <textarea id="description" formControlName="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
+                          </div>
+                        </div>
+                        <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc()">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                      </div>
+                    </details> 
+                  </div>
+                </div>
             </section>
-
-              <div class="flex flex-wrap my-4 justify-center" *ngIf="!submittedData">
+              <div class="flex flex-wrap my-4 justify-center">
                 <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">Confirmer</button>
               </div>
           </form>
@@ -113,42 +156,36 @@
                               </td>
                             </tr>
                           </ng-container>
-          
-                          <ng-container >
                             <tr>
                               <th class="th_title text-blue-500">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th>
                             </tr>
-                            <ng-container >
-                              <tr>
-                                <td>
-                                  <table  class="table_class" style="width: 90%;">
-                                    <tbody>
-                                      <tr>
-                                        <th class="heading text-left text-base leading-3 pt-2"><!--position.PositionTitle-->PositionTitle </th>
+                            <tr>
+                              <td>
+                                <table  class="table_class">
+                                  <tbody>
+                                    <tr>
+                                      <th class="heading text-left text-base leading-3 pt-2"  *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th>
                                       </tr>
                                       <tr>
-                                        <td class="employer_name"><!----> position.CompanyName </td>
+                                        <td class="employer_name" *ngIf="submittedData && submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td>
                                       </tr>
                                       <tr>
-                                        <td class="employment_duration"><!--position.StartDate + ' - ' + position.EndDate-->StartDate + '-' + EndDate </td>
+                                        <td class="employment_duration" *ngIf="submittedData && submittedData.Datedebut && submittedData.Datefin">{{ submittedData.Datedebut+ '/' + submittedData.Datefin }}</td>
                                       </tr>
                                       <tr>
                                         <td>
-                                          <div class="employment_history relative left-0 line-height-5 pt-4"><!--position.Description--> Description</div>
+                                          <div class="employment_history relative left-0 line-height-5"*ngIf="submittedData && submittedData.description">{{ submittedData.description }}</div>
                                         </td>
                                       </tr>
                                     </tbody>
                                   </table>
                                 </td>
                               </tr>
-                            </ng-container>
-                          </ng-container>
-          
-                          <ng-container >
+                      
                             <tr class="tr_title">
                               <th class="th_title text-blue-500">E D U C A T I O N</th>
                             </tr>
-                            <ng-container >
+
                               <tr>
                                 <td>
                                   <table >
@@ -166,8 +203,8 @@
                                   </table>
                                 </td>
                               </tr>
-                            </ng-container>
-                          </ng-container>
+                          
+                    
                         </tbody>
                       </table>
                     </td>

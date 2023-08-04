@@ -12,7 +12,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
-  submittedData:any;
+  submittedData:any = {};
+
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -29,7 +30,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       role: ['',Validators.required],
       Anneesexperience: [''],
       Nomentreprise:['',Validators.required],
-      Intituléposte:['',Validators.required],
+      Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
       Datefin:['',Validators.required],
       description:[''],
@@ -61,7 +62,15 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
         container.appendChild(nouveauBloc);
       }
     }
+  
+    // Ajouter les données du nouveau bloc à la liste des blocs
+    const nouveauBlocData = this.visualisationForm.value;
+    if (!this.submittedData) {
+      this.submittedData = { blocs: [] };
+    }
+    this.submittedData.blocs.push(nouveauBlocData);
   }
+  
   ajouterBlocEdu() {
     const blocExistant = document.querySelector(".blocksEdu") as HTMLElement;
     if (blocExistant) {
@@ -103,8 +112,6 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     }
   }
   onSubmit(): void {
-    
- 
     this.submittedData = this.visualisationForm.value;   
     }
   }
