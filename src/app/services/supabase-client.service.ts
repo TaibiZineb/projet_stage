@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AppUser } from '../model/user.model';
 import { from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Role, Workspace, WorkspaceData } from '../model/user.model';
+import { Role,Workspace,WorkspaceData } from '../model/user.model';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
 @Injectable({
   providedIn: 'root'
@@ -151,20 +151,20 @@ export class SupabaseClientService {
   async insertWorkspaceWithUserRole(id_user: string, idWorkspace: number, idRole: number): Promise<any> {
     try {
       console.log('Insertion dans UserRoleWorkspace:', { id_user, idWorkspace, idRole });
-      const { data, error } = await this.supabase
+      const { data: UserRoleWorkspace, error: UserRoleWorkspaceError } = await this.supabase
         .from('UserRoleWorkspace')
         .insert({
           id_user: id_user,
           idWorkspace: idWorkspace,
           idRole: idRole
-        }).select().single();
-      console.log('Réponse de UserRoleWorkspace:', { data, error });
-
-      if (error !== null) {
-        console.error('Erreur lors de l\'insertion dans UserRoleWorkspace:', error);
-        return { error: error };
+        });
+      console.log('Réponse de UserRoleWorkspace:', { UserRoleWorkspace, UserRoleWorkspaceError });
+  
+      if (UserRoleWorkspaceError !== null) {
+        console.error('Erreur lors de l\'insertion dans UserRoleWorkspace:', UserRoleWorkspaceError);
+        return { error: UserRoleWorkspaceError };
       } else {
-        return data;
+        return UserRoleWorkspace;
       }
     } catch (error) {
       console.error('Erreur lors de l\'insertion dans UserRoleWorkspace:', error);
@@ -177,7 +177,7 @@ export class SupabaseClientService {
         .from('UserRoleWorkspace')
         .select()
         .eq('id_user', userId);
-
+  
       if (error) {
         console.error('Erreur lors de la vérification de l\'espace de travail de l\'utilisateur:', error);
         return false;
@@ -192,38 +192,31 @@ export class SupabaseClientService {
     try {
       console.log('Début de la fonction getWorkspaceByUserId');
       console.log('ID de l\'utilisateur :', userId);
-
       const { data: userWorkspaces, error: workspaceError } = await this.supabase
         .from('UserRoleWorkspace')
         .select('idWorkspace')
         .eq('id_user', userId);
-
+  
       if (workspaceError) {
         console.error('Erreur lors de la récupération de l\'espace de l\'utilisateur :', workspaceError);
         return null;
       }
-
       if (userWorkspaces.length === 0) {
         console.error('Aucun espace de travail associé à cet utilisateur.');
         return null;
       }
-
       const workspaceIds = userWorkspaces.map((userWorkspace) => userWorkspace.idWorkspace);
-
       const { data, error } = await this.supabase
         .from('Workspace')
         .select('idWorkspace, nomEspace, icon')
         .in('idWorkspace', workspaceIds)
         .limit(1);
-
       console.log('Data from Supabase:', data);
       console.log('Error from Supabase:', error);
-
       if (error) {
         console.error('Erreur lors de la récupération de l\'espace de l\'utilisateur :', error);
         return null;
       }
-
       if (data && data.length > 0) {
         const workspaceData: WorkspaceData = data[0];
         if (workspaceData) {
@@ -247,7 +240,4 @@ export class SupabaseClientService {
       return null;
     }
   }
-
-
-
 }

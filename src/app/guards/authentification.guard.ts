@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { Session } from '@supabase/gotrue-js';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationGuard implements CanActivate {
   private canActivateCalled = false;
   constructor(private supabaseAuth: SupabaseClientService, private router: Router) {}
-
   async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -17,9 +15,7 @@ export class AuthentificationGuard implements CanActivate {
     if (this.canActivateCalled) {
       return true;
     }
-
     this.canActivateCalled = true;
-    
     const session: Session | null = await this.supabaseAuth.getSession();
     if (!session) {
       console.log('User not authenticated, redirecting to login page');
