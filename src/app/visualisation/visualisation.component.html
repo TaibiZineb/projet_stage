@@ -209,14 +209,14 @@
           </form>
         </div>
       </div>
-      <div class="visualisationD w-full lg:w-1/2  mx-auto px-4 mb-6 relative">
+      <div class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
         <div class="w-full bg-gray-200 p-4 mt-2">
           <section class="container bg-slate-50" #ref>
             <div class="wrapper templateId2 " id="cv">
               <table class="table_class header_table">
                 <tbody>
                   <tr>
-                    <td class="candidate_details text-left pt-20">
+                    <td class="candidate_details text-left pt-10">
                       <ng-container>
                         <h2 class="text-3xl text-blue-600 font-bold inline-block">
                           FirstName. 
@@ -238,7 +238,7 @@
                   </tr>
                 </tbody>
               </table>
-              <hr class="horizontal_line" />
+              <hr class="horizontal_line bg-slate-950" />
               <table class="table_class table_container">
                 <tbody>
                   <tr>
@@ -254,7 +254,7 @@
                                 <table>
                                   <tbody>
                                     <tr>
-                                      <td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-18 space-x-15 text-blue-600"><!--topskill.Name<--> Name</td>
+                                      <td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600"><!--topskill.Name<--> Name</td>
                                     
                                     </tr>
                                   </tbody>
@@ -273,7 +273,7 @@
                                   <table  class="table_class" style="width: 90%;">
                                     <tbody>
                                       <tr>
-                                        <th class="heading"><!--position.PositionTitle-->PositionTitle </th>
+                                        <th class="heading text-left text-base leading-3 pt-2"><!--position.PositionTitle-->PositionTitle </th>
                                       </tr>
                                       <tr>
                                         <td class="employer_name"><!----> position.CompanyName </td>
@@ -283,7 +283,7 @@
                                       </tr>
                                       <tr>
                                         <td>
-                                          <div class="employment_history"><!--position.Description--> Description</div>
+                                          <div class="employment_history relative left-0 line-height-5 pt-4"><!--position.Description--> Description</div>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -303,13 +303,13 @@
                                   <table >
                                     <tbody>
                                       <tr>
-                                        <th class="heading"><!--edu.Degree-->Degree </th>
+                                        <th class="heading text-left text-base leading-3 pt-2"><!--edu.Degree-->Diplôme </th>
                                       </tr>
                                       <tr>
-                                        <td class="employer_name"><!--edu.School || ''-->School </td>
+                                        <td class="employer_name"><!--edu.School || ''-->Ecole</td>
                                       </tr>
                                       <tr>
-                                        <td class="edu_duration"><!--edu.StartDate + ' ' + edu.EndDate + ' ' + edu.City-->StartDate + ' ' + EndDate + ' ' + City </td>
+                                        <td class="edu_duration"><!--edu.StartDate + ' ' + edu.EndDate + ' ' + edu.City-->StartDate + ' ' + EndDate + ' ' + Ville </td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -335,7 +335,7 @@
                                         <td>
                                           <table  class="table_class">
                                             <tbody>
-                                              <ul class="top_skills_table_ul ul_class">
+                                              <ul class="top_skills_table_ul w-full flex flex-row flex-grow justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
                                                 <li class="top_skills_table_li li_class">
                                                   topskill.Name 
                                                 </li>
@@ -364,7 +364,7 @@
                                           <table >
                                             <tbody>
                                               <tr>
-                                                <th class="heading">lang.Name </th>
+                                                <th class="heading text-left text-base leading-3 pt-2">lang.Name </th>
                                               </tr>
                                               <tr>
                                                 <td class="rightpart_text" >lang.Level </td>
@@ -393,7 +393,7 @@
                                           <table class="table_class">
                                             <tbody>
                                               <tr>
-                                                <th class="heading" lang="en">certif.Name</th>
+                                                <th class="heading text-left text-base leading-3 pt-2" lang="en">certif.Name</th>
                                               </tr>
                                               <tr>
                                                 <td>certif.Date </td>
