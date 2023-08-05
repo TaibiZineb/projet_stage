@@ -14,6 +14,7 @@ export class AdminTemplateComponent implements OnInit {
   users: AppUser[] = [];
   authentificateUser: AppUser | null = null;
   userWorkspace: Workspace | null = null;
+  showNav: boolean = true;
   constructor(public supabaseAuth: SupabaseClientService, public router: Router, private workspaceService: WorkspaceService) {
     this.authentificateUser = null;
   }
@@ -40,6 +41,10 @@ export class AdminTemplateComponent implements OnInit {
       hamburger?.classList.remove("active");
       navMenu?.classList.remove("active");
     }));
+    console.log("ngOnInit called");
+    this.router.events.subscribe(() => {
+      this.showNav = !['/admin/visualisation', '/admin/workspace'].includes(this.router.url);
+    });
   }
   handleLogout(): void {
     this.supabaseAuth.handleLogout();

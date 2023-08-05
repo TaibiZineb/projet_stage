@@ -13,6 +13,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   supabaseKey!: string;
   supabase: any;
   submittedData:any = {};
+  submittedDataArray: any[] = [];
 
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
@@ -50,71 +51,49 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   ngAfterViewInit(): void {
     const addButton = document.getElementById("addButton");
     if (addButton) {
-      addButton.addEventListener("click", this.ajouterBloc.bind(this));
+      addButton.addEventListener("click", () => this.ajouterBloc("blocks", "container"));
+
     }
   }
-  ajouterBloc() {
-    const blocExistant = document.querySelector(".blocks") as HTMLElement;
+  ajouterBloc(nomClasse: string, containerId: string): void {
+    const blocExistant = document.querySelector("." + nomClasse) as HTMLElement;
     if (blocExistant) {
       const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const container = document.getElementById("container");
+      const container = document.getElementById(containerId);
       if (container) {
         container.appendChild(nouveauBloc);
+  
+        // Reset the form controls in the new section
+        const formControls = this.visualisationForm.controls;
+        for (const controlName in formControls) {
+          if (Object.prototype.hasOwnProperty.call(formControls, controlName)) {
+            formControls[controlName].reset();
+          }
+        }
       }
     }
-  
-    // Ajouter les données du nouveau bloc à la liste des blocs
-    const nouveauBlocData = this.visualisationForm.value;
-    if (!this.submittedData) {
-      this.submittedData = { blocs: [] };
-    }
-    this.submittedData.blocs.push(nouveauBlocData);
   }
   
+  
+  ajouterBlocStage() {
+    this.ajouterBloc("blocks", "container");
+  }
   ajouterBlocEdu() {
-    const blocExistant = document.querySelector(".blocksEdu") as HTMLElement;
-    if (blocExistant) {
-      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const containerEdu = document.getElementById("containerEdu");
-      if (containerEdu) {
-        containerEdu.appendChild(nouveauBloc);
-      }
-    }
+    this.ajouterBloc("blocksEdu", "containerEdu");
   }
   ajouterBlocLang() {
-    const blocExistant = document.querySelector(".blocksLang") as HTMLElement;
-    if (blocExistant) {
-      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const containerLang = document.getElementById("containerLang");
-      if (containerLang) {
-        containerLang.appendChild(nouveauBloc);
-      }
-    }
+    this.ajouterBloc("blocksLang", "containerLang");
   }
   ajouterBlocCertif() {
-    const blocExistant = document.querySelector(".blocksCertif") as HTMLElement;
-    if (blocExistant) {
-      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const containerCertif = document.getElementById("containerCertif");
-      if (containerCertif) {
-        containerCertif.appendChild(nouveauBloc);
-      }
-    }
+    this.ajouterBloc("blocksCertif", "containerCertif");
   }
   ajouterBlocCopet() {
-    const blocExistant = document.querySelector(".blocksCopet") as HTMLElement;
-    if (blocExistant) {
-      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const containerCopet = document.getElementById("containerCopet");
-      if (containerCopet) {
-        containerCopet.appendChild(nouveauBloc);
-      }
-    }
+    this.ajouterBloc("blocksCopet", "containerCopet");
   }
   onSubmit(): void {
     this.submittedData = this.visualisationForm.value;   
-    }
   }
+}
 
 
 

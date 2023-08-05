@@ -54,12 +54,12 @@
     </nav>
   </div>
 </nav>
-<div class="navbarmenu flex flex-wrap mx-auto">
+<div class="navbarmenu flex flex-wrap mx-auto justify-between" *ngIf="showNav">
   <menu class="bg-gray-100 hidden lg:flex">
 		<ul class="overflow-y-auto overflow-x-hidden text-base tracking-tighter">
       <li class="hidden-link h-auto border-t list-none relative w-full py-2">
     
-				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord
+				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord.
 				</a>
 			</li>
       <li class="hidden-link h-auto border-t list-none relative w-full py-2">
@@ -87,7 +87,7 @@
 
 		</ul>
   </menu>
-  <div class="flex flex-wrap ">
+  <div class="flex flex-wrap justify-end ">
     <div class="px-4 mb-6 relative text-right">
       <p id="box">{{ currentDate }}</p>
     </div>

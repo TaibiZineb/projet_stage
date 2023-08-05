@@ -1,8 +1,11 @@
 
 <div class="flex">
-  <div class="hidden lg:flex  w-1/12"></div>
-  <div class=" mx-auto px-4 mb-6 relative">
+  <div class=" mx-auto px-4 mb-6 relative w-full">
     <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
+    <div class="flex mt-4 justify-end">
+      <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/dashboard"><svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+       </a>
+    </div>
     <div class="flex flex-wrap">
       <div class="formVisualisation  w-full lg:w-1/2 mx-auto px-4 mb-6 relative">
         <div class="w-full bg-slate-100 p-4 mt-2">
@@ -66,7 +69,7 @@
                       <div class="accordion__content px-3 py-1">
                         <!--Nom de l'entreprise & Intitulé du poste-->
                         <div class="flex flex-wrap -mx-3 mb-6">
-                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                          <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
                             <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
                          
@@ -102,7 +105,8 @@
                     </details> 
                   </div>
                 </div>
-                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc()">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc('blocks', 'container')">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+
             </section>
             <!--Éducation-->
             <section class="Education">
@@ -239,7 +243,7 @@
       </div>
       <div class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
         <div class="w-full bg-gray-200 p-4 mt-2">
-          <section class=" bg-slate-50" #ref>
+          <section class=" bg-slate-50">
             <div class="wrapper templateId2 " id="cv">
               <table class="table_class header_table">
                 <tbody>
@@ -283,6 +287,7 @@
                                 </table>
                               </td>
                             </tr>
+                            <!--H I S T O R I Q U E  D E  L ' E M P L O I-->
                             <tr>
                               <th class="th_title text-blue-500 text-xs">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th>
                             </tr>
@@ -290,8 +295,8 @@
                               <td>
                                 <table  class="table_class">
                                   <tbody>
-                                    <tr>
-                                      <th class="heading text-left text-base leading-3 pt-2"  *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th>
+                                    <tr >
+                                      <th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th>
                                     </tr>
                                     <tr>
                                         <td class="employer_name" *ngIf="submittedData && submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td>
@@ -435,6 +440,4 @@
     </div>
     
   </div>
-
- 
 </div>
