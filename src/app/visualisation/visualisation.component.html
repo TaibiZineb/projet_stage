@@ -95,14 +95,18 @@
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
                             <div class="flex items-center">
                               <input formControlName="Datefin" 
-                                    class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
-                                    id="grid-Datefin" 
-                                    type="month">
-                              <label class="block text-gray-700 text-xs font-bold ml-2">
-                                <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" formControlName="present">
-                                <span class="ml-2">Présent</span>
+                                     *ngIf="!isDateFinChecked()"
+                                     class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
+                                     id="grid-Datefin" 
+                                     type="month">
+                              <span *ngIf="isDateFinChecked()">Jusqu'à présent</span>
+                              <label class="ml-2 text-sm text-gray-700">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present">
+                                Jusqu'à présent
                               </label>
                             </div>
+                            
+                            
                             <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                         </div>
@@ -113,13 +117,11 @@
                             <textarea id="description" formControlName="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
                           </div>
                         </div>
-                      
                       </div>
                     </details> 
                   </div>
                 </div>
                 <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc('blocks', 'container')">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
-
             </section>
             <!--Éducation-->
             <section class="Education">
@@ -183,7 +185,6 @@
                   <h6 class="text-lg font-bold text-center">Aucune compétence prédéfinie trouvée.</h6>
                   <p class="text-center">Mais vous pouvez toujours ajouter des compétences pour le candidat.</p>
                 </div>-->
-              
                 <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocCopet()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
                 <div class="flex items-center">
                   <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -266,7 +267,6 @@
                           {{ submittedData.firstName.charAt(0).toUpperCase() + '.' || '' }}
                         </h2>
                         <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.lastName">
-                          <!--candidateDetails.LastName--> 
                           {{ submittedData.lastName.charAt(0).toUpperCase() + '.' || '' }}
                         </h2>
                       <h3 class="text-xl text-blue-500" *ngIf="submittedData && submittedData.role">{{ submittedData.role }}</h3>
@@ -299,7 +299,6 @@
                                 </table>
                               </td>
                             </tr>
-                            <!--H I S T O R I Q U E  D E  L ' E M P L O I-->
                             <tr>
                               <th class="th_title text-blue-500 text-xs">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th>
                             </tr>
@@ -325,7 +324,6 @@
                                 </table>
                               </td>
                             </tr>
-                      
                             <tr class="tr_title">
                               <th class="th_title text-blue-500 text-xs">E D U C A T I O N</th>
                             </tr>
@@ -346,8 +344,6 @@
                                   </table>
                                 </td>
                               </tr>
-                          
-                    
                         </tbody>
                       </table>
                     </td>
@@ -374,21 +370,17 @@
                                           </table>
                                         </td>
                                       </tr>
-                                 
                                   </tbody>
                                 </table>
-                              
                             </td>
                           </tr>
                           <tr>
                             <td>
-                              
                                 <table class="table_class">
                                   <tbody>
                                     <tr>
                                       <th class="th_title text-blue-500 text-xs">L A N G U A G E S</th>
-                                    </tr>
-                               
+                                    </tr>                              
                                       <tr>
                                         <td>
                                           <table >
@@ -403,21 +395,17 @@
                                           </table>
                                         </td>
                                       </tr>
-                                   
                                   </tbody>
                                 </table>
-                              
                             </td>
                           </tr>
                           <tr>
                             <td>
-                              <ng-container >
                                 <table class="table_class">
                                   <tbody>
                                     <tr>
                                       <th class="th_title text-blue-500 text-xs">C E R T I F I C A T I O N S</th>
                                     </tr>
-                                    <ng-container >
                                       <tr >
                                         <td>
                                           <table class="table_class">
@@ -432,10 +420,8 @@
                                           </table>
                                         </td>
                                       </tr>
-                                    </ng-container>
                                   </tbody>
                                 </table>
-                              </ng-container>
                             </td>
                           </tr>
                         </tbody>
@@ -447,9 +433,7 @@
             </div>
           </section>
         </div>
-      
       </div>
     </div>
-    
   </div>
 </div>
