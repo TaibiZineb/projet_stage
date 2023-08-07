@@ -1,8 +1,11 @@
 
 <div class="flex">
-  <div class="hidden lg:flex  w-1/12"></div>
-  <div class=" mx-auto px-4 mb-6 relative">
+  <div class=" mx-auto px-4 mb-6 relative w-full">
     <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
+    <div class="flex mt-4 justify-end">
+      <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/dashboard"><svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+       </a>
+    </div>
     <div class="flex flex-wrap">
       <div class="formVisualisation  w-full lg:w-1/2 mx-auto px-4 mb-6 relative">
         <div class="w-full bg-slate-100 p-4 mt-2">
@@ -52,227 +55,323 @@
               </section>
             </div>
             </section>
+            <!--Historique professionnel-->
             <section class="Historique professionnel">
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
               </div>
+                <div id="container">
+                  <div class="blocks">
+                    <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
+                      <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage</summary>
+                      <div class="accordion__content px-3 py-1">
+                        <!--Nom de l'entreprise & Intitulé du poste-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
+                            <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise" >
+                            <div *ngIf="visualisationForm.get('Nomentreprise')?.touched && visualisationForm.get('Nomentreprise')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                          </div>
+                          <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
+                            <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
+                            <div *ngIf="visualisationForm.get('Intituleposte')?.touched && visualisationForm.get('Intituleposte')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                          </div>
+                        </div>
+                        <!--Date debut & fin-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datedebut">*Date de début</label>
+                            <input formControlName="Datedebut" 
+                                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
+                                  id="grid-Datedebut" 
+                                  type="month">
+                            <div *ngIf="visualisationForm.get('Datedebut')?.touched && visualisationForm.get('Datedebut')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                          </div>
+                                                
+                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
+                            <div class="flex items-center">
+                              <input formControlName="Datefin" 
+                                     *ngIf="!isDateFinChecked()"
+                                     class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
+                                     id="grid-Datefin" 
+                                     type="month"
+                                     [min]="getMinimumDate()">
+                              <span *ngIf="isDateFinChecked()">Jusqu'à présent</span>
+                              <label class="ml-2 text-sm text-gray-700">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present">
+                                Jusqu'à présent
+                              </label>
+                            </div>
+                            <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                          </div>
+                        </div>
+                        <!--Description-->
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                          <div class="w-full  px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Description</label>
+                            <textarea id="description" formControlName="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </details> 
+                  </div>
+                </div>
+                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc('blocks', 'container')">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                
             </section>
-
-              <div class="flex flex-wrap my-4 justify-center" *ngIf="!submittedData">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">Confirmer</button>
+            <!--Éducation-->
+            <section class="Education">
+              <div class="flex flex-row">
+                <svg width="24px" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.93691 15.6016C4.15447 15.6016 4.33085 15.1538 4.33085 14.6016C4.33085 14.0493 4.15447 13.6016 3.93691 13.6016C3.71934 13.6016 3.54297 14.0493 3.54297 14.6016C3.54297 15.1538 3.71934 15.6016 3.93691 15.6016Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.46077 20.0016L3.73913 20.4016L3.0175 20.0016L1.93504 20.4016L1.57422 19.6016C1.57422 19.6016 3.91908 18.4541 3.93786 15.6016C3.93786 15.6016 5.34309 18.669 4.46077 20.0016Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.51367 9.60156V14.77C5.51367 15.2702 5.81926 15.7179 6.28053 15.8936L10.7101 17.5802C11.4419 17.8588 12.217 18.0016 12.9985 18.0016H12.9985C13.78 18.0016 14.5552 17.8588 15.2869 17.5802L19.7165 15.8936C20.1778 15.7179 20.4834 15.2702 20.4834 14.77V9.60156" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9985 3.60156L1.57422 8.00156L12.9985 12.4016L24.4227 8.00156L12.9985 3.60156Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9994 8.40156C13.217 8.40156 13.3933 8.22248 13.3933 8.00156C13.3933 7.78065 13.217 7.60156 12.9994 7.60156C12.7818 7.60156 12.6055 7.78065 12.6055 8.00156C12.6055 8.22248 12.7818 8.40156 12.9994 8.40156Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9981 8L3.9375 8.91034V13.6" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <p class="text-blue-600 p-4 mt-2">Éducation</p>
               </div>
+              <div id="containerEdu">
+                <div class="blocksEdu">
+                  <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1">
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">École/Faculté</summary>
+                    <div class="accordion__content px-3 py-1">
+                      <!-- École -->
+                      <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">École</label>
+                          <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">Diplôme</label>
+                          <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
+                        </div>
+                      </div>
+                      <!-- ville & date debut & date fin -->
+                      <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-VilleE">Ville</label>
+                          <input formControlName="VilleE" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-villeE" type="text" placeholder="Ville">
+                        </div>
+                        <div class="w-full md:w-1/3 px-3">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-DatedebutF">Date début</label>
+                          <input formControlName="DatedebutF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatedebutF" type="date">
+                        </div>
+                        <div class="w-full md:w-1/3 px-3">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-datefinF">Date fin</label>
+                          <input formControlName="datefinF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-datefinF" type="date">
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+              <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocEdu()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
+            </section>
+            <section class="Competences">
+              <div class="flex flex-row">
+                <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_48941_20242)"><path d="M19 0H14C13.9693 0 13.9407 0.0076904 13.9103 0.0090942L13.9102 0.0083007L13.9006 0.0100707C13.7276 0.0187377 13.5621 0.0510863 13.4033 0.101135L8.86035 0.933106C8.43488 0.965881 8.0459 1.13702 7.72955 1.40448L7.72754 1.40137L4.05762 3.7876C3.39551 4.20117 3 4.91455 3 5.6958C3 6.1416 3.13086 6.57275 3.35938 6.91357L12.0162 22.1604C12.0995 23.1873 12.9523 24 14 24H19C20.1025 24 21 23.103 21 22V2C21 0.896973 20.1025 0 19 0ZM8.98828 1.92334L12.1171 1.35199C12.0464 1.55634 12 1.77197 12 2V17.3488L8.06152 3.23535C7.9668 2.94189 8.01074 2.62695 8.18262 2.37109C8.35449 2.11475 8.62891 1.9541 8.98828 1.92334ZM4 5.6958C4 5.26172 4.21973 4.86523 4.59473 4.63086L7.01807 3.05566C7.0285 3.21381 7.05481 3.37091 7.10449 3.52344L11.473 19.1791L4.20996 6.38916C4.07227 6.18311 4 5.94336 4 5.6958ZM20 22C20 22.5513 19.5518 23 19 23H14C13.4482 23 13 22.5513 13 22V2C13 1.58691 13.2518 1.23157 13.6101 1.07928L14.0444 1H19C19.5518 1 20 1.44873 20 2V22Z" fill="#0056FC" stroke="#0056FC" stroke-width="0.3"></path><path d="M16.5 18C15.6729 18 15 18.6729 15 19.5C15 20.3271 15.6729 21 16.5 21C17.3271 21 18 20.3271 18 19.5C18 18.6729 17.3271 18 16.5 18ZM16.5 20C16.2246 20 16 19.7759 16 19.5C16 19.2241 16.2246 19 16.5 19C16.7754 19 17 19.2241 17 19.5C17 19.7759 16.7754 20 16.5 20Z" fill="#0056FC" stroke="#0056FC" stroke-width="0.3"></path><path d="M18.5 2H14.5C14.2236 2 14 2.22363 14 2.5V5.5C14 5.77637 14.2236 6 14.5 6H18.5C18.7764 6 19 5.77637 19 5.5V2.5C19 2.22363 18.7764 2 18.5 2ZM18 5H15V3H18V5Z" fill="#0056FC" stroke="#0056FC" stroke-width="0.3"></path><path d="M18.5 7H14.5C14.2236 7 14 7.22363 14 7.5V10.5C14 10.7764 14.2236 11 14.5 11H18.5C18.7764 11 19 10.7764 19 10.5V7.5C19 7.22363 18.7764 7 18.5 7ZM18 10H15V8H18V10Z" fill="#0056FC" stroke="#0056FC" stroke-width="0.3"></path><path d="M18.5 12H14.5C14.2236 12 14 12.2236 14 12.5V15.5C14 15.7764 14.2236 16 14.5 16H18.5C18.7764 16 19 15.7764 19 15.5V12.5C19 12.2236 18.7764 12 18.5 12ZM18 15H15V13H18V15Z" fill="#0056FC" stroke="#0056FC" stroke-width="0.3"></path></g><defs><clipPath id="clip0_48941_20242"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
+                <p class="text-blue-600 p-4 mt-2">Meilleures compétences</p>
+              </div>
+              <div id="containerCopet">
+                <div class="blocksCopet">
+                  <div class=" flex flex-wrap -mx-3 mb-6">
+                    <div class="rounded w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <input formControlName="titre_comp" class="appearance-none  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-compétences" type="text" placeholder="compétence"><i class="bi bi-x"></i>
+                    </div>
+                  </div>
+                </div>
+                <!--   <div class="border-solid border-2 rounded border-gray-200 justify-center mx-auto">
+                  <div class="w-25 h-auto justify-center mx-auto flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 120 120" width="120" height="120" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;"><defs><clipPath id="__lottie_element_92"><rect width="120" height="120" x="0" y="0"></rect></clipPath></defs><g clip-path="url(#__lottie_element_92)"><g transform="matrix(1,0,0,1,0,0)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><g opacity="1" transform="matrix(1,0,0,1,60,83.33000183105469)"><path fill="rgb(204,209,217)" fill-opacity="1" d=" M-32.143001556396484,-24.17099952697754 C-32.143001556396484,-24.17099952697754 -32.143001556396484,11.310999870300293 -32.143001556396484,11.310999870300293 C-32.143001556396484,11.310999870300293 -0.0010000000474974513,24.17099952697754 -0.0010000000474974513,24.17099952697754 C-0.0010000000474974513,24.17099952697754 32.14400100708008,11.310999870300293 32.14400100708008,11.310999870300293 C32.14400100708008,11.310999870300293 32.14400100708008,-24.17099952697754 32.14400100708008,-24.17099952697754 C32.14400100708008,-24.17099952697754 -32.143001556396484,-24.17099952697754 -32.143001556396484,-24.17099952697754z"></path></g><g opacity="1" transform="matrix(1,0,0,1,76.0719985961914,83.33000183105469)"><path fill="rgb(230,233,236)" fill-opacity="1" d=" M-16.07200050354004,24.17099952697754 C-16.07200050354004,24.17099952697754 16.07200050354004,11.312000274658203 16.07200050354004,11.312000274658203 C16.07200050354004,11.312000274658203 16.07200050354004,-24.17099952697754 16.07200050354004,-24.17099952697754 C16.07200050354004,-24.17099952697754 -16.07200050354004,-24.17099952697754 -16.07200050354004,-24.17099952697754 C-16.07200050354004,-24.17099952697754 -16.07200050354004,24.17099952697754 -16.07200050354004,24.17099952697754z"></path></g><g opacity="1" transform="matrix(1,0,0,1,60,55.74800109863281)"><path fill="rgb(244,244,244)" fill-opacity="1" d=" M12.855999946594238,-23.249000549316406 C12.855999946594238,-23.249000549316406 0,-16.604999542236328 0,-16.604999542236328 C0,-16.604999542236328 -12.857000350952148,-23.249000549316406 -12.857000350952148,-23.249000549316406 C-12.857000350952148,-23.249000549316406 -45,-6.640999794006348 -45,-6.640999794006348 C-45,-6.640999794006348 -32.14400100708008,0.0010000000474974513 -32.14400100708008,0.0010000000474974513 C-32.14400100708008,0.0010000000474974513 -45,6.644999980926514 -45,6.644999980926514 C-45,6.644999980926514 -12.857000350952148,23.249000549316406 -12.857000350952148,23.249000549316406 C-12.857000350952148,23.249000549316406 0,16.608999252319336 0,16.608999252319336 C0,16.608999252319336 12.855999946594238,23.249000549316406 12.855999946594238,23.249000549316406 C12.855999946594238,23.249000549316406 45,6.644999980926514 45,6.644999980926514 C45,6.644999980926514 32.143001556396484,0.0010000000474974513 32.143001556396484,0.0010000000474974513 C32.143001556396484,0.0010000000474974513 45,-6.640999794006348 45,-6.640999794006348 C45,-6.640999794006348 12.855999946594238,-23.249000549316406 12.855999946594238,-23.249000549316406z"></path></g><g opacity="1" transform="matrix(1,0,0,1,60,55.75)"><path fill="rgb(204,209,217)" fill-opacity="1" d=" M-0.0010000000474974513,-16.60700035095215 C-0.0010000000474974513,-16.60700035095215 -32.143001556396484,-0.0020000000949949026 -32.143001556396484,-0.0020000000949949026 C-32.143001556396484,-0.0020000000949949026 -0.0010000000474974513,16.60700035095215 -0.0010000000474974513,16.60700035095215 C-0.0010000000474974513,16.60700035095215 32.14400100708008,-0.0020000000949949026 32.14400100708008,-0.0020000000949949026 C32.14400100708008,-0.0020000000949949026 -0.0010000000474974513,-16.60700035095215 -0.0010000000474974513,-16.60700035095215z"></path></g></g></g><g transform="matrix(1,0,0,1,-0.75,-0.75)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,67.87000274658203,37.63100051879883)"><path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke-dasharray=" 2.028 2.028" stroke-dashoffset="0" stroke="rgb(159,159,159)" stroke-opacity="1" stroke-width="1" d=" M-7.382999897003174,24.760000228881836 C-11.39799976348877,21.21500015258789 -18.527000427246094,13.472999572753906 -11.651000022888184,8.017999649047852"></path></g></g><g transform="matrix(1,0,0,1,-4.2891845703125,31.45743179321289)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><g opacity="1" transform="matrix(1,0,0,1,57.957000732421875,10.552000045776367)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M0,-3.614000082015991 C1.996000051498413,-3.614000082015991 3.614000082015991,-1.996000051498413 3.614000082015991,0 C3.614000082015991,1.996000051498413 1.996000051498413,3.614000082015991 0,3.614000082015991 C-1.996000051498413,3.614000082015991 -3.614000082015991,1.996000051498413 -3.614000082015991,0 C-3.614000082015991,-1.996000051498413 -1.996000051498413,-3.614000082015991 0,-3.614000082015991z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="rgb(134,134,134)" stroke-opacity="1" stroke-width="0.7" d=" M0,-3.614000082015991 C1.996000051498413,-3.614000082015991 3.614000082015991,-1.996000051498413 3.614000082015991,0 C3.614000082015991,1.996000051498413 1.996000051498413,3.614000082015991 0,3.614000082015991 C-1.996000051498413,3.614000082015991 -3.614000082015991,1.996000051498413 -3.614000082015991,0 C-3.614000082015991,-1.996000051498413 -1.996000051498413,-3.614000082015991 0,-3.614000082015991z"></path></g><g opacity="1" transform="matrix(1,0,0,1,64.1449966430664,9.605999946594238)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M0.0010000000474974513,-2.5739998817443848 C1.4220000505447388,-2.5739998817443848 2.5739998817443848,-1.4220000505447388 2.5739998817443848,0 C2.5739998817443848,1.4220000505447388 1.4220000505447388,2.5739998817443848 0.0010000000474974513,2.5739998817443848 C-1.4210000038146973,2.5739998817443848 -2.5739998817443848,1.4220000505447388 -2.5739998817443848,0 C-2.5739998817443848,-1.4220000505447388 -1.4210000038146973,-2.5739998817443848 0.0010000000474974513,-2.5739998817443848z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="rgb(134,134,134)" stroke-opacity="1" stroke-width="0.7" d=" M0.0010000000474974513,-2.5739998817443848 C1.4220000505447388,-2.5739998817443848 2.5739998817443848,-1.4220000505447388 2.5739998817443848,0 C2.5739998817443848,1.4220000505447388 1.4220000505447388,2.5739998817443848 0.0010000000474974513,2.5739998817443848 C-1.4210000038146973,2.5739998817443848 -2.5739998817443848,1.4220000505447388 -2.5739998817443848,0 C-2.5739998817443848,-1.4220000505447388 -1.4210000038146973,-2.5739998817443848 0.0010000000474974513,-2.5739998817443848z"></path></g><g opacity="1" transform="matrix(1,0,0,1,62.400001525878906,13.144000053405762)"><path fill="rgb(134,134,134)" fill-opacity="1" d=" M-0.0010000000474974513,-1.8009999990463257 C0.9940000176429749,-1.8009999990463257 1.8009999990463257,-0.9950000047683716 1.8009999990463257,-0.0010000000474974513 C1.8009999990463257,0.9929999709129333 0.9940000176429749,1.8009999990463257 -0.0010000000474974513,1.8009999990463257 C-0.9950000047683716,1.8009999990463257 -1.8009999990463257,0.9929999709129333 -1.8009999990463257,-0.0010000000474974513 C-1.8009999990463257,-0.9950000047683716 -0.9950000047683716,-1.8009999990463257 -0.0010000000474974513,-1.8009999990463257z"></path></g></g></g></g></svg>
+                  </div>
+                  <h6 class="text-lg font-bold text-center">Aucune compétence prédéfinie trouvée.</h6>
+                  <p class="text-center">Mais vous pouvez toujours ajouter des compétences pour le candidat.</p>
+                </div>-->
+             
+                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocCopet()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                <!--<div class="flex items-center">
+                  <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="link-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher les compétences trouvées <i class="bi bi-question-circle-fill"></i></label>
+                </div>-->
+              </div>
+            </section>
+            <section class="Langues">
+              <div class="flex flex-row">
+                <svg width="24px" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.9803 6.63122H3.61249C3.37649 6.63122 3.15016 6.53747 2.98328 6.3706C2.81641 6.20372 2.72266 5.97739 2.72266 5.74139C2.72266 5.50539 2.81641 5.27906 2.98328 5.11219C3.15016 4.94531 3.37649 4.85156 3.61249 4.85156H10.9803C11.2163 4.85156 11.4426 4.94531 11.6095 5.11219C11.7764 5.27906 11.8701 5.50539 11.8701 5.74139C11.8701 5.97739 11.7764 6.20372 11.6095 6.3706C11.4426 6.53747 11.2163 6.63122 10.9803 6.63122Z" fill="#0056FC"></path><path d="M9.98788 11.4519C8.47923 11.4463 7.03397 10.8445 5.96719 9.77772C4.9004 8.71093 4.29859 7.26567 4.29297 5.75702C4.29297 5.52102 4.38672 5.29469 4.55359 5.12781C4.72047 4.96094 4.9468 4.86719 5.1828 4.86719C5.4188 4.86719 5.64513 4.96094 5.812 5.12781C5.97888 5.29469 6.07263 5.52102 6.07263 5.75702C6.07731 6.79397 6.49131 7.78711 7.22455 8.52035C7.95779 9.25359 8.95094 9.66759 9.98788 9.67227C10.2239 9.67227 10.4502 9.76602 10.6171 9.9329C10.784 10.0998 10.8777 10.3261 10.8777 10.5621C10.8777 10.7981 10.784 11.0244 10.6171 11.1913C10.4502 11.3582 10.2239 11.4519 9.98788 11.4519Z" fill="#0056FC"></path><path d="M4.60467 11.4519C4.36868 11.4519 4.14234 11.3582 3.97547 11.1913C3.80859 11.0244 3.71484 10.7981 3.71484 10.5621C3.71484 10.3261 3.80859 10.0998 3.97547 9.9329C4.14234 9.76602 4.36868 9.67227 4.60467 9.67227C5.64162 9.66759 6.63477 9.25359 7.36801 8.52035C8.10125 7.78711 8.51525 6.79397 8.51993 5.75702C8.51993 5.52102 8.61368 5.29469 8.78056 5.12781C8.94743 4.96094 9.17376 4.86719 9.40976 4.86719C9.64576 4.86719 9.87209 4.96094 10.039 5.12781C10.2058 5.29469 10.2996 5.52102 10.2996 5.75702C10.294 7.26567 9.69216 8.71093 8.62537 9.77772C7.55859 10.8445 6.11333 11.4463 4.60467 11.4519Z" fill="#0056FC"></path><path d="M7.29608 6.62876C7.06008 6.62876 6.83375 6.53501 6.66688 6.36813C6.5 6.20126 6.40625 5.97493 6.40625 5.73893V4.03046C6.40625 3.79446 6.5 3.56813 6.66688 3.40125C6.83375 3.23437 7.06008 3.14062 7.29608 3.14062C7.53208 3.14062 7.75841 3.23437 7.92529 3.40125C8.09216 3.56813 8.18591 3.79446 8.18591 4.03046V5.73893C8.18591 5.97493 8.09216 6.20126 7.92529 6.36813C7.75841 6.53501 7.53208 6.62876 7.29608 6.62876Z" fill="#0056FC"></path><path d="M18.1881 21H9.21864C8.47289 21 7.75768 20.7038 7.23036 20.1764C6.70303 19.6491 6.40678 18.9339 6.40678 18.1881V14.5932H2.81186C2.06611 14.5932 1.3509 14.297 0.823576 13.7696C0.296249 13.2423 0 12.5271 0 11.7814L0 2.81186C0 2.06611 0.296249 1.3509 0.823576 0.823576C1.3509 0.296249 2.06611 0 2.81186 0L11.7814 0C12.5271 0 13.2423 0.296249 13.7696 0.823576C14.297 1.3509 14.5932 2.06611 14.5932 2.81186V6.40678H18.1881C18.9339 6.40678 19.6491 6.70303 20.1764 7.23036C20.7038 7.75768 21 8.47289 21 9.21864V18.1881C21 18.9339 20.7038 19.6491 20.1764 20.1764C19.6491 20.7038 18.9339 21 18.1881 21ZM2.81186 1.77966C2.53811 1.77966 2.27556 1.88841 2.08199 2.08199C1.88841 2.27556 1.77966 2.53811 1.77966 2.81186V11.7814C1.77966 12.0551 1.88841 12.3177 2.08199 12.5112C2.27556 12.7048 2.53811 12.8136 2.81186 12.8136H7.29661C7.53261 12.8136 7.75894 12.9073 7.92582 13.0742C8.09269 13.2411 8.18644 13.4674 8.18644 13.7034V18.1881C8.18644 18.4619 8.29519 18.7244 8.48877 18.918C8.68234 19.1116 8.94489 19.2203 9.21864 19.2203H18.1881C18.4619 19.2203 18.7244 19.1116 18.918 18.918C19.1116 18.7244 19.2203 18.4619 19.2203 18.1881V9.21864C19.2203 8.94489 19.1116 8.68234 18.918 8.48877C18.7244 8.29519 18.4619 8.18644 18.1881 8.18644H13.7034C13.4674 8.18644 13.2411 8.09269 13.0742 7.92582C12.9073 7.75894 12.8136 7.53261 12.8136 7.29661V2.81186C12.8136 2.53811 12.7048 2.27556 12.5112 2.08199C12.3177 1.88841 12.0551 1.77966 11.7814 1.77966H2.81186Z" fill="#0056FC"></path><path d="M11.4604 17.5696C11.3459 17.5691 11.2324 17.5473 11.1258 17.5056C10.9075 17.417 10.7332 17.2456 10.6411 17.0287C10.549 16.8119 10.5467 16.5673 10.6346 16.3488L12.877 10.7927C12.9432 10.6278 13.0572 10.4865 13.2044 10.387C13.3515 10.2875 13.5251 10.2344 13.7028 10.2344C13.8804 10.2344 14.054 10.2875 14.2012 10.387C14.3483 10.4865 14.4623 10.6278 14.5285 10.7927L16.7709 16.3488C16.8146 16.4572 16.8365 16.5732 16.8354 16.6901C16.8343 16.807 16.8101 16.9226 16.7644 17.0301C16.7186 17.1377 16.6521 17.2352 16.5686 17.3171C16.4851 17.399 16.3864 17.4636 16.2779 17.5073C16.1695 17.551 16.0535 17.573 15.9366 17.5718C15.8197 17.5707 15.7041 17.5466 15.5966 17.5008C15.489 17.455 15.3915 17.3885 15.3096 17.305C15.2277 17.2216 15.1631 17.1228 15.1194 17.0144L13.6956 13.5013L12.2719 17.0144C12.2062 17.1764 12.0941 17.3155 11.9498 17.4143C11.8055 17.513 11.6353 17.5671 11.4604 17.5696Z" fill="#0056FC"></path><path d="M15.2553 16.3383H12.1515C11.9156 16.3383 11.6892 16.2445 11.5223 16.0776C11.3555 15.9108 11.2617 15.6844 11.2617 15.4484C11.2617 15.2124 11.3555 14.9861 11.5223 14.8192C11.6892 14.6523 11.9156 14.5586 12.1515 14.5586H15.2553C15.4913 14.5586 15.7176 14.6523 15.8845 14.8192C16.0514 14.9861 16.1451 15.2124 16.1451 15.4484C16.1451 15.6844 16.0514 15.9108 15.8845 16.0776C15.7176 16.2445 15.4913 16.3383 15.2553 16.3383Z" fill="#0056FC"></path></svg>
+                   <p class="text-blue-600 p-4 mt-2">Langues</p>
+              </div>
+              <div id="containerLang">
+                <div class="blocksLang">
+                  <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Langues
+                    </summary>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">langue</label>
+                        <input formControlName="titre_langue" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-Mcompétences" type="text" placeholder="langue">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
+                        
+                        <select id="niveaulang" formControlName="niveaulang" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500">
+                          <option value="INT">Intermédiaire</option>
+                          <option value="AV">Avancé(e)</option>
+                          <option value="C">Courant</option>
+                          <option value="Bi">Bilingue</option>
+                        </select>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+              <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocLang()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
+            </section>
+            <section class="Certificats">
+              <div class="flex flex-row">
+                <svg width="24px" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.7383 13.7129V18.2188L14.3035 16.6701L15.8688 18.2188V13.7129" stroke="#0056FC" stroke-width="1.4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.3049 14.3207C15.6016 14.3207 16.6528 13.2696 16.6528 11.9729C16.6528 10.6762 15.6016 9.625 14.3049 9.625C13.0082 9.625 11.957 10.6762 11.957 11.9729C11.957 13.2696 13.0082 14.3207 14.3049 14.3207Z" stroke="#0056FC" stroke-width="1.4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.7393 15.0878H2.17393C1.52559 15.0878 1 14.5622 1 13.9139V2.95714C1 2.30879 1.52559 1.7832 2.17393 1.7832H15.0871L19.0003 5.69636V13.9139C19.0003 14.5622 18.4747 15.0878 17.8264 15.0878H15.8698" stroke="#0056FC" stroke-width="1.4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M19.001 5.69636H16.2618C15.6135 5.69636 15.0879 5.17077 15.0879 4.52243V1.7832" stroke="#0056FC" stroke-width="1.4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.34766 12.7399C4.03245 12.2263 4.9129 11.0523 4.9129 10.392C4.9129 9.73166 4.32593 9.60938 4.13028 9.60938C3.93462 9.60938 3.34766 10.0496 3.34766 10.7833C3.34766 11.517 4.39931 12.7399 4.9129 12.7399C5.4265 12.7399 5.84226 11.1746 6.08684 11.1746C6.3314 11.1746 6.5026 12.7399 6.86946 12.7399C7.23631 12.7399 8.82602 11.1746 8.82602 11.1746" stroke="#0056FC" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                   <p class="text-blue-600 p-4 mt-2">Certificats</p>
+              </div>
+              <div id="containerCertif">
+                <div class="blocksCertif">
+                  <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Certificats
+                    </summary>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Certificat</label>
+
+                        <input formControlName="titre_certificat" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date</label>
+                        <input formControlName="dateCert" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-dateCert" type="date">
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+              <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocCertif()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
+            </section>
+            <div class="flex flex-wrap my-4 justify-center">
+              <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">Confirmer</button>
+            </div>
           </form>
         </div>
       </div>
       <div class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
         <div class="w-full bg-gray-200 p-4 mt-2">
-          <section class=" bg-slate-50" #ref>
+          <section class=" bg-slate-50">
             <div class="wrapper templateId2 " id="cv">
               <table class="table_class header_table">
                 <tbody>
-                  <tr>
-                    <td class="candidate_details text-left pt-10">
-                        <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.firstName">
-                          {{ submittedData.firstName.charAt(0).toUpperCase() + '.' || '' }}
-                        </h2>
-                        <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.lastName">
-                          <!--candidateDetails.LastName--> 
-                          {{ submittedData.lastName.charAt(0).toUpperCase() + '.' || '' }}
-                        </h2>
-                      <h3 class="text-xl text-blue-500" *ngIf="submittedData && submittedData.role">{{ submittedData.role }}</h3>
-                      <h3 class="text-xl text-slate-400 my-1 font-normal"  *ngIf="submittedData && submittedData.Anneesexperience">
-                        {{ submittedData.Anneesexperience }}
-                      </h3>
-                      <br />
-                    </td>
-                  </tr>
+                  <tr><td class="candidate_details text-left pt-10">
+                    <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.firstName">{{ submittedData.firstName.charAt(0).toUpperCase() + '.' || '' }}</h2>
+                    <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.lastName">{{ submittedData.lastName.charAt(0).toUpperCase() + '.' || '' }}</h2>
+                    <h3 class="text-xl text-blue-500" *ngIf="submittedData && submittedData.role">{{ submittedData.role }}</h3>
+                    <h3 class="text-xl text-slate-400 my-1 font-normal"  *ngIf="submittedData && submittedData.Anneesexperience">{{ submittedData.Anneesexperience }}</h3>
+                    <br />
+                  </td></tr>
                 </tbody>
               </table>
               <hr class="horizontal_line bg-slate-950" />
               <table class="table_class table_container">
                 <tbody>
-                  <tr>
-                    <td class="leftpart">
-                      <table class="table_class">
-                        <tbody>
-                          <ng-container >
-                            <tr>
-                              <th class="th_title text-blue-500">T O P &nbsp; C O M P É T E N C E S</th>
-                            </tr>
-                            <tr class="top_skills">
-                              <td>
-                                <table>
-                                  <tbody>
-                                    <tr>
-                                      <td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600"><!--topskill.Name<--> Name</td>
-                                    
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </ng-container>
-          
-                          <ng-container >
-                            <tr>
-                              <th class="th_title text-blue-500">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th>
-                            </tr>
-                            <ng-container >
-                              <tr>
-                                <td>
-                                  <table  class="table_class" style="width: 90%;">
-                                    <tbody>
-                                      <tr>
-                                        <th class="heading text-left text-base leading-3 pt-2"><!--position.PositionTitle-->PositionTitle </th>
-                                      </tr>
-                                      <tr>
-                                        <td class="employer_name"><!----> position.CompanyName </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="employment_duration"><!--position.StartDate + ' - ' + position.EndDate-->StartDate + '-' + EndDate </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <div class="employment_history relative left-0 line-height-5 pt-4"><!--position.Description--> Description</div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </ng-container>
-                          </ng-container>
-          
-                          <ng-container >
-                            <tr class="tr_title">
-                              <th class="th_title text-blue-500">E D U C A T I O N</th>
-                            </tr>
-                            <ng-container >
-                              <tr>
-                                <td>
-                                  <table >
-                                    <tbody>
-                                      <tr>
-                                        <th class="heading text-left text-base leading-3 pt-2"><!--edu.Degree-->Diplôme </th>
-                                      </tr>
-                                      <tr>
-                                        <td class="employer_name"><!--edu.School || ''-->Ecole</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="edu_duration"><!--edu.StartDate + ' ' + edu.EndDate + ' ' + edu.City-->StartDate + ' ' + EndDate + ' ' + Ville </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </ng-container>
-                          </ng-container>
-                        </tbody>
-                      </table>
-                    </td>
-                    <td class="rightpart">
-                      <table class="table_class" style="background-color: #FBFBFB; padding: 0 10px 10px;">
-                        <tbody>
-                          <tr>
-                            <td><ng-container>
-                                <table class="other_skills table_class">
-                                  <tbody>
-                                    <tr class="tr_title">
-                                      <th class="th_title text-blue-500">O T H E R &nbsp; S K I L L S</th>
-                                    </tr>
-                                    <ng-container >
-                                      <tr>
-                                        <td>
-                                          <table  class="table_class">
-                                            <tbody>
-                                              <ul class="top_skills_table_ul w-full flex flex-row flex-grow justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
-                                                <li class="top_skills_table_li li_class">
-                                                  topskill.Name 
-                                                </li>
-                                              </ul>
-                                            </tbody>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </ng-container>
-                                  </tbody>
-                                </table>
-                              </ng-container>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <ng-container>
+                  <tr><td class="leftpart">
+                    <table class="table_class">
+                      <tbody>
+                        <tr><th class="th_title text-blue-500 text-xs">T O P &nbsp; C O M P É T E N C E S</th></tr>
+                        <tr class="top_skills"><td>
+                          <table>
+                            <tbody>
+                              <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600"*ngIf="submittedData && submittedData.titre_comp">{{ submittedData.titre_comp }}</td></tr>
+                            </tbody>
+                          </table>
+                        </td></tr>
+                        <tr><th class="th_title text-blue-500 text-xs">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th></tr>
+                        <tr><td>
+                          <table class="table_class">
+                            <tbody>
+                              <tr ><th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th></tr>
+                              <tr><td class="employer_name" *ngIf="submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td></tr>
+                              <tr><td class="employment_duration" *ngIf="submittedData.Datedebut && submittedData.Datefin">{{ submittedData.Datedebut + ' - ' + submittedData.Datefin }}</td></tr>
+                              <tr><td>
+                                <div class="employment_history relative left-0 line-height-5" *ngIf="submittedData.description">{{ submittedData.description }}</div></td></tr>
+                            </tbody>
+                          </table>
+                        </td></tr>
+                        <tr class="tr_title"><th class="th_title text-blue-500 text-xs">E D U C A T I O N</th></tr>
+                        <tr><td>
+                          <table >
+                            <tbody>
+                              <tr><th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.Diplome">{{ submittedData.Diplome }}</th></tr>
+                              <tr><td class="employer_name" *ngIf="submittedData && submittedData.Nom_ecole">{{ submittedData.Nom_ecole }}</td></tr>
+                              <tr><td class="edu_duration" *ngIf="submittedData && submittedData.DatedebutF && submittedData.datefinF">{{ submittedData.DatedebutF + ' ' + submittedData.datefinF +  ' '+ submittedData.VilleE }}</td></tr>
+                            </tbody>
+                          </table>
+                        </td></tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td class="rightpart">
+                    <table class="table_class">
+                      <tbody>
+                        <tr><td>
+                          <table class="other_skills table_class">
+                            <tbody>
+                              <tr class="tr_title"> 
+                                <th class="th_title text-blue-500 text-xs">O T H E R &nbsp; S K I L L S</th></tr>
+                              <tr><td>
                                 <table class="table_class">
                                   <tbody>
-                                    <tr>
-                                      <th class="th_title text-blue-500">L A N G U A G E S</th>
-                                    </tr>
-                                    <ng-container >
-                                      <tr>
-                                        <td>
-                                          <table >
-                                            <tbody>
-                                              <tr>
-                                                <th class="heading text-left text-base leading-3 pt-2">lang.Name </th>
-                                              </tr>
-                                              <tr>
-                                                <td class="rightpart_text" >lang.Level </td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </ng-container>
+                                    <ul class="top_skills_table_ul w-full flex flex-row flex-grow justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
+                                      <li class="top_skills_table_li li_class"  *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}
+                                      </li>
+                                    </ul>
                                   </tbody>
                                 </table>
-                              </ng-container>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <ng-container >
-                                <table class="table_class">
+                              </td></tr>
+                            </tbody>
+                          </table>
+                        </td></tr>
+                        <tr><td>
+                          <table class="table_class">
+                            <tbody>
+                              <tr>
+                                <th class="th_title text-blue-500 text-xs">L A N G U A G E S</th>
+                              </tr>                              
+                              <tr><td>
+                                <table >
                                   <tbody>
-                                    <tr>
-                                      <th class="th_title text-blue-500">C E R T I F I C A T I O N S</th>
-                                    </tr>
-                                    <ng-container >
-                                      <tr >
-                                        <td>
-                                          <table class="table_class">
-                                            <tbody>
-                                              <tr>
-                                                <th class="heading text-left text-base leading-3 pt-2" lang="en">certif.Name</th>
-                                              </tr>
-                                              <tr>
-                                                <td>certif.Date </td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </ng-container>
+                                    <tr><th class="heading text-left text-base leading-3 pt-2"  *ngIf="submittedData && submittedData.titre_langue"> {{ submittedData.titre_langue }}</th></tr>
+                                    <tr><td class="rightpart_text"*ngIf="submittedData && submittedData.niveaulang" > {{ submittedData.niveaulang }}</td></tr>
                                   </tbody>
                                 </table>
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
+                              </td></tr>
+                            </tbody>
+                          </table>
+                        </td></tr>
+                        <tr><td>
+                          <table class="table_class">
+                              <tbody>
+                                <tr><th class="th_title text-blue-500 text-xs">C E R T I F I C A T I O N S</th></tr>
+                                <tr ><td>
+                                  <table class="table_class">
+                                    <tbody>
+                                      <tr><th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.titre_certificat"> {{ submittedData.titre_certificat }}</th></tr>
+                                      <tr><td *ngIf="submittedData && submittedData.dateCert"> {{ submittedData.dateCert }}</td></tr>
+                                    </tbody>
+                                  </table>
+                                </td></tr>
+                              </tbody>
+                          </table>
+                        </td></tr>
+                      </tbody>
+                    </table>
+                  </td></tr>
                 </tbody>
               </table>
             </div>
           </section>
         </div>
-      
       </div>
     </div>
-    
   </div>
-
- 
 </div>
