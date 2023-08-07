@@ -64,19 +64,18 @@
                 <div id="container">
                   <div class="blocks">
                     <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
-                      <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage
-                      </summary>
+                      <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage</summary>
                       <div class="accordion__content px-3 py-1">
                         <!--Nom de l'entreprise & Intitulé du poste-->
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
-                            <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
+                            <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise" >
                             <div *ngIf="visualisationForm.get('Nomentreprise')?.touched && visualisationForm.get('Nomentreprise')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
-                            <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste">
+                            <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
                             <div *ngIf="visualisationForm.get('Intituleposte')?.touched && visualisationForm.get('Intituleposte')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                         </div>
@@ -98,15 +97,14 @@
                                      *ngIf="!isDateFinChecked()"
                                      class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
                                      id="grid-Datefin" 
-                                     type="month">
+                                     type="month"
+                                     [min]="getMinimumDate()">
                               <span *ngIf="isDateFinChecked()">Jusqu'à présent</span>
                               <label class="ml-2 text-sm text-gray-700">
                                 <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present">
                                 Jusqu'à présent
                               </label>
                             </div>
-                            
-                            
                             <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                         </div>
@@ -122,6 +120,7 @@
                   </div>
                 </div>
                 <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc('blocks', 'container')">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                
             </section>
             <!--Éducation-->
             <section class="Education">
@@ -179,11 +178,19 @@
                     </div>
                   </div>
                 </div>
+                <!--   <div class="border-solid border-2 rounded border-gray-200 justify-center mx-auto">
+                  <div class="w-25 h-auto justify-center mx-auto flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 120 120" width="120" height="120" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;"><defs><clipPath id="__lottie_element_92"><rect width="120" height="120" x="0" y="0"></rect></clipPath></defs><g clip-path="url(#__lottie_element_92)"><g transform="matrix(1,0,0,1,0,0)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><g opacity="1" transform="matrix(1,0,0,1,60,83.33000183105469)"><path fill="rgb(204,209,217)" fill-opacity="1" d=" M-32.143001556396484,-24.17099952697754 C-32.143001556396484,-24.17099952697754 -32.143001556396484,11.310999870300293 -32.143001556396484,11.310999870300293 C-32.143001556396484,11.310999870300293 -0.0010000000474974513,24.17099952697754 -0.0010000000474974513,24.17099952697754 C-0.0010000000474974513,24.17099952697754 32.14400100708008,11.310999870300293 32.14400100708008,11.310999870300293 C32.14400100708008,11.310999870300293 32.14400100708008,-24.17099952697754 32.14400100708008,-24.17099952697754 C32.14400100708008,-24.17099952697754 -32.143001556396484,-24.17099952697754 -32.143001556396484,-24.17099952697754z"></path></g><g opacity="1" transform="matrix(1,0,0,1,76.0719985961914,83.33000183105469)"><path fill="rgb(230,233,236)" fill-opacity="1" d=" M-16.07200050354004,24.17099952697754 C-16.07200050354004,24.17099952697754 16.07200050354004,11.312000274658203 16.07200050354004,11.312000274658203 C16.07200050354004,11.312000274658203 16.07200050354004,-24.17099952697754 16.07200050354004,-24.17099952697754 C16.07200050354004,-24.17099952697754 -16.07200050354004,-24.17099952697754 -16.07200050354004,-24.17099952697754 C-16.07200050354004,-24.17099952697754 -16.07200050354004,24.17099952697754 -16.07200050354004,24.17099952697754z"></path></g><g opacity="1" transform="matrix(1,0,0,1,60,55.74800109863281)"><path fill="rgb(244,244,244)" fill-opacity="1" d=" M12.855999946594238,-23.249000549316406 C12.855999946594238,-23.249000549316406 0,-16.604999542236328 0,-16.604999542236328 C0,-16.604999542236328 -12.857000350952148,-23.249000549316406 -12.857000350952148,-23.249000549316406 C-12.857000350952148,-23.249000549316406 -45,-6.640999794006348 -45,-6.640999794006348 C-45,-6.640999794006348 -32.14400100708008,0.0010000000474974513 -32.14400100708008,0.0010000000474974513 C-32.14400100708008,0.0010000000474974513 -45,6.644999980926514 -45,6.644999980926514 C-45,6.644999980926514 -12.857000350952148,23.249000549316406 -12.857000350952148,23.249000549316406 C-12.857000350952148,23.249000549316406 0,16.608999252319336 0,16.608999252319336 C0,16.608999252319336 12.855999946594238,23.249000549316406 12.855999946594238,23.249000549316406 C12.855999946594238,23.249000549316406 45,6.644999980926514 45,6.644999980926514 C45,6.644999980926514 32.143001556396484,0.0010000000474974513 32.143001556396484,0.0010000000474974513 C32.143001556396484,0.0010000000474974513 45,-6.640999794006348 45,-6.640999794006348 C45,-6.640999794006348 12.855999946594238,-23.249000549316406 12.855999946594238,-23.249000549316406z"></path></g><g opacity="1" transform="matrix(1,0,0,1,60,55.75)"><path fill="rgb(204,209,217)" fill-opacity="1" d=" M-0.0010000000474974513,-16.60700035095215 C-0.0010000000474974513,-16.60700035095215 -32.143001556396484,-0.0020000000949949026 -32.143001556396484,-0.0020000000949949026 C-32.143001556396484,-0.0020000000949949026 -0.0010000000474974513,16.60700035095215 -0.0010000000474974513,16.60700035095215 C-0.0010000000474974513,16.60700035095215 32.14400100708008,-0.0020000000949949026 32.14400100708008,-0.0020000000949949026 C32.14400100708008,-0.0020000000949949026 -0.0010000000474974513,-16.60700035095215 -0.0010000000474974513,-16.60700035095215z"></path></g></g></g><g transform="matrix(1,0,0,1,-0.75,-0.75)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,67.87000274658203,37.63100051879883)"><path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke-dasharray=" 2.028 2.028" stroke-dashoffset="0" stroke="rgb(159,159,159)" stroke-opacity="1" stroke-width="1" d=" M-7.382999897003174,24.760000228881836 C-11.39799976348877,21.21500015258789 -18.527000427246094,13.472999572753906 -11.651000022888184,8.017999649047852"></path></g></g><g transform="matrix(1,0,0,1,-4.2891845703125,31.45743179321289)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><g opacity="1" transform="matrix(1,0,0,1,57.957000732421875,10.552000045776367)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M0,-3.614000082015991 C1.996000051498413,-3.614000082015991 3.614000082015991,-1.996000051498413 3.614000082015991,0 C3.614000082015991,1.996000051498413 1.996000051498413,3.614000082015991 0,3.614000082015991 C-1.996000051498413,3.614000082015991 -3.614000082015991,1.996000051498413 -3.614000082015991,0 C-3.614000082015991,-1.996000051498413 -1.996000051498413,-3.614000082015991 0,-3.614000082015991z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="rgb(134,134,134)" stroke-opacity="1" stroke-width="0.7" d=" M0,-3.614000082015991 C1.996000051498413,-3.614000082015991 3.614000082015991,-1.996000051498413 3.614000082015991,0 C3.614000082015991,1.996000051498413 1.996000051498413,3.614000082015991 0,3.614000082015991 C-1.996000051498413,3.614000082015991 -3.614000082015991,1.996000051498413 -3.614000082015991,0 C-3.614000082015991,-1.996000051498413 -1.996000051498413,-3.614000082015991 0,-3.614000082015991z"></path></g><g opacity="1" transform="matrix(1,0,0,1,64.1449966430664,9.605999946594238)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M0.0010000000474974513,-2.5739998817443848 C1.4220000505447388,-2.5739998817443848 2.5739998817443848,-1.4220000505447388 2.5739998817443848,0 C2.5739998817443848,1.4220000505447388 1.4220000505447388,2.5739998817443848 0.0010000000474974513,2.5739998817443848 C-1.4210000038146973,2.5739998817443848 -2.5739998817443848,1.4220000505447388 -2.5739998817443848,0 C-2.5739998817443848,-1.4220000505447388 -1.4210000038146973,-2.5739998817443848 0.0010000000474974513,-2.5739998817443848z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="rgb(134,134,134)" stroke-opacity="1" stroke-width="0.7" d=" M0.0010000000474974513,-2.5739998817443848 C1.4220000505447388,-2.5739998817443848 2.5739998817443848,-1.4220000505447388 2.5739998817443848,0 C2.5739998817443848,1.4220000505447388 1.4220000505447388,2.5739998817443848 0.0010000000474974513,2.5739998817443848 C-1.4210000038146973,2.5739998817443848 -2.5739998817443848,1.4220000505447388 -2.5739998817443848,0 C-2.5739998817443848,-1.4220000505447388 -1.4210000038146973,-2.5739998817443848 0.0010000000474974513,-2.5739998817443848z"></path></g><g opacity="1" transform="matrix(1,0,0,1,62.400001525878906,13.144000053405762)"><path fill="rgb(134,134,134)" fill-opacity="1" d=" M-0.0010000000474974513,-1.8009999990463257 C0.9940000176429749,-1.8009999990463257 1.8009999990463257,-0.9950000047683716 1.8009999990463257,-0.0010000000474974513 C1.8009999990463257,0.9929999709129333 0.9940000176429749,1.8009999990463257 -0.0010000000474974513,1.8009999990463257 C-0.9950000047683716,1.8009999990463257 -1.8009999990463257,0.9929999709129333 -1.8009999990463257,-0.0010000000474974513 C-1.8009999990463257,-0.9950000047683716 -0.9950000047683716,-1.8009999990463257 -0.0010000000474974513,-1.8009999990463257z"></path></g></g></g></g></svg>
+                  </div>
+                  <h6 class="text-lg font-bold text-center">Aucune compétence prédéfinie trouvée.</h6>
+                  <p class="text-center">Mais vous pouvez toujours ajouter des compétences pour le candidat.</p>
+                </div>-->
+             
                 <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocCopet()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
-                <div class="flex items-center">
+                <!--<div class="flex items-center">
                   <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                   <label for="link-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher les compétences trouvées <i class="bi bi-question-circle-fill"></i></label>
-                </div>
+                </div>-->
               </div>
             </section>
             <section class="Langues">
@@ -243,9 +250,9 @@
               </div>
               <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocCertif()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
             </section>
-              <div class="flex flex-wrap my-4 justify-center">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">Confirmer</button>
-              </div>
+            <div class="flex flex-wrap my-4 justify-center">
+              <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit">Confirmer</button>
+            </div>
           </form>
         </div>
       </div>
@@ -259,7 +266,8 @@
                     <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.firstName">{{ submittedData.firstName.charAt(0).toUpperCase() + '.' || '' }}</h2>
                     <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.lastName">{{ submittedData.lastName.charAt(0).toUpperCase() + '.' || '' }}</h2>
                     <h3 class="text-xl text-blue-500" *ngIf="submittedData && submittedData.role">{{ submittedData.role }}</h3>
-                    <h3 class="text-xl text-slate-400 my-1 font-normal"  *ngIf="submittedData && submittedData.Anneesexperience">{{ submittedData.Anneesexperience }}</h3><br />
+                    <h3 class="text-xl text-slate-400 my-1 font-normal"  *ngIf="submittedData && submittedData.Anneesexperience">{{ submittedData.Anneesexperience }}</h3>
+                    <br />
                   </td></tr>
                 </tbody>
               </table>
@@ -278,14 +286,14 @@
                           </table>
                         </td></tr>
                         <tr><th class="th_title text-blue-500 text-xs">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th></tr>
-                        <tr *ngFor="let data of submittedDataArray"><td>
+                        <tr><td>
                           <table class="table_class">
                             <tbody>
-                              <tr ><th class="heading text-left text-base leading-3 pt-2" *ngIf="data.Intituleposte">{{ data.Intituleposte }}</th></tr>
-                              <tr><td class="employer_name" *ngIf="data.Nomentreprise">{{ data.Nomentreprise }}</td></tr>
-                              <tr><td class="employment_duration" *ngIf="data.Datedebut && data.Datefin">{{ data.Datedebut + ' - ' + data.Datefin }}</td></tr>
+                              <tr ><th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th></tr>
+                              <tr><td class="employer_name" *ngIf="submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td></tr>
+                              <tr><td class="employment_duration" *ngIf="submittedData.Datedebut && submittedData.Datefin">{{ submittedData.Datedebut + ' - ' + submittedData.Datefin }}</td></tr>
                               <tr><td>
-                                <div class="employment_history relative left-0 line-height-5" *ngIf="data.description">{{ data.description }}</div></td></tr>
+                                <div class="employment_history relative left-0 line-height-5" *ngIf="submittedData.description">{{ submittedData.description }}</div></td></tr>
                             </tbody>
                           </table>
                         </td></tr>

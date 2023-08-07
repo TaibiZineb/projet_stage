@@ -24,4 +24,11 @@ export interface UserRoleWorkspace {
     idRole: number;
     idWorkspace: number;
 }
-
+export interface BlockData {
+  Nomentreprise: string;
+  Intituleposte: string;
+  Datedebut: string;
+  Datefin: string;
+  present: boolean;
+  description: string;
+}

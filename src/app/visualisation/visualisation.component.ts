@@ -1,6 +1,7 @@
 import { Component,OnInit,AfterViewInit } from '@angular/core';
 import {  FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
+import { map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-visualisation',
@@ -63,15 +64,12 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       const container = document.getElementById(containerId);
       if (container) {
         container.appendChild(nouveauBloc);
-        const formControls = this.visualisationForm.controls;
-        for (const controlName in formControls) {
-          if (Object.prototype.hasOwnProperty.call(formControls, controlName)) {
-            formControls[controlName].reset();
-          }
-        }
-        this.submittedDataArray.push(this.visualisationForm.value);
+        this.submittedDataArray.push(this.visualisationForm.value); // Ajoutez les données dans le tableau submittedDataArray
+        this.visualisationForm.reset(); // Réinitialisez le formulaire
       }
     }
+    this.submittedData = this.visualisationForm.value;
+    this.submittedDataArray.push(this.submittedData);
   }
   ajouterBlocStage() {
     this.ajouterBloc("blocks", "container");
@@ -89,27 +87,69 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.ajouterBloc("blocksCopet", "containerCopet");
   }
   onSubmit(): void {
+    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
     let dateFinValue = this.visualisationForm.get('Datefin')?.value;
 
     if (this.isDateFinChecked()) {
       dateFinValue = 'jusqu\'à présent';
     }
-  
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
-  
-    // Ajouter les données du formulaire au tableau submittedDataArray
     this.submittedData = this.visualisationForm.value;
     this.submittedDataArray.push(this.submittedData);
   }
-  
   
   onDateInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
     const formattedDate = this.formatDateToMonthYear(inputValue);
     this.visualisationForm.get('Datedebut')?.setValue(formattedDate, { emitEvent: false });
+  
+    // Désactiver les dates antérieures dans le champ de date de fin
+    this.updateEndDateOptions();
   }
-
+  updateEndDateOptions(): void {
+    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
+    const dateDebut = new Date(dateDebutValue);
+    const dateFinControl = this.visualisationForm.get('Datefin');
+  
+    // Vérifier si une date de début est sélectionnée
+    if (dateDebutValue && dateFinControl) {
+      // Récupérer la valeur actuelle du champ de date de fin
+      const dateFinValue = dateFinControl.value;
+  
+      // Vérifier si la date de fin actuelle est antérieure à la date de début
+      const currentDateFin = new Date(dateFinValue);
+      if (currentDateFin < dateDebut) {
+        // Réinitialiser la date de fin si elle est antérieure à la date de début
+        dateFinControl.patchValue('');
+      }
+  
+      // Désactiver les dates antérieures à la date de début
+      const dateDebutFormatted = this.formatDateToMonthYear(dateDebutValue);
+      dateFinControl.patchValue(dateFinValue, { emitEvent: false }); // Patch la valeur actuelle pour déclencher le changement de date de fin sans boucle infinie
+      dateFinControl.disable({ onlySelf: true, emitEvent: false }); // Désactiver le champ temporairement pour éviter les erreurs de validation
+      this.visualisationForm.get('Datefin')?.setValidators([Validators.required]); // Appliquer une validation requise pour éviter de soumettre le formulaire sans date de fin
+  
+      // Activer les dates supérieures à la date de début
+      const dateFinOptions = dateFinControl.valueChanges.pipe(
+        map((selectedDate: string) => {
+          return this.formatDateToMonthYear(selectedDate);
+        }),
+        startWith(dateFinControl.value as string),
+        map((selectedDate: string) => {
+          return selectedDate && selectedDate >= dateDebutFormatted ? selectedDate : dateDebutFormatted;
+        })
+      );
+  
+      // Mettre à jour les options du champ de date de fin
+      dateFinOptions.subscribe((options: string) => {
+        dateFinControl.enable({ onlySelf: true, emitEvent: false }); // Réactiver le champ de date de fin
+        dateFinControl.setValidators([]); // Supprimer la validation requise pour le champ de date de fin
+        dateFinControl.patchValue(options, { emitEvent: false });
+      });
+    }
+  }
+  
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -124,4 +164,16 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     const isPresent = this.visualisationForm.get('present')?.value;
     return isPresent ? true : false;
   }
+  getMinimumDate(): string | null {
+    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
+    return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
+  }
+  
+  formatDateToYearMonth(dateStr: string): string {
+    const date = new Date(dateStr);
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    return `${year}-${month}`;
+  }
+  
 }
