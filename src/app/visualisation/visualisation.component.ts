@@ -34,6 +34,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
       Datefin:['',Validators.required],
+      present: [false],
       description:[''],
       Nom_ecole:[''],
       Diplome:[''],
@@ -62,19 +63,16 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       const container = document.getElementById(containerId);
       if (container) {
         container.appendChild(nouveauBloc);
-  
-        // Reset the form controls in the new section
         const formControls = this.visualisationForm.controls;
         for (const controlName in formControls) {
           if (Object.prototype.hasOwnProperty.call(formControls, controlName)) {
             formControls[controlName].reset();
           }
         }
+        this.submittedDataArray.push(this.visualisationForm.value);
       }
     }
   }
-  
-  
   ajouterBlocStage() {
     this.ajouterBloc("blocks", "container");
   }
@@ -91,10 +89,40 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.ajouterBloc("blocksCopet", "containerCopet");
   }
   onSubmit(): void {
-    this.submittedData = this.visualisationForm.value;   
+    // Récupérer la valeur de la case à cocher "Présent"
+    const isPresent = this.visualisationForm.get('present')?.value;
+  
+    // Récupérer la valeur du champ de date de fin
+    let dateFinValue = this.visualisationForm.get('Datefin')?.value;
+  
+    // Si la case "Présent" est cochée, ajuster la valeur de la date de fin à "jusqu'à présent"
+    if (isPresent) {
+      const currentDate = new Date();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const year = currentDate.getFullYear().toString();
+      dateFinValue = `${year}-${month}`;
+    }
+  
+    // Mettre à jour la valeur du champ de date de fin dans le formulaire
+    this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
+  
+    // Ajouter les données du formulaire au tableau submittedDataArray
+    this.submittedData = this.visualisationForm.value;
+    this.submittedDataArray.push(this.submittedData);
   }
+  
+  onDateInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+    const formattedDate = this.formatDateToMonthYear(inputValue);
+    this.visualisationForm.get('Datedebut')?.setValue(formattedDate, { emitEvent: false });
+  }
+
+  formatDateToMonthYear(dateStr: string): string {
+    const date = new Date(dateStr);
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${month}/${year}`;
+  }
+  
 }
-
-
-
-

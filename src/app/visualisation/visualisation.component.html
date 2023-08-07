@@ -72,7 +72,7 @@
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
                             <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise">
-                         
+                            <div *ngIf="visualisationForm.get('Nomentreprise')?.touched && visualisationForm.get('Nomentreprise')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
@@ -83,14 +83,27 @@
                         <!--Date debut & fin-->
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Date de début</label>
-                            <input formControlName="Datedebut" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datedebut" type="date" placeholder="">
-                         
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datedebut">*Date de début</label>
+                            <input formControlName="Datedebut" 
+                                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
+                                  id="grid-Datedebut" 
+                                  type="month">
+                            <div *ngIf="visualisationForm.get('Datedebut')?.touched && visualisationForm.get('Datedebut')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
-                          <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">*Date de fin</label>
-                            <input formControlName="Datefin" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="date" placeholder="">
-                            
+                                                
+                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
+                            <div class="flex items-center">
+                              <input formControlName="Datefin" 
+                                    class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
+                                    id="grid-Datefin" 
+                                    type="month">
+                              <label class="block text-gray-700 text-xs font-bold ml-2">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" formControlName="present">
+                                <span class="ml-2">Présent</span>
+                              </label>
+                            </div>
+                            <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                         </div>
                         <!--Description-->
@@ -268,7 +281,7 @@
               <hr class="horizontal_line bg-slate-950" />
               <table class="table_class table_container">
                 <tbody>
-                  <tr>
+                  <tr >
                     <td class="leftpart">
                       <table class="table_class">
                         <tbody>
@@ -281,7 +294,6 @@
                                   <tbody>
                                     <tr>
                                       <td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600"*ngIf="submittedData && submittedData.titre_comp">{{ submittedData.titre_comp }}</td>
-                                    
                                     </tr>
                                   </tbody>
                                 </table>
@@ -291,28 +303,28 @@
                             <tr>
                               <th class="th_title text-blue-500 text-xs">H I S T O R I Q U E&nbsp; D E&nbsp; L ' E M P L O I </th>
                             </tr>
-                            <tr>
+                            <tr *ngFor="let data of submittedDataArray">
                               <td>
                                 <table  class="table_class">
                                   <tbody>
                                     <tr >
-                                      <th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th>
+                                      <th class="heading text-left text-base leading-3 pt-2" *ngIf="data.Intituleposte">{{ data.Intituleposte }}</th>
                                     </tr>
                                     <tr>
-                                        <td class="employer_name" *ngIf="submittedData && submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="employment_duration" *ngIf="submittedData && submittedData.Datedebut && submittedData.Datefin">{{ submittedData.Datedebut+ '/' + submittedData.Datefin }}</td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <div class="employment_history relative left-0 line-height-5"*ngIf="submittedData && submittedData.description">{{ submittedData.description }}</div>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
+                                      <td class="employer_name" *ngIf="data.Nomentreprise">{{ data.Nomentreprise }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="employment_duration" *ngIf="data.Datedebut && data.Datefin">{{ data.Datedebut + ' - ' + data.Datefin }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div class="employment_history relative left-0 line-height-5" *ngIf="data.description">{{ data.description }}</div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
                       
                             <tr class="tr_title">
                               <th class="th_title text-blue-500 text-xs">E D U C A T I O N</th>

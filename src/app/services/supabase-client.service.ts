@@ -190,7 +190,6 @@ export class SupabaseClientService {
   }
   async getWorkspaceByUserId(userId: string): Promise<Workspace | null> {
     try {
-      console.log('Début de la fonction getWorkspaceByUserId');
       console.log('ID de l\'utilisateur :', userId);
       const { data: userWorkspaces, error: workspaceError } = await this.supabase
         .from('UserRoleWorkspace')
