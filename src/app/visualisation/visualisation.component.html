@@ -159,6 +159,7 @@
                               Jusqu'à présent
                             </label>
                           </div>
+                          <div *ngIf="visualisationForm.get('DatefinF')?.touched && visualisationForm.get('DatefinF')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                         </div>
                       </div>
                     </div>
