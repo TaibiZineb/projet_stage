@@ -94,19 +94,21 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.submittedDataArray.push(this.submittedData);
     this.isDataSubmitted = true;
   }
-  onDateInput(event: Event): void {
-    
+  onDateInput(event: Event, fieldName: string): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
     const formattedDate = this.formatDateToMonthYear(inputValue);
-    this.visualisationForm.get('Datedebut')?.setValue(formattedDate, { emitEvent: false });
-    this.updateEndDateOptions();
+    this.visualisationForm.get(fieldName)?.setValue(formattedDate, { emitEvent: false });
+    this.updateEndDateOptions(fieldName);
   }
-  updateEndDateOptions(): void {
-    console.log('updateEndDateOptions called');
-    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
+  
+  updateEndDateOptions(fieldName: string): void {
+    console.log(`updateEndDateOptions called for ${fieldName}`);
+
+    const dateDebutValue = this.visualisationForm.get('fieldName')?.value;
     const dateDebut = new Date(dateDebutValue);
-    const dateFinControl = this.visualisationForm.get('Datefin');
+    const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
+
   
     if (dateDebutValue && dateFinControl && dateFinControl.value) {
       const [year, month] = dateFinControl.value.split('-');
@@ -162,8 +164,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     const isPresent = this.visualisationForm.get('present')?.value;
     return isPresent ? true : false;
   }
-  getMinimumDate(): string | null {
-    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
+  getMinimumDate(fieldName: string): string | null {
+    const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
   }
   formatDateToYearMonth(dateStr: string): string {
@@ -172,7 +174,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
   }
-  getMaximumDate(): string {
+  getMaximumDate(fieldName: string): string {
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
   }
