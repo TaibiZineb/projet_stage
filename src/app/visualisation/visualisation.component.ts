@@ -101,15 +101,11 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.visualisationForm.get(fieldName)?.setValue(formattedDate, { emitEvent: false });
     this.updateEndDateOptions(fieldName);
   }
-  
   updateEndDateOptions(fieldName: string): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
-
     const dateDebutValue = this.visualisationForm.get('fieldName')?.value;
     const dateDebut = new Date(dateDebutValue);
     const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
-
-  
     if (dateDebutValue && dateFinControl && dateFinControl.value) {
       const [year, month] = dateFinControl.value.split('-');
       const formattedDateFinValue = `${year}-${month}`;
