@@ -41,6 +41,7 @@ export class AdminTemplateComponent implements OnInit {
       hamburger?.classList.remove("active");
       navMenu?.classList.remove("active");
     }));
+    console.log("ngOnInit called");
     this.router.events.subscribe(() => {
       this.showNav = !['/admin/visualisation', '/admin/workspace'].includes(this.router.url);
     });
