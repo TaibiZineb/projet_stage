@@ -1,0 +1,115 @@
+
+summary.accordion__title {
+    list-style-type: none;
+    padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M23.024 11.263l-7.024 7.023-7.022-7.023-3.091 3.090 8.569 8.569c0.413 0.413 0.961 0.64 1.545 0.64s1.133-0.228 1.545-0.64l8.569-8.569-3.091-3.090z' fill='%23555555'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem top 0.625rem;
+    background-size: 1.5rem;
+  }
+  summary.accordion__title.plus, details.accordion[open] summary.accordion__title.plus{
+    background-image:none;
+  }
+  summary.accordion__title::marker,
+  summary.accordion__title::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion__content {
+    padding: 0 1rem 1rem 1rem;
+  }
+  
+  .accordion__content p {
+    margin: 0;
+  }
+  .accordion__content p + p {
+    margin-top: 0.5em;
+  }
+  details.accordion[open] summary.accordion__title {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8.976 22.025l7.024-7.023 7.022 7.023 3.091-3.090-8.568-8.568c-0.413-0.412-0.961-0.64-1.545-0.64s-1.133 0.228-1.545 0.64l-8.569 8.569 3.091 3.090z' fill='%23555555'/%3e%3c/svg%3e");
+  }
+  .formVisualisation{
+    width: 43%;
+  }
+  .visualisationD{
+    width: 57%;
+  }
+.templateId2 .top_skills_value {
+  height: 40px;
+  width: 152px;
+ 
+}
+.templateId2 .edu_duration {
+  padding-top:6px;
+}
+
+.templateId2 .table_class {
+  width: 100%;
+}
+.templateId2 .table_container {
+  padding: 0;
+  width: 100%;
+}
+.wrapper {
+  height: auto;
+}
+.candidate_name {
+  text-align: left;
+  padding: 20px 0 0 0;
+}
+.category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    height: 29px;
+    width: fit-content;
+    background: #21b573;
+    border-radius: 4px;
+    line-height: 11px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+.title {
+  text-align: left;
+  font-size: 16px;
+  line-height: 13px;
+  padding-top: 20px;
+  padding-bottom:7px;
+}
+.top_skills_table_ul {
+ 
+  height: 49px;
+  
+}
+.left_part {
+  vertical-align: top;
+  width: 70%;
+}
+.right_part {
+  vertical-align: top;
+  width: 30%;
+}
+.table_container {
+  padding: 0;
+  width: 100%;
+}
+.preview_employment_history {
+  position: relative;
+  left: 0%;
+  font-size: 14px;
+  line-height: 25px;
+  padding-top: 3px;
+}
+.education_degree {
+  font-size: 15px;
+  font-weight: 500;
+  padding-bottom: 6px;
+}
+.other_skills_tr {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
