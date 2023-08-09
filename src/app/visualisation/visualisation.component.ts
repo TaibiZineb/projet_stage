@@ -16,6 +16,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   submittedDataArray: any[] = [];
   isDataSubmitted: boolean = false;
   isConfirmed: boolean = false;
+  isFormConfirmed: boolean = false;
+
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -56,15 +58,13 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       const container = document.getElementById(containerId);
       if (container) {
         container.appendChild(nouveauBloc);
-        this.submittedDataArray.push(this.visualisationForm.value); 
+        const formData = this.visualisationForm.value; 
+        this.submittedDataArray.push(formData); 
+        this.submittedData = formData; 
         this.visualisationForm.reset(); 
       }
     }
-    
-    this.submittedData = this.visualisationForm.value; // Mettre à jour submittedData
   }
-  
-  
   ajouterBlocStage() {
     this.ajouterBloc("blocks", "container");
   }
@@ -81,19 +81,23 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.ajouterBloc("blocksCopet", "containerCopet");
   }
   onSubmit(): void {
-    const dateDebutValue = this.visualisationForm.get('Datedebut${section}')?.value;
-    let dateFinValue = this.visualisationForm.get('Datefin${section}')?.value;
+    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
+    let dateFinValue = this.visualisationForm.get('Datefin')?.value;
+    
     if (this.isDateFinChecked(1)) {
       dateFinValue = 'jusqu\'à présent';
     }
+
     if (this.isDateFinChecked(2)) {
       dateFinValue = 'jusqu\'à présent';
     }
+
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
     this.submittedData = this.visualisationForm.value;
     this.isDataSubmitted = true;
-    this.isConfirmed = true;
+    this.isFormConfirmed = true; 
   }
+  
   onDateInput(event: Event, fieldName: string): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
