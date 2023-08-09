@@ -2,12 +2,13 @@ import { Component,OnInit,AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
+
 @Component({
-  selector: 'app-visualisation',
-  templateUrl: './visualisation.component.html',
-  styleUrls: ['./visualisation.component.css']
+  selector: 'app-visualbis',
+  templateUrl: './visualbis.component.html',
+  styleUrls: ['./visualbis.component.css']
 })
-export class VisualisationComponent implements OnInit,AfterViewInit{
+export class VisualbisComponent implements OnInit,AfterViewInit{
   visualisationForm !: FormGroup;
   supabaseUrl!: string;
   supabaseKey!: string;
@@ -15,7 +16,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   submittedData:any = {};
   submittedDataArray: any[] = [];
   isDataSubmitted: boolean = false;
-  isConfirmed: boolean = false;
+
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -29,18 +30,25 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       Email: ['',Validators.email],
       telephone: ['',Validators.pattern(telephonePattern)],
       role: ['',Validators.required],
+      Anneesexperience: [''],
       Nomentreprise:['',Validators.required],
       Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
       Datefin:['',Validators.required],
       present1: [false],
       present2: [false],
+      description:[''],
       Nom_ecole:[''],
       Diplome:[''],
+      VilleE:[''],
+      DatedebutF:[''],
       datefinF:[''],
       titre_comp:[''],
       titre_certificat:[''],
+      dateCert:[''],
       titre_langue:[''],
+      niveaulang:['']
+
     });
   }
   ngAfterViewInit(): void {
@@ -60,11 +68,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
         this.visualisationForm.reset(); 
       }
     }
-    
-    this.submittedData = this.visualisationForm.value; // Mettre à jour submittedData
+    this.submittedData = this.visualisationForm.value;
   }
-  
-  
   ajouterBlocStage() {
     this.ajouterBloc("blocks", "container");
   }
@@ -83,6 +88,7 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   onSubmit(): void {
     const dateDebutValue = this.visualisationForm.get('Datedebut${section}')?.value;
     let dateFinValue = this.visualisationForm.get('Datefin${section}')?.value;
+
     if (this.isDateFinChecked(1)) {
       dateFinValue = 'jusqu\'à présent';
     }
@@ -90,9 +96,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       dateFinValue = 'jusqu\'à présent';
     }
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
-    this.submittedData = this.visualisationForm.value;
+    this.submittedDataArray.push(this.submittedData);
     this.isDataSubmitted = true;
-    this.isConfirmed = true;
   }
   onDateInput(event: Event, fieldName: string): void {
     const inputElement = event.target as HTMLInputElement;
@@ -143,16 +148,20 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       }
     }
   }
+  
+  
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
   }
+  
   isDateFinChecked(section: number): boolean {
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
+  
   isDateFinDisabled(section: number): boolean {
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
@@ -171,4 +180,5 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
   }
+  
 }
