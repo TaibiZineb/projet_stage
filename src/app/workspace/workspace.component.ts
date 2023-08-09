@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { WorkspaceService } from '../services/workspace.service';
 @Component({
@@ -9,7 +8,7 @@ import { WorkspaceService } from '../services/workspace.service';
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.css']
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnInit {
   supabaseAuth: any;
   workspaceName!: string;
   WorkspaceForm!: FormGroup;

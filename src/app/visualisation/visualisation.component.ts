@@ -34,7 +34,8 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
       Datefin:['',Validators.required],
-      present: [false],
+      present1: [false],
+      present2: [false],
       description:[''],
       Nom_ecole:[''],
       Diplome:[''],
@@ -84,10 +85,13 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     this.ajouterBloc("blocksCopet", "containerCopet");
   }
   onSubmit(): void {
-    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
-    let dateFinValue = this.visualisationForm.get('Datefin')?.value;
+    const dateDebutValue = this.visualisationForm.get('Datedebut${section}')?.value;
+    let dateFinValue = this.visualisationForm.get('Datefin${section}')?.value;
 
-    if (this.isDateFinChecked()) {
+    if (this.isDateFinChecked(1)) {
+      dateFinValue = 'jusqu\'à présent';
+    }
+    if (this.isDateFinChecked(2)) {
       dateFinValue = 'jusqu\'à présent';
     }
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
@@ -152,12 +156,13 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     return `${year}-${month}`;
   }
   
-  isDateFinDisabled(): boolean {
-    const isPresent = this.visualisationForm.get('present')?.value;
+  isDateFinChecked(section: number): boolean {
+    const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
-  isDateFinChecked(): boolean {
-    const isPresent = this.visualisationForm.get('present')?.value;
+  
+  isDateFinDisabled(section: number): boolean {
+    const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
   getMinimumDate(fieldName: string): string | null {
