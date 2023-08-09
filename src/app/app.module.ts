@@ -15,7 +15,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
-import { VisualComponent } from './visual/visual.component';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { VisualComponent } from './visual/visual.component';
     DashboardComponent,
     WorkspaceComponent,
     CVtemplateComponent,
-    VisualComponent
+
 
   ],
   imports: [
