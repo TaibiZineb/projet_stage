@@ -1,5 +1,5 @@
 import { Component,OnInit,AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
 
@@ -15,11 +15,13 @@ export class VisualisationComponent implements OnInit{
   supabase: any;
   submittedData: any = {};
   submittedDataArray: any[] = [];
+  currentSectionIndex: number; 
   isDataSubmitted: boolean = false;
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    this.currentSectionIndex = 0;
   }
   ngOnInit(): void {
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
@@ -46,8 +48,8 @@ export class VisualisationComponent implements OnInit{
       titre_certificat:[''],
       dateCert:[''],
       titre_langue:[''],
-      niveaulang:['']
-
+      niveaulang:[''],
+      historique: this.formBuilder.array([this.createHistoriqueSection()])
     });
     console.log('Initial form values:', this.visualisationForm.value);
   }
@@ -60,9 +62,7 @@ export class VisualisationComponent implements OnInit{
     if (this.isDateFinChecked(1)) {
       dateFinValue = 'jusqu\'à présent';
     }
-  
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
-  
     this.submittedData = this.visualisationForm.value;
     this.isDataSubmitted = true;
   }
@@ -84,13 +84,11 @@ export class VisualisationComponent implements OnInit{
     if (dateDebutValue && dateFinControl && dateFinControl.value) {
       const [year, month] = dateFinControl.value.split('-');
       const formattedDateFinValue = `${year}-${month}`;
-  
       const currentDateFin = new Date(formattedDateFinValue);
       const today = new Date();
       console.log('dateDebut:', dateDebut);
       console.log('currentDateFin:', currentDateFin);
       console.log('today:', today);
-  
       if (currentDateFin < dateDebut || currentDateFin > today) {
         console.log('Invalid date');
         dateFinControl.patchValue('');
@@ -148,5 +146,26 @@ export class VisualisationComponent implements OnInit{
   getMaximumDate(fieldName: string): string {
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
+  }
+  addHistoriqueSection(): void {
+    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+    historiqueArray.push(this.createHistoriqueSection());
+  }
+  createHistoriqueSection(): FormGroup {
+    return this.formBuilder.group({
+      Nomentreprise: ['', Validators.required],
+      Intituleposte: ['', Validators.required],
+      Datedebut: ['', Validators.required],
+      Datefin: [''],
+      present1: [false],
+      description: ['']
+    });
+  }
+  get historiqueFormArray(): FormArray {
+    return this.visualisationForm.get('historique') as FormArray;
+  }
+  removeHistoriqueSection(index: number) {
+    const historiqueControl = this.visualisationForm.get('historique') as FormArray;
+    historiqueControl.removeAt(index);
   }
 }

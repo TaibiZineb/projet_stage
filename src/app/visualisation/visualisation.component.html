@@ -55,15 +55,19 @@
             </div>
             </section>
             <!--Historique professionnel-->
-            <section class="Historique professionnel">
+            <section class="Historique professionnel" formArrayName="historique">
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
+                
               </div>
                 <div id="container">
+                  <ng-container *ngFor="let section of historiqueFormArray.controls; let i = index">
                   <div class="blocks">
-                    <details class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
+                    <details [formGroupName]="i" class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
                       <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">Stage</summary>
+                      <button type="button" (click)="removeHistoriqueSection(i)">
+                        <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                       <div class="accordion__content px-3 py-1">
                         <!--Nom de l'entreprise & Intitulé du poste-->
                         <div class="flex flex-wrap -mx-3 mb-6">
@@ -99,7 +103,7 @@
                                 <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present1">
                                 Jusqu'à présent
                               </label>
-                            
+                              <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                             </div>
                             
                           </div>
@@ -114,11 +118,22 @@
                       </div>
                     </details> 
                   </div>
+            
+                </ng-container>
+
                 </div>
-                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" >Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                <div class="flex items-center">
+                  <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addHistoriqueSection()">
+                    <p class="mr-2">Ajouter un nouveau</p>
+                    <svg color="#0056FC" width="16px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 8H4.18182H8ZM8 8V4.18182V8ZM8 8H11.8182H8ZM8 8V11.8182V8ZM8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8C15 11.866 11.866 15 8 15Z" stroke="#0056FC" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+              
                 
             </section>
-      
             <div class="flex flex-wrap my-4 justify-center">
               <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit" (click)="onSubmit()">Confirmer</button>
             </div>
