@@ -99,8 +99,9 @@
                                 <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present1">
                                 Jusqu'à présent
                               </label>
+                            
                             </div>
-                            <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                            
                           </div>
                         </div>
                         <!--Description-->
@@ -114,80 +115,29 @@
                     </details> 
                   </div>
                 </div>
-                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBloc('blocks', 'container')">Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
+                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" >Ajouter un nouveau <i class="bi bi-plus-circle-fill"></i></button>
                 
             </section>
-            <!--Éducation-->
-            <section class="Education">
-              <div class="flex flex-row">
-                <svg width="24px" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.93691 15.6016C4.15447 15.6016 4.33085 15.1538 4.33085 14.6016C4.33085 14.0493 4.15447 13.6016 3.93691 13.6016C3.71934 13.6016 3.54297 14.0493 3.54297 14.6016C3.54297 15.1538 3.71934 15.6016 3.93691 15.6016Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.46077 20.0016L3.73913 20.4016L3.0175 20.0016L1.93504 20.4016L1.57422 19.6016C1.57422 19.6016 3.91908 18.4541 3.93786 15.6016C3.93786 15.6016 5.34309 18.669 4.46077 20.0016Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.51367 9.60156V14.77C5.51367 15.2702 5.81926 15.7179 6.28053 15.8936L10.7101 17.5802C11.4419 17.8588 12.217 18.0016 12.9985 18.0016H12.9985C13.78 18.0016 14.5552 17.8588 15.2869 17.5802L19.7165 15.8936C20.1778 15.7179 20.4834 15.2702 20.4834 14.77V9.60156" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9985 3.60156L1.57422 8.00156L12.9985 12.4016L24.4227 8.00156L12.9985 3.60156Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9994 8.40156C13.217 8.40156 13.3933 8.22248 13.3933 8.00156C13.3933 7.78065 13.217 7.60156 12.9994 7.60156C12.7818 7.60156 12.6055 7.78065 12.6055 8.00156C12.6055 8.22248 12.7818 8.40156 12.9994 8.40156Z" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.9981 8L3.9375 8.91034V13.6" stroke="#0056FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                <p class="text-blue-600 p-4 mt-2">Éducation</p>
-              </div>
-              <div id="containerEdu">
-                <div class="blocksEdu">
-                  <details class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1">
-                    <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">École/Faculté</summary>
-                    <div class="accordion__content px-3 py-1">
-                      <!-- École -->
-                      <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">École</label>
-                          <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
-                        </div>
-                        <div class="w-full md:w-1/2 px-3">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">Diplôme</label>
-                          <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
-                        </div>
-                      </div>
-                      <!-- ville & date debut & date fin -->
-                      <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-VilleE">Ville</label>
-                          <input formControlName="VilleE" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-villeE" type="text" placeholder="Ville">
-                        </div>
-                        <div class="w-full md:w-1/3 px-3">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-DatedebutF">Date début</label>
-                          <input formControlName="DatedebutF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatedebutF" type="month" (input)="onDateInput($event, 'DatedebutF')">
-                        </div>
-                        <div class="w-full md:w-1/3 px-3">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-datefinF">Date fin</label>
-                          <div class="flex items-center">
-                            <input formControlName="DatefinF" *ngIf="!isDateFinChecked(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" 
-                            [max]="getMaximumDate('DatefinF')"   >
-                            <span *ngIf="isDateFinChecked(2)">Jusqu'à présent</span>
-                            <label class="ml-2 text-sm text-gray-700">
-                              <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present2">
-                              Jusqu'à présent
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </details>
-                </div>
-              </div>
-              <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600" (click)="ajouterBlocEdu()">Ajouter un Nouveau <i class="bi bi-plus-circle-fill"></i></button>
-            </section>
-       
+      
             <div class="flex flex-wrap my-4 justify-center">
-              <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit"  (click)="onSubmit()">Confirmer</button>
+              <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" type="submit" (click)="onSubmit()">Confirmer</button>
             </div>
           </form>
         </div>
       </div>
-      <div *ngIf="isFormConfirmed" class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
+      <div class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
         <div class="w-full bg-gray-200 p-4 mt-2">
-          <section class=" bg-slate-50">
+          <section *ngIf="isDataSubmitted" class=" bg-slate-50">
             <div class="wrapper templateId2 " id="cv">
               <table class="table_class header_table">
                 <tbody>
                   <!--Détails du candidat-->
                   <tr><td class="candidate_details text-left pt-10">
-                    <ng-container *ngIf="submittedData">
-                      <h2 class="text-3xl text-blue-600 font-bold inline-block" >{{ submittedDataArray[0].firstName.charAt(0).toUpperCase() + '.' || '' }}</h2>
-                      <h2 class="text-3xl text-blue-600 font-bold inline-block">{{ submittedDataArray[0].lastName.charAt(0).toUpperCase() + '.' || '' }}</h2>
-                    <h3 class="text-xl text-blue-500" >{{ submittedDataArray[0].role }}</h3>
-                    <h3 class="text-xl text-slate-400 my-1 font-normal">{{ submittedDataArray[0].Anneesexperience }}</h3>
+                    <ng-container>
+                      <h2 class="text-3xl text-blue-600 font-bold inline-block" *ngIf="submittedData && submittedData.firstName">{{ submittedData.firstName.charAt(0).toUpperCase() + '.' || '' }}</h2>
+                      <h2 class="text-3xl text-blue-600 font-bold inline-block"*ngIf="submittedData && submittedData.lastName">{{ submittedData.lastName.charAt(0).toUpperCase() + '.' || '' }}</h2>
+                    <h3 class="text-xl text-blue-500" *ngIf="submittedData && submittedData.role" >{{ submittedData.role }}</h3>
+                    <h3 class="text-xl text-slate-400 my-1 font-normal" *ngIf="submittedData && submittedData.Anneesexperience">{{ submittedData.Anneesexperience }}</h3>
                   </ng-container>
                     <br />
                   </td></tr>
@@ -201,23 +151,17 @@
                       <tbody>
                         <!--top compétance-->
                         <tr><th class="th_title text-blue-500 text-xs uppercase">top&nbsp;compétance(s)</th></tr>
-                        <tr class="top_skills"><td>
-                          <table>
-                            <tbody *ngFor="let data of submittedDataArray">
-                              <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600"*ngIf="submittedData && submittedData.titre_comp">{{ data.titre_comp }}</td></tr>
-                            </tbody>
-                          </table>
-                        </td></tr>
+                       
                         <!--historique professionnel-->
                         <tr><th class="th_title text-blue-500 text-xs uppercase">historique&nbsp;professionnel</th></tr>
                         <tr><td>
                           <table class="table_class">
-                            <tbody *ngFor="let data of submittedDataArray">
-                              <tr ><th class="heading text-left text-base leading-3 pt-2">{{ data.Intituleposte }}</th></tr>
-                              <tr><td class="employer_name" >{{ data.Nomentreprise }}</td></tr>
-                              <tr><td class="employment_duration">{{ data.Datedebut + ' - ' + data.Datefin }}</td></tr>
+                            <tbody>
+                              <tr ><th class="heading text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.Intituleposte">{{ submittedData.Intituleposte }}</th></tr>
+                              <tr><td class="employer_name" *ngIf="submittedData && submittedData.Nomentreprise">{{ submittedData.Nomentreprise }}</td></tr>
+                              <tr><td class="employment_duration" *ngIf="submittedData && submittedData.Datedebut && submittedData.Datefin">{{ submittedData.Datedebut + ' - ' + submittedData.Datefin }}</td></tr>
                               <tr><td>
-                                <div class="employment_history relative left-0 line-height-5">{{ data.description }}</div></td></tr>
+                                <div class="employment_history relative left-0 line-height-5">{{ submittedData.description }}</div></td></tr>
                             </tbody>
                           </table>
                         </td></tr>

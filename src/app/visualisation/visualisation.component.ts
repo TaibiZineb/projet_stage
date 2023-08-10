@@ -2,22 +2,20 @@ import { Component,OnInit,AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
+
 @Component({
   selector: 'app-visualisation',
   templateUrl: './visualisation.component.html',
   styleUrls: ['./visualisation.component.css']
 })
-export class VisualisationComponent implements OnInit,AfterViewInit{
+export class VisualisationComponent implements OnInit{
   visualisationForm !: FormGroup;
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
-  submittedData:any = {};
+  submittedData: any = {};
   submittedDataArray: any[] = [];
   isDataSubmitted: boolean = false;
-  isConfirmed: boolean = false;
-  isFormConfirmed: boolean = false;
-
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -31,71 +29,42 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
       Email: ['',Validators.email],
       telephone: ['',Validators.pattern(telephonePattern)],
       role: ['',Validators.required],
+      Anneesexperience: [''],
       Nomentreprise:['',Validators.required],
       Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
       Datefin:['',Validators.required],
       present1: [false],
       present2: [false],
+      description:[''],
       Nom_ecole:[''],
       Diplome:[''],
+      VilleE:[''],
+      DatedebutF:[''],
       datefinF:[''],
       titre_comp:[''],
       titre_certificat:[''],
+      dateCert:[''],
       titre_langue:[''],
+      niveaulang:['']
+
     });
-  }
-  ngAfterViewInit(): void {
-    const addButton = document.getElementById("addButton");
-    if (addButton) {
-      addButton.addEventListener("click", () => this.ajouterBloc("blocks", "container"));
-    }
-  }
-  ajouterBloc(nomClasse: string, containerId: string): void {
-    const blocExistant = document.querySelector("." + nomClasse) as HTMLElement;
-    if (blocExistant) {
-      const nouveauBloc = blocExistant.cloneNode(true) as HTMLElement;
-      const container = document.getElementById(containerId);
-      if (container) {
-        container.appendChild(nouveauBloc);
-        const formData = this.visualisationForm.value; 
-        this.submittedDataArray.push(formData); 
-        this.submittedData = formData; 
-        this.visualisationForm.reset(); 
-      }
-    }
-  }
-  ajouterBlocStage() {
-    this.ajouterBloc("blocks", "container");
-  }
-  ajouterBlocEdu() {
-    this.ajouterBloc("blocksEdu", "containerEdu");
-  }
-  ajouterBlocLang() {
-    this.ajouterBloc("blocksLang", "containerLang");
-  }
-  ajouterBlocCertif() {
-    this.ajouterBloc("blocksCertif", "containerCertif");
-  }
-  ajouterBlocCopet() {
-    this.ajouterBloc("blocksCopet", "containerCopet");
+    console.log('Initial form values:', this.visualisationForm.value);
   }
   onSubmit(): void {
+    console.log('Submitting form data:', this.visualisationForm.value);
+  
     const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
     let dateFinValue = this.visualisationForm.get('Datefin')?.value;
-    
+  
     if (this.isDateFinChecked(1)) {
       dateFinValue = 'jusqu\'à présent';
     }
-
-    if (this.isDateFinChecked(2)) {
-      dateFinValue = 'jusqu\'à présent';
-    }
-
+  
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
+  
     this.submittedData = this.visualisationForm.value;
     this.isDataSubmitted = true;
-    this.isFormConfirmed = true; 
   }
   
   onDateInput(event: Event, fieldName: string): void {
@@ -108,8 +77,10 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
   updateEndDateOptions(fieldName: string): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
     const dateDebutValue = this.visualisationForm.get('fieldName')?.value;
-    const dateDebut = new Date(dateDebutValue);
     const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
+    const dateDebut = new Date(dateDebutValue);
+    console.log('Date de début (updateEndDateOptions):', dateDebutValue);
+  console.log('Date de fin (updateEndDateOptions):', dateFinControl?.value);
     if (dateDebutValue && dateFinControl && dateFinControl.value) {
       const [year, month] = dateFinControl.value.split('-');
       const formattedDateFinValue = `${year}-${month}`;
@@ -157,16 +128,19 @@ export class VisualisationComponent implements OnInit,AfterViewInit{
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
+  
   isDateFinDisabled(section: number): boolean {
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
+    console.log('Date de début (getMinimumDate):', dateDebutValue);
     return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
   }
   formatDateToYearMonth(dateStr: string): string {
     const date = new Date(dateStr);
+    console.log('Date formatée (formatDateToMonthYear):', date);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
