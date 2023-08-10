@@ -49,7 +49,12 @@ export class VisualisationComponent implements OnInit{
       dateCert:[''],
       titre_langue:[''],
       niveaulang:[''],
-      historique: this.formBuilder.array([this.createHistoriqueSection()])
+      historique: this.formBuilder.array([this.createHistoriqueSection()]),
+      Education:  this.formBuilder.array([this.createEducationSection()]),
+      Competences: this.formBuilder.array([this.createCompetencesSection()]),
+      Langues:this.formBuilder.array([this.createLanguesSection()]),
+      Certificats:this.formBuilder.array([this.createCertificatsSection()]),
+
     });
     console.log('Initial form values:', this.visualisationForm.value);
   }
@@ -166,6 +171,77 @@ export class VisualisationComponent implements OnInit{
   }
   removeHistoriqueSection(index: number) {
     const historiqueControl = this.visualisationForm.get('historique') as FormArray;
+    historiqueControl.removeAt(index);
+  }
+  addEducationSection():void{
+    const historiqueArray = this.visualisationForm.get('Education') as FormArray;
+    historiqueArray.push(this.createHistoriqueSection());
+  }
+  createEducationSection(): FormGroup {
+    return this.formBuilder.group({
+      Nom_ecole:[''],
+      Diplome:[''],
+      VilleE:[''],
+      DatedebutF:[''],
+      datefinF:[''],
+      present2: [false]
+    });
+  }
+  get EducationFormArray(): FormArray {
+    return this.visualisationForm.get('Education') as FormArray;
+  }
+  removeEducationSection(index: number) {
+    const historiqueControl = this.visualisationForm.get('Education') as FormArray;
+    historiqueControl.removeAt(index);
+  }
+  addCompetencesSection(): void {
+    const historiqueArray = this.visualisationForm.get('Competences') as FormArray;
+    historiqueArray.push(this.createHistoriqueSection());
+  }
+  createCompetencesSection(): FormGroup {
+    return this.formBuilder.group({
+      titre_comp:['']
+    });
+  }
+  get CompetencesFormArray(): FormArray {
+    return this.visualisationForm.get('Competences') as FormArray;
+  }
+  removeCompetenceSection(index: number) {
+    const historiqueControl = this.visualisationForm.get('Competences') as FormArray;
+    historiqueControl.removeAt(index);
+  }
+  addLanguesSection(): void {
+    const historiqueArray = this.visualisationForm.get('Langues') as FormArray;
+    historiqueArray.push(this.createHistoriqueSection());
+  }
+  createLanguesSection(): FormGroup {
+    return this.formBuilder.group({
+      titre_langue:[''],
+      niveaulang:['']
+    });
+  }
+  get LanguesFormArray(): FormArray {
+    return this.visualisationForm.get('Langues') as FormArray;
+  }
+  removeLanguesSection(index: number) {
+    const historiqueControl = this.visualisationForm.get('Langues') as FormArray;
+    historiqueControl.removeAt(index);
+  }
+  addCertificatsSection(): void {
+    const historiqueArray = this.visualisationForm.get('Certificats') as FormArray;
+    historiqueArray.push(this.createHistoriqueSection());
+  }
+  createCertificatsSection(): FormGroup {
+    return this.formBuilder.group({
+      titre_certificat:[''],
+      dateCert:['']
+    });
+  }
+  get CertificatsFormArray(): FormArray {
+    return this.visualisationForm.get('Certificats') as FormArray;
+  }
+  removeCertificatsSection(index: number) {
+    const historiqueControl = this.visualisationForm.get('Certificats') as FormArray;
     historiqueControl.removeAt(index);
   }
 }
