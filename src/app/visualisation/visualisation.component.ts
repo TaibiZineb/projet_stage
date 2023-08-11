@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
@@ -55,8 +54,6 @@ export class VisualisationComponent implements OnInit{
       Competences: this.formBuilder.array([this.createCompetencesSection()]),
       Langues:this.formBuilder.array([this.createLanguesSection()]),
       Certificats:this.formBuilder.array([this.createCertificatsSection()]),
-      
-
     });
     this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
       const villeEControl = this.visualisationForm.get('Education.0.VilleE');
@@ -84,7 +81,7 @@ export class VisualisationComponent implements OnInit{
     this.isDataSubmitted = true;
 
   }
-  
+
   onDateInput(event: Event, fieldName: string): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -166,6 +163,7 @@ export class VisualisationComponent implements OnInit{
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
   }
+  
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
@@ -242,8 +240,8 @@ export class VisualisationComponent implements OnInit{
     historiqueControl.removeAt(index);
   }
   addCertificatsSection(): void {
-    const historiqueArray = this.visualisationForm.get('Certificats') as FormArray;
-    historiqueArray.push(this.createHistoriqueSection());
+    const CertificatsArray = this.visualisationForm.get('Certificats') as FormArray;
+    CertificatsArray.push(this.createHistoriqueSection());
   }
   createCertificatsSection(): FormGroup {
     return this.formBuilder.group({
@@ -255,7 +253,7 @@ export class VisualisationComponent implements OnInit{
     return this.visualisationForm.get('Certificats') as FormArray;
   }
   removeCertificatsSection(index: number) {
-    const historiqueControl = this.visualisationForm.get('Certificats') as FormArray;
-    historiqueControl.removeAt(index);
+    const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
+    CertificatsControl.removeAt(index);
   }
 }
