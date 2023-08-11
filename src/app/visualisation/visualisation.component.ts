@@ -1,4 +1,4 @@
-import { Component,OnInit,AfterViewInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
@@ -9,14 +9,14 @@ import { map, startWith} from 'rxjs/operators';
   styleUrls: ['./visualisation.component.css']
 })
 export class VisualisationComponent implements OnInit{
-  visualisationForm !: FormGroup;
+  visualisationForm!: FormGroup;
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
   submittedData: any = {};
-  submittedDataArray: any[] = [];
-  currentSectionIndex: number; 
+  currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
+  isSubmitted: boolean = false;
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -54,24 +54,34 @@ export class VisualisationComponent implements OnInit{
       Competences: this.formBuilder.array([this.createCompetencesSection()]),
       Langues:this.formBuilder.array([this.createLanguesSection()]),
       Certificats:this.formBuilder.array([this.createCertificatsSection()]),
-
     });
+    this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
+      const villeEControl = this.visualisationForm.get('Education.0.VilleE');
+      if (value) {
+        villeEControl?.disable();
+      } else {
+        villeEControl?.enable();
+      }
+    });
+    
     console.log('Initial form values:', this.visualisationForm.value);
   }
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
-  
     const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
     let dateFinValue = this.visualisationForm.get('Datefin')?.value;
-  
     if (this.isDateFinChecked(1)) {
+      dateFinValue = 'jusqu\'à présent';
+    }
+    if (this.isDateFinChecked(2)) {
       dateFinValue = 'jusqu\'à présent';
     }
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
     this.submittedData = this.visualisationForm.value;
     this.isDataSubmitted = true;
+
   }
-  
+
   onDateInput(event: Event, fieldName: string): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -81,7 +91,7 @@ export class VisualisationComponent implements OnInit{
   }
   updateEndDateOptions(fieldName: string): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
-    const dateDebutValue = this.visualisationForm.get('fieldName')?.value;
+    const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
     const dateDebut = new Date(dateDebutValue);
     console.log('Date de début (updateEndDateOptions):', dateDebutValue);
@@ -123,6 +133,7 @@ export class VisualisationComponent implements OnInit{
   }
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
+    console.log('Date to format:', date);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
@@ -131,7 +142,6 @@ export class VisualisationComponent implements OnInit{
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
   }
-  
   isDateFinDisabled(section: number): boolean {
     const isPresent = this.visualisationForm.get(`present${section}`)?.value;
     return isPresent ? true : false;
@@ -141,6 +151,7 @@ export class VisualisationComponent implements OnInit{
     console.log('Date de début (getMinimumDate):', dateDebutValue);
     return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
   }
+  
   formatDateToYearMonth(dateStr: string): string {
     const date = new Date(dateStr);
     console.log('Date formatée (formatDateToMonthYear):', date);
@@ -152,6 +163,7 @@ export class VisualisationComponent implements OnInit{
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
   }
+  
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
@@ -228,8 +240,8 @@ export class VisualisationComponent implements OnInit{
     historiqueControl.removeAt(index);
   }
   addCertificatsSection(): void {
-    const historiqueArray = this.visualisationForm.get('Certificats') as FormArray;
-    historiqueArray.push(this.createHistoriqueSection());
+    const CertificatsArray = this.visualisationForm.get('Certificats') as FormArray;
+    CertificatsArray.push(this.createHistoriqueSection());
   }
   createCertificatsSection(): FormGroup {
     return this.formBuilder.group({
@@ -241,7 +253,7 @@ export class VisualisationComponent implements OnInit{
     return this.visualisationForm.get('Certificats') as FormArray;
   }
   removeCertificatsSection(index: number) {
-    const historiqueControl = this.visualisationForm.get('Certificats') as FormArray;
-    historiqueControl.removeAt(index);
+    const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
+    CertificatsControl.removeAt(index);
   }
 }

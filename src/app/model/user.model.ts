@@ -24,11 +24,64 @@ export interface UserRoleWorkspace {
     idRole: number;
     idWorkspace: number;
 }
-export interface BlockData {
+
+export interface Resume {
+  candidateDetails: CandidateDetails;
+  historiques: historiques;
+  Educations: Educations;
+  languages: Languages;
+  certifications: Certifications;
+  Competences: Competences;
+  OriginalCv: string;
+}
+
+export interface CandidateDetails {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  position: 'relative',
+  role: string;
+  Phone?: string;
+  Anneesexperience?: string;
+}
+export interface historiques {
+  Position: Position[];
+}
+export interface Position {
   Nomentreprise: string;
-  Intituleposte: string;
+  PositionTitle: string;
   Datedebut: string;
   Datefin: string;
-  present: boolean;
-  description: string;
+  Description?: string;
+}
+export interface Educations {
+  Education: Education[];
+}
+export interface Education {
+  Nom_ecole: string;
+  Diplome: string;
+  ville?: string;
+  DatedebutF?: string;
+  DatefinF?: string;
+}
+export interface Languages {
+  Language: Language[];
+}
+export interface Language {
+  titre_langue: string;
+  niveaulang?: string;
+}
+export interface Certifications {
+  Certification: Certification[];
+}
+export interface Certification {
+  titre_certificat: string;
+  DateCert?: string;
+}
+
+export interface Competences {
+  TopSkills: Competence[];
+}
+export interface Competence {
+  titre_comp: string;
 }
