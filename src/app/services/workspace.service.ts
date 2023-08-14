@@ -1,8 +1,5 @@
-// workspace.service.ts
-
 import { Injectable } from '@angular/core';
 import { Workspace } from '../model/user.model';
-
 @Injectable({ providedIn: 'root' })
 export class WorkspaceService {
 

@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
+import { Resume,CandidateDetails,historiques,Position,Educations,Education,Langues,Langue,Certifications,Certification,Competences,Competence } from'../model/user.model'; 
 
 @Component({
   selector: 'app-visualisation',
@@ -14,6 +15,7 @@ export class VisualisationComponent implements OnInit{
   supabaseKey!: string;
   supabase: any;
   submittedData: any = {};
+  skillsData: any[] = [];
   currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
   isSubmitted: boolean = false;
@@ -23,11 +25,47 @@ export class VisualisationComponent implements OnInit{
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.currentSectionIndex = 0;
   }
+  resume: Resume = {
+    CandidateDetails: {
+      FirstName: '',
+      LastName: '',
+      Email: '',
+      role: '',
+      position: 'relative'
+    },
+    historiques: {
+      Position: [],
+    },
+    Educations: {
+      Education: [],
+    },
+    Langues: {
+      Langue: [],
+    },
+    certifications: {
+      Certification: [],
+    },
+    Competences: {
+      TopSkills: [],
+    },
+    OriginalCv: '',
+  };
+
   ngOnInit(): void {
+    
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
-      firstName: ['',Validators.required],
-      lastName: ['',Validators.required],
+      CandidateDetails: this.formBuilder.group({
+        FirstName: ['',Validators.required],
+        LastName: ['',Validators.required],
+        Email: ['',Validators.email],
+        telephone: ['',Validators.pattern(telephonePattern)],
+        role: ['',Validators.required],
+        Anneesexperience: ['']
+      }),
+
+      FirstName: ['',Validators.required],
+      LastName: ['',Validators.required],
       Email: ['',Validators.email],
       telephone: ['',Validators.pattern(telephonePattern)],
       role: ['',Validators.required],
@@ -43,16 +81,16 @@ export class VisualisationComponent implements OnInit{
       Diplome:[''],
       VilleE:[''],
       DatedebutF:[''],
-      datefinF:[''],
+      DatefinF:[''],
       titre_comp:[''],
       titre_certificat:[''],
-      dateCert:[''],
+      DateCert:[''],
       titre_langue:[''],
       niveaulang:[''],
       historique: this.formBuilder.array([this.createHistoriqueSection()]),
-      Education:  this.formBuilder.array([this.createEducationSection()]),
+      Educations:  this.formBuilder.array([this.createEducationsSection()]),
       Competences: this.formBuilder.array([this.createCompetencesSection()]),
-      Langues:this.formBuilder.array([this.createLanguesSection()]),
+      Langues:this.formBuilder.array([this.createLanguagesSection()]),
       Certificats:this.formBuilder.array([this.createCertificatsSection()]),
     });
     this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
@@ -186,29 +224,29 @@ export class VisualisationComponent implements OnInit{
     historiqueControl.removeAt(index);
   }
   addEducationSection():void{
-    const historiqueArray = this.visualisationForm.get('Education') as FormArray;
-    historiqueArray.push(this.createHistoriqueSection());
+    const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
+    EducationsArray.push(this.createEducationsSection());
   }
-  createEducationSection(): FormGroup {
+  createEducationsSection(): FormGroup {
     return this.formBuilder.group({
       Nom_ecole:[''],
       Diplome:[''],
       VilleE:[''],
       DatedebutF:[''],
-      datefinF:[''],
+      DatefinF:[''],
       present2: [false]
     });
   }
-  get EducationFormArray(): FormArray {
-    return this.visualisationForm.get('Education') as FormArray;
+  get EducationsFormArray(): FormArray {
+    return this.visualisationForm.get('Educations') as FormArray;
   }
-  removeEducationSection(index: number) {
-    const historiqueControl = this.visualisationForm.get('Education') as FormArray;
-    historiqueControl.removeAt(index);
+  removeEducationsSection(index: number) {
+    const EducationsControl = this.visualisationForm.get('Educations') as FormArray;
+    EducationsControl.removeAt(index);
   }
   addCompetencesSection(): void {
-    const historiqueArray = this.visualisationForm.get('Competences') as FormArray;
-    historiqueArray.push(this.createHistoriqueSection());
+    const CompetencesArray = this.visualisationForm.get('Competences') as FormArray;
+    CompetencesArray.push(this.createCompetencesSection());
   }
   createCompetencesSection(): FormGroup {
     return this.formBuilder.group({
@@ -222,31 +260,31 @@ export class VisualisationComponent implements OnInit{
     const historiqueControl = this.visualisationForm.get('Competences') as FormArray;
     historiqueControl.removeAt(index);
   }
-  addLanguesSection(): void {
-    const historiqueArray = this.visualisationForm.get('Langues') as FormArray;
-    historiqueArray.push(this.createHistoriqueSection());
+  addLanguagesSection(): void {
+    const LanguagesArray = this.visualisationForm.get('Langues') as FormArray;
+    LanguagesArray.push(this.createLanguagesSection());
   }
-  createLanguesSection(): FormGroup {
+  createLanguagesSection(): FormGroup {
     return this.formBuilder.group({
       titre_langue:[''],
       niveaulang:['']
     });
   }
-  get LanguesFormArray(): FormArray {
+  get LanguagesFormArray(): FormArray {
     return this.visualisationForm.get('Langues') as FormArray;
   }
-  removeLanguesSection(index: number) {
-    const historiqueControl = this.visualisationForm.get('Langues') as FormArray;
-    historiqueControl.removeAt(index);
+  removeLanguagesSection(index: number) {
+    const LanguagesControl = this.visualisationForm.get('Langues') as FormArray;
+    LanguagesControl.removeAt(index);
   }
   addCertificatsSection(): void {
     const CertificatsArray = this.visualisationForm.get('Certificats') as FormArray;
-    CertificatsArray.push(this.createHistoriqueSection());
+    CertificatsArray.push(this.createCertificatsSection());
   }
   createCertificatsSection(): FormGroup {
     return this.formBuilder.group({
       titre_certificat:[''],
-      dateCert:['']
+      DateCert:['']
     });
   }
   get CertificatsFormArray(): FormArray {
