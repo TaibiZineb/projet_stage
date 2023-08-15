@@ -59,7 +59,6 @@
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
-                
               </div>
                 <div id="container">
                   <ng-container *ngFor="let section of historiqueFormArray.controls; let i = index">
@@ -91,22 +90,19 @@
                               id="grid-Datedebut" 
                               type="month"
                               [max]="getMaximumDate('Datedebut')"
-                              (input)="onDateInput($event, 'Datedebut')">
+                              (input)="onDateInput($event, 'Datedebut',1)">
                             <div *ngIf="visualisationForm.get('Datedebut')?.touched && visualisationForm.get('Datedebut')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
                             <div class="flex items-center">
-                              <input formControlName="Datefin" *ngIf="!isDateFinChecked(1)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="month" [min]="getMinimumDate('Datedebut')" 
-                              [max]="getMaximumDate('Datefin')"   >
+                              <input formControlName="Datefin" [disabled]="isDateFinChecked(1)" *ngIf="!isDateFinChecked(1)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="month" [min]="getMinimumDate('Datedebut')" [max]="getMaximumDate('Datefin')"(input)="onDateInput($event, 'Datefin', 1)"  >
                               <span *ngIf="isDateFinChecked(1)">Jusqu'à présent</span>
                               <label class="ml-2 text-sm text-gray-700">
-                                <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present1">
-                                Jusqu'à présent
+                                <input type="checkbox" class="form-checkbox h-4 w-4 " (change)="toggleDateFin(1)" formControlName="present1">Jusqu'à présent
                               </label>
                               <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                             </div>
-                            
                           </div>
                         </div>
                         <!--Description-->
@@ -163,15 +159,15 @@
                           </div>
                           <div class="w-full md:w-1/3 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-DatedebutF">Date début</label>
-                            <input formControlName="DatedebutF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatedebutF" type="month" [max]="getMaximumDate('DatedebutF')"(input)="onDateInput($event, 'DatedebutF')">
+                            <input formControlName="DatedebutF" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatedebutF" type="month" [max]="getMaximumDate('DatedebutF')"(input)="onDateInput($event, 'DatedebutF',2)">
                           </div>
                           <div class="w-full md:w-1/3 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-datefinF">Date fin</label>
                             <div class="flex items-center">
-                              <input formControlName="DatefinF" *ngIf="!isDateFinChecked(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')">
+                              <input formControlName="DatefinF" [disabled]="isDateFinChecked(2)" *ngIf="!isDateFinChecked(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')"   (input)="onDateInput($event, 'DatefinF', 2)">
                               <span *ngIf="isDateFinChecked(2)">Jusqu'à présent</span>
                               <label class="ml-2 text-sm text-gray-700">
-                                <input type="checkbox" class="form-checkbox h-4 w-4 " formControlName="present2"> Jusqu'à présent
+                                <input type="checkbox" (change)="toggleDateFin(2)" class="form-checkbox h-4 w-4 " formControlName="present2"> Jusqu'à présent
                               </label>
                             </div>
                           </div>
@@ -345,8 +341,7 @@
                         <tr class="top_skills" *ngFor="let topskill of resume.Competences.TopSkills" ><td>
                           <table>
                             <tbody>
-                              <ng-container>   <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600">{{ topskill.titre_comp }}</td></tr></ng-container>
-                           
+                              <ng-container> <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600">{{ topskill.titre_comp }}</td></tr></ng-container>
                             </tbody>
                           </table>
                         </td></tr>
@@ -358,12 +353,11 @@
                         <tr><td>
                           <table class="table_class">
                             <tbody>
-                              <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600">{{ submittedData.titre_comp }}</td></tr>
-                                <tr ><th class="text-left text-base leading-3 pt-2" *ngIf="submittedData && submittedData.Intituleposte">{{ position.Intituleposte }}</th></tr>
-                                <tr><td class="employer_name" >{{ position.Nomentreprise }}</td></tr>
-                                <tr><td class="employment_duration" >{{ position.Datedebut + ' - ' + position.Datefin }}</td></tr>
-                                <tr><td>
-                                  <div class="employment_history relative left-0 line-height-5">{{ position.Description }}</div></td></tr>
+                              <tr ><th class="text-left text-base leading-3 pt-2">{{ position.Intituleposte }}</th></tr>
+                              <tr><td class="employer_name" >{{ position.Nomentreprise }}</td></tr>
+                              <tr><td class="employment_duration" >{{ position.Datedebut + ' - ' + position.Datefin }}</td></tr>
+                              <tr><td>
+                                <div class="employment_history relative left-0 line-height-5">{{ position.Description }}</div></td></tr>
                             </tbody>
                           </table>
                         </td></tr>
@@ -376,7 +370,7 @@
                         <tr><td>
                           <table >
                             <tbody>
-                              <tr><th class=" text-left text-base leading-3 pt-2">">{{ edu.Diplome || '' }}</th></tr>
+                              <tr><th class=" text-left text-base leading-3 pt-2">{{ edu.Diplome || '' }}</th></tr>
                               <tr><td class="employer_name">{{ edu.Nom_ecole }}</td></tr>
                               <tr><td class="edu_duration">{{ edu.DatedebutF + ' ' + edu.DatefinF +  ' '+ edu.VilleE }}</td></tr>
                             </tbody>
@@ -390,30 +384,38 @@
                   <td class="rightpart">
                     <table class="table_class">
                       <tbody>
-                        <tr><td>
-                          <table class="other_skills table_class">
+                        <tr ><td>
+                          <table class="table_class">
                             <tbody>
-                              <tr class="tr_title"><th class="th_title text-blue-500 text-xs uppercase">autre &nbsp;compétance(s)</th></tr>
-                              <tr><td>
-                                <table class="table_class">
-                                  <tbody>
-                                    <ul class="top_skills_table_ul w-full flex flex-row flex-grow justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
-                                      <li class="top_skills_table_li li_class"  >
-                                      </li>
-                                    </ul>
-                                  </tbody>
-                                </table>
-                              </td></tr>
+                              <tr class="tr_title">
+                                <th class="th_title text-blue-500 text-xs uppercase">autre &nbsp;compétance(s)</th>
+                              </tr>
+                              <tr *ngFor="let skillgroup of skillsData; let index = index">
+                                <td>
+                                  <table [attr.key]="index" class="table_class">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <ul class="top_skills_table_ul w-full flex flex-row flex-wrap justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
+                                            <li *ngFor="let topskill of skillgroup.competences; let innerIndex = index">
+                                              Key: {{ skillgroup.key }}
+                                            </li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
-                        
                         </td></tr>
                         <tr><td>
                           <ng-container *ngIf="resume.Langues.Langue.length !== 0">
                           <table class="table_class">
                             <tbody>
                               <tr>
-                                <th class="th_title text-blue-500 text-xs uppercase">languages</th>
+                                <th class="th_title text-blue-500 text-xs uppercase">langues</th>
                               </tr>   
                               <ng-container *ngFor="let lang of resume.Langues.Langue; let index = index">                           
                               <tr><td>
@@ -456,7 +458,6 @@
             </div>
           </section>
         </div>
-
       </div>
     </div>
   </div>

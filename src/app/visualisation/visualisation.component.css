@@ -53,63 +53,14 @@
 .wrapper {
   height: auto;
 }
-.candidate_name {
-  text-align: left;
-  padding: 20px 0 0 0;
-}
-.category {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
-    height: 29px;
-    width: fit-content;
-    background: #21b573;
-    border-radius: 4px;
-    line-height: 11px;
-    text-transform: uppercase;
-    color: #ffffff;
-}
-.title {
-  text-align: left;
-  font-size: 16px;
-  line-height: 13px;
-  padding-top: 20px;
-  padding-bottom:7px;
-}
 .top_skills_table_ul {
- 
   height: 49px;
-  
-}
-.left_part {
-  vertical-align: top;
-  width: 70%;
-}
-.right_part {
-  vertical-align: top;
-  width: 30%;
 }
 .table_container {
   padding: 0;
   width: 100%;
 }
-.preview_employment_history {
-  position: relative;
-  left: 0%;
-  font-size: 14px;
-  line-height: 25px;
-  padding-top: 3px;
-}
-.education_degree {
-  font-size: 15px;
-  font-weight: 500;
-  padding-bottom: 6px;
-}
-.other_skills_tr {
-  display: flex;
-  flex-wrap: wrap;
-}
+
+
 
 

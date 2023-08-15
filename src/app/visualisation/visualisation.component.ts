@@ -2,8 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
-import { Resume,CandidateDetails,historiques,Position,Educations,Education,Langues,Langue,Certifications,Certification,Competences,Competence } from'../model/user.model'; 
-
+import { Resume } from'../model/user.model'; 
 @Component({
   selector: 'app-visualisation',
   templateUrl: './visualisation.component.html',
@@ -18,12 +17,13 @@ export class VisualisationComponent implements OnInit{
   skillsData: any[] = [];
   currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
-  isSubmitted: boolean = false;
+  dateFinValues: string[] = [];
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.currentSectionIndex = 0;
+    this.dateFinValues = [''];
   }
   resume: Resume = {
     CandidateDetails: {
@@ -50,9 +50,11 @@ export class VisualisationComponent implements OnInit{
     },
     OriginalCv: '',
   };
-
   ngOnInit(): void {
-    
+    this.skillsData = [
+      { key: 'COMP1', value: 'Description 1' },
+      { key: 'COMP2', value: 'Description 2' },
+    ];
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
@@ -63,7 +65,6 @@ export class VisualisationComponent implements OnInit{
         role: ['',Validators.required],
         Anneesexperience: ['']
       }),
-
       FirstName: ['',Validators.required],
       LastName: ['',Validators.required],
       Email: ['',Validators.email],
@@ -101,7 +102,17 @@ export class VisualisationComponent implements OnInit{
         villeEControl?.enable();
       }
     });
-    
+    this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
+      const dateFinControl = this.visualisationForm.get('Datefin');
+      if (value) {
+        dateFinControl?.setValue(null);
+        dateFinControl?.disable();
+      } else {
+        dateFinControl?.enable();
+        const previousDateFinValue = this.dateFinValues[0]; // Utilisez le tableau dateFinValues que vous avez défini
+        dateFinControl?.setValue(previousDateFinValue);
+      }
+    });
     console.log('Initial form values:', this.visualisationForm.value);
   }
   onSubmit(): void {
@@ -109,25 +120,41 @@ export class VisualisationComponent implements OnInit{
     const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
     let dateFinValue = this.visualisationForm.get('Datefin')?.value;
     if (this.isDateFinChecked(1)) {
-      dateFinValue = 'jusqu\'à présent';
+      this.dateFinValues[0] = 'jusqu\'à présent';
+    } else {
+      this.dateFinValues[0] = this.visualisationForm.get('Datefin')?.value;
     }
+  
     if (this.isDateFinChecked(2)) {
-      dateFinValue = 'jusqu\'à présent';
+      this.dateFinValues[1] = 'jusqu\'à présent';
+    } else {
+      this.dateFinValues[2] = this.visualisationForm.get('DatefinF')?.value;
     }
     this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
     this.submittedData = this.visualisationForm.value;
+    this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
+    this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
+    this.resume.Educations.Education = this.visualisationForm.get('Educations')?.value;
+    this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
+    this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
+    this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
     this.isDataSubmitted = true;
-
   }
-
-  onDateInput(event: Event, fieldName: string): void {
+  onDateInput(event: Event, fieldName: string, section: number): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
     const formattedDate = this.formatDateToMonthYear(inputValue);
     this.visualisationForm.get(fieldName)?.setValue(formattedDate, { emitEvent: false });
-    this.updateEndDateOptions(fieldName);
+    const presentControl = this.visualisationForm.get(`present${section}`);
+    if (inputValue) {
+      presentControl?.disable();
+      presentControl?.setValue(false);
+    } else {
+      presentControl?.enable();
+    }
   }
-  updateEndDateOptions(fieldName: string): void {
+  
+  updateEndDateOptions(fieldName: string,section: number): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
@@ -139,16 +166,12 @@ export class VisualisationComponent implements OnInit{
       const formattedDateFinValue = `${year}-${month}`;
       const currentDateFin = new Date(formattedDateFinValue);
       const today = new Date();
-      console.log('dateDebut:', dateDebut);
-      console.log('currentDateFin:', currentDateFin);
-      console.log('today:', today);
       if (currentDateFin < dateDebut || currentDateFin > today) {
-        console.log('Invalid date');
         dateFinControl.patchValue('');
       } else {
         console.log('Valid date');
         const dateDebutFormatted = this.formatDateToMonthYear(dateDebutValue);
-        const dateFinFormatted = this.formatDateToMonthYear(formattedDateFinValue); // Format date fin
+        const dateFinFormatted = this.formatDateToMonthYear(formattedDateFinValue);
         dateFinControl.patchValue(dateFinFormatted, { emitEvent: false });
         dateFinControl.disable({ onlySelf: true, emitEvent: false });
         this.visualisationForm.get('Datefin')?.setValidators([Validators.required]);
@@ -168,6 +191,7 @@ export class VisualisationComponent implements OnInit{
         });
       }
     }
+    this.visualisationForm.get(`present${section}`)?.enable();
   }
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
@@ -294,4 +318,19 @@ export class VisualisationComponent implements OnInit{
     const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
     CertificatsControl.removeAt(index);
   }
+toggleDateFin(section: number): void {
+  const dateFinControl = this.visualisationForm.get(`Datefin${section === 1 ? '' : 'F'}`);
+  const presentControl = this.visualisationForm.get(`present${section}`);
+
+  if (dateFinControl && presentControl) {
+    if (dateFinControl.value) {
+      dateFinControl.setValue(null);
+      dateFinControl.enable();
+    } else {
+      dateFinControl.disable();
+    }
+    presentControl.setValue(!dateFinControl.disabled);
+  }
+}
+  
 }
