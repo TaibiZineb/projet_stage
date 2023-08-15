@@ -10,7 +10,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
-import { VisualbisComponent } from './visualbis/visualbis.component';
+
 
 
 const routes: Routes = [
@@ -25,15 +25,11 @@ const routes: Routes = [
       { path: 'visualisation', component: VisualisationComponent },
       { path: 'workspace', component: WorkspaceComponent },
       { path: 'cvtemplate', component: CVtemplateComponent },
-      { path: 'visualbis', component: VisualbisComponent }
-      
     ]
   },
   
   { path: '**', redirectTo: 'login' }, 
 ];
-
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

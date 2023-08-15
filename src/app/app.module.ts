@@ -15,7 +15,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
-import { VisualbisComponent } from './visualbis/visualbis.component';
+
 
 
 @NgModule({
@@ -30,9 +30,6 @@ import { VisualbisComponent } from './visualbis/visualbis.component';
     DashboardComponent,
     WorkspaceComponent,
     CVtemplateComponent,
-    VisualbisComponent,
-
-
   ],
   imports: [
     BrowserModule,

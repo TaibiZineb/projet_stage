@@ -24,24 +24,22 @@ export interface UserRoleWorkspace {
     idRole: number;
     idWorkspace: number;
 }
-
 export interface Resume {
-  candidateDetails: CandidateDetails;
+  CandidateDetails: CandidateDetails;
   historiques: historiques;
   Educations: Educations;
-  languages: Languages;
+  Langues: Langues;
   certifications: Certifications;
   Competences: Competences;
   OriginalCv: string;
 }
-
 export interface CandidateDetails {
   FirstName: string;
   LastName: string;
   Email: string;
   position: 'relative',
   role: string;
-  Phone?: string;
+  telephone?: string;
   Anneesexperience?: string;
 }
 export interface historiques {
@@ -49,7 +47,7 @@ export interface historiques {
 }
 export interface Position {
   Nomentreprise: string;
-  PositionTitle: string;
+  Intituleposte: string;
   Datedebut: string;
   Datefin: string;
   Description?: string;
@@ -60,14 +58,14 @@ export interface Educations {
 export interface Education {
   Nom_ecole: string;
   Diplome: string;
-  ville?: string;
+  VilleE?: string;
   DatedebutF?: string;
   DatefinF?: string;
 }
-export interface Languages {
-  Language: Language[];
+export interface Langues {
+  Langue: Langue[];
 }
-export interface Language {
+export interface Langue {
   titre_langue: string;
   niveaulang?: string;
 }
@@ -78,7 +76,6 @@ export interface Certification {
   titre_certificat: string;
   DateCert?: string;
 }
-
 export interface Competences {
   TopSkills: Competence[];
 }
