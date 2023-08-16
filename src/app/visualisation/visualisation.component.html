@@ -87,21 +87,23 @@
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datedebut">*Date de début</label>
                             <input formControlName="Datedebut" 
                               class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
-                              id="grid-Datedebut" 
-                              type="month"
-                              [max]="getMaximumDate('Datedebut')"
-                              (input)="onDateInput($event, 'Datedebut',1)">
+                              id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
                             <div *ngIf="visualisationForm.get('Datedebut')?.touched && visualisationForm.get('Datedebut')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
+                            <div *ngIf="!isDateFinChecked(1)">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
+                              <input formControlName="Datefin" [disabled]="isDateFinDisabled(1) || isDateFinChecked(1)" 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 hover:border-blue-500"
+                                id="grid-Datefin" type="month" [min]="getMinimumDate('Datedebut')" [max]="getMaximumDate('Datefin')" (input)="onDateInput($event, 'Datefin', 1)">
+                            </div>
+                            <span *ngIf="isDateFinChecked(1)">Jusqu'à présent</span>
                             <div class="flex items-center">
-                              <input formControlName="Datefin" [disabled]="isDateFinChecked(1)" *ngIf="!isDateFinChecked(1)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="month" [min]="getMinimumDate('Datedebut')" [max]="getMaximumDate('Datefin')"(input)="onDateInput($event, 'Datefin', 1)"  >
-                              <span *ngIf="isDateFinChecked(1)">Jusqu'à présent</span>
-                              <label class="ml-2 text-sm text-gray-700">
-                                <input type="checkbox" class="form-checkbox h-4 w-4 " (change)="toggleDateFin(1)" formControlName="present1">Jusqu'à présent
-                              </label>
-                              <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                              <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(1)" formControlName="present1">
+                              <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
+                            </div>
+                            <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']"
+                              class="text-red-500 text-xs italic">Ce champ est obligatoire.
                             </div>
                           </div>
                         </div>
@@ -164,11 +166,12 @@
                           <div class="w-full md:w-1/3 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-datefinF">Date fin</label>
                             <div class="flex items-center">
-                              <input formControlName="DatefinF" [disabled]="isDateFinChecked(2)" *ngIf="!isDateFinChecked(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')"   (input)="onDateInput($event, 'DatefinF', 2)">
+                              <input formControlName="DatefinF" [disabled]="isDateFinChecked(2)" *ngIf="!isDateFinChecked(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')" (input)="onDateInput($event, 'DatefinF', 2)">
                               <span *ngIf="isDateFinChecked(2)">Jusqu'à présent</span>
-                              <label class="ml-2 text-sm text-gray-700">
-                                <input type="checkbox" (change)="toggleDateFin(2)" class="form-checkbox h-4 w-4 " formControlName="present2"> Jusqu'à présent
-                              </label>
+                              <div class="flex items-center">
+                                <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(2)" formControlName="present2">
+                                <label class="ml-2 text-sm text-gray-700" for="present2">Jusqu'à présent</label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -178,7 +181,7 @@
                 </ng-container>
               </div>
               <div class="flex items-center">
-                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addEducationSection()">
+                <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addEducationsSection()">
                   <p class="mr-2">Ajouter un nouveau</p>
                   <svg color="#0056FC" width="16px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 8H4.18182H8ZM8 8V4.18182V8ZM8 8H11.8182H8ZM8 8V11.8182V8ZM8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8C15 11.866 11.866 15 8 15Z" stroke="#0056FC" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -199,7 +202,7 @@
                     <div class="rounded w-full md:w-1/2 px-3 mb-6 md:mb-0">
                       <input formControlName="titre_comp" class="appearance-none  text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-compétences" type="text" placeholder="compétence"><i class="bi bi-x"></i>
                     </div> 
-                     <button type="button" (click)="removeCompetenceSection(i)">
+                     <button type="button" (click)="removeCompetencesSection(i)">
                       <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                   </div>
                 </div>
@@ -355,7 +358,10 @@
                             <tbody>
                               <tr ><th class="text-left text-base leading-3 pt-2">{{ position.Intituleposte }}</th></tr>
                               <tr><td class="employer_name" >{{ position.Nomentreprise }}</td></tr>
-                              <tr><td class="employment_duration" >{{ position.Datedebut + ' - ' + position.Datefin }}</td></tr>
+                             <tr><td class="employment_duration">{{ position.Datedebut + ' - ' }}
+                              <ng-container *ngIf="isDateFinChecked(index); else dateFin">{{ dateFinValues[index] }}</ng-container>
+                              <ng-template #dateFin>jusqu'à présent</ng-template>
+                              </td></tr>
                               <tr><td>
                                 <div class="employment_history relative left-0 line-height-5">{{ position.Description }}</div></td></tr>
                             </tbody>
@@ -372,7 +378,12 @@
                             <tbody>
                               <tr><th class=" text-left text-base leading-3 pt-2">{{ edu.Diplome || '' }}</th></tr>
                               <tr><td class="employer_name">{{ edu.Nom_ecole }}</td></tr>
-                              <tr><td class="edu_duration">{{ edu.DatedebutF + ' ' + edu.DatefinF +  ' '+ edu.VilleE }}</td></tr>
+                              <tr><td class="edu_duration">
+                                {{ edu.DatedebutF + ' - ' }}
+                                <ng-container *ngIf="isDateFinChecked(2); else dateFin">{{ dateFinValues[1] }}</ng-container>
+                                <ng-template #dateFin>jusqu'à présent</ng-template> {{ edu.VilleE }}
+                              </td></tr>
+                              
                             </tbody>
                           </table>
                         </td></tr>

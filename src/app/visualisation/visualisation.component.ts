@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
 import { Resume } from'../model/user.model'; 
@@ -17,7 +17,10 @@ export class VisualisationComponent implements OnInit{
   skillsData: any[] = [];
   currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
-  dateFinValues: string[] = [];
+   dateFinValues: string[] = [];
+   dateFinControls: { date: FormControl, present: FormControl }[] = [];
+
+  presentControls: FormControl[] = [];
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -55,6 +58,7 @@ export class VisualisationComponent implements OnInit{
       { key: 'COMP1', value: 'Description 1' },
       { key: 'COMP2', value: 'Description 2' },
     ];
+    
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
@@ -103,34 +107,33 @@ export class VisualisationComponent implements OnInit{
       }
     });
     this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
-      const dateFinControl = this.visualisationForm.get('Datefin');
       if (value) {
-        dateFinControl?.setValue(null);
-        dateFinControl?.disable();
+        this.visualisationForm.get('Datefin')?.setValue(null);
+        this.visualisationForm.get('Datefin')?.disable();
       } else {
-        dateFinControl?.enable();
-        const previousDateFinValue = this.dateFinValues[0]; // Utilisez le tableau dateFinValues que vous avez défini
-        dateFinControl?.setValue(previousDateFinValue);
+        this.visualisationForm.get('Datefin')?.enable();
       }
     });
     console.log('Initial form values:', this.visualisationForm.value);
   }
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
-    const dateDebutValue = this.visualisationForm.get('Datedebut')?.value;
-    let dateFinValue = this.visualisationForm.get('Datefin')?.value;
-    if (this.isDateFinChecked(1)) {
-      this.dateFinValues[0] = 'jusqu\'à présent';
-    } else {
-      this.dateFinValues[0] = this.visualisationForm.get('Datefin')?.value;
-    }
   
-    if (this.isDateFinChecked(2)) {
-      this.dateFinValues[1] = 'jusqu\'à présent';
-    } else {
-      this.dateFinValues[2] = this.visualisationForm.get('DatefinF')?.value;
-    }
-    this.visualisationForm.get('Datefin')?.setValue(dateFinValue);
+    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+
+    historiqueArray.controls.forEach((control: AbstractControl, index: number) => {
+      const presentControl = control.get('present1') as FormControl;
+      const dateFinControl = control.get('Datefin') as FormControl;
+  
+      if (presentControl.value) {
+        dateFinControl.setValue('jusqu\'à présent');
+      } else {
+        dateFinControl.setValue(this.dateFinValues[index] || null);
+      }
+    });
+    this.dateFinValues[0] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : this.visualisationForm.get('Datefin')?.value;
+    this.dateFinValues[1] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : this.visualisationForm.get('DatefinF')?.value;
+  
     this.submittedData = this.visualisationForm.value;
     this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
     this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
@@ -154,27 +157,24 @@ export class VisualisationComponent implements OnInit{
     }
   }
   
-  updateEndDateOptions(fieldName: string,section: number): void {
+  updateEndDateOptions(fieldName: string, section: number): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
     const dateDebut = new Date(dateDebutValue);
+    const dateFin = dateFinControl?.value ? new Date(dateFinControl.value) : null;
     console.log('Date de début (updateEndDateOptions):', dateDebutValue);
-  console.log('Date de fin (updateEndDateOptions):', dateFinControl?.value);
-    if (dateDebutValue && dateFinControl && dateFinControl.value) {
-      const [year, month] = dateFinControl.value.split('-');
-      const formattedDateFinValue = `${year}-${month}`;
-      const currentDateFin = new Date(formattedDateFinValue);
+    console.log('Date de fin (updateEndDateOptions):', dateFinControl?.value);
+    if (dateFinControl && dateFinControl.enabled && !this.isDateFinChecked(section)) {
       const today = new Date();
-      if (currentDateFin < dateDebut || currentDateFin > today) {
+      if (dateFin && (dateFin < dateDebut || dateFin > today)) {
         dateFinControl.patchValue('');
       } else {
         console.log('Valid date');
         const dateDebutFormatted = this.formatDateToMonthYear(dateDebutValue);
-        const dateFinFormatted = this.formatDateToMonthYear(formattedDateFinValue);
+        const dateFinFormatted = dateFin ? this.formatDateToMonthYear(dateFinControl.value) : '';
         dateFinControl.patchValue(dateFinFormatted, { emitEvent: false });
         dateFinControl.disable({ onlySelf: true, emitEvent: false });
-        this.visualisationForm.get('Datefin')?.setValidators([Validators.required]);
         const dateFinOptions = dateFinControl.valueChanges.pipe(
           map((selectedDate: string) => {
             return this.formatDateToMonthYear(selectedDate);
@@ -186,7 +186,6 @@ export class VisualisationComponent implements OnInit{
         );
         dateFinOptions.subscribe((options: string) => {
           dateFinControl.enable({ onlySelf: true, emitEvent: false });
-          dateFinControl.setValidators([]);
           dateFinControl.patchValue(options, { emitEvent: false });
         });
       }
@@ -200,20 +199,30 @@ export class VisualisationComponent implements OnInit{
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
   }
+  toggleDateFin(section: number): void {
+    const dateFinControl = this.visualisationForm.get(`Datefin${section}`);
+    const presentControl = this.visualisationForm.get(`present${section}`);
+  
+    if (presentControl?.value) {
+      dateFinControl?.patchValue('jusqu\'à présent');
+      dateFinControl?.disable({ onlySelf: true, emitEvent: false });
+    } else {
+      dateFinControl?.patchValue('', { emitEvent: false });
+      dateFinControl?.enable({ onlySelf: true, emitEvent: false });
+    }
+  }
+  
   isDateFinChecked(section: number): boolean {
-    const isPresent = this.visualisationForm.get(`present${section}`)?.value;
-    return isPresent ? true : false;
+    return this.visualisationForm.get(`present${section}`)?.value === true;
   }
   isDateFinDisabled(section: number): boolean {
-    const isPresent = this.visualisationForm.get(`present${section}`)?.value;
-    return isPresent ? true : false;
+    return this.visualisationForm.get(`present${section}`)?.value === true;
   }
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     console.log('Date de début (getMinimumDate):', dateDebutValue);
     return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
   }
-  
   formatDateToYearMonth(dateStr: string): string {
     const date = new Date(dateStr);
     console.log('Date formatée (formatDateToMonthYear):', date);
@@ -225,7 +234,6 @@ export class VisualisationComponent implements OnInit{
     const today = new Date();
     return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
   }
-  
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
@@ -236,7 +244,7 @@ export class VisualisationComponent implements OnInit{
       Intituleposte: ['', Validators.required],
       Datedebut: ['', Validators.required],
       Datefin: [''],
-      present1: [false],
+      present1: [false], 
       description: ['']
     });
   }
@@ -247,9 +255,12 @@ export class VisualisationComponent implements OnInit{
     const historiqueControl = this.visualisationForm.get('historique') as FormArray;
     historiqueControl.removeAt(index);
   }
-  addEducationSection():void{
+  addEducationsSection():void{
+    console.log('Adding education section');
     const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
     EducationsArray.push(this.createEducationsSection());
+
+
   }
   createEducationsSection(): FormGroup {
     return this.formBuilder.group({
@@ -280,9 +291,9 @@ export class VisualisationComponent implements OnInit{
   get CompetencesFormArray(): FormArray {
     return this.visualisationForm.get('Competences') as FormArray;
   }
-  removeCompetenceSection(index: number) {
-    const historiqueControl = this.visualisationForm.get('Competences') as FormArray;
-    historiqueControl.removeAt(index);
+  removeCompetencesSection(index: number) {
+    const CompetencesControl = this.visualisationForm.get('Competences') as FormArray;
+    CompetencesControl.removeAt(index);
   }
   addLanguagesSection(): void {
     const LanguagesArray = this.visualisationForm.get('Langues') as FormArray;
@@ -318,19 +329,4 @@ export class VisualisationComponent implements OnInit{
     const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
     CertificatsControl.removeAt(index);
   }
-toggleDateFin(section: number): void {
-  const dateFinControl = this.visualisationForm.get(`Datefin${section === 1 ? '' : 'F'}`);
-  const presentControl = this.visualisationForm.get(`present${section}`);
-
-  if (dateFinControl && presentControl) {
-    if (dateFinControl.value) {
-      dateFinControl.setValue(null);
-      dateFinControl.enable();
-    } else {
-      dateFinControl.disable();
-    }
-    presentControl.setValue(!dateFinControl.disabled);
-  }
-}
-  
 }
