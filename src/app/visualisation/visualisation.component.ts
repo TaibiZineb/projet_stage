@@ -19,6 +19,8 @@ export class VisualisationComponent implements OnInit{
   isDataSubmitted: boolean = false;
    dateFinValues: string[] = [];
    dateFinControls: { date: FormControl, present: FormControl }[] = [];
+   dateFinValuesHistorique: string[] = [''];
+dateFinValuesEducations: string[] = [''];
 
   presentControls: FormControl[] = [];
   constructor(private formBuilder: FormBuilder){
@@ -143,6 +145,7 @@ export class VisualisationComponent implements OnInit{
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
     this.isDataSubmitted = true;
   }
+  
   onDateInput(event: Event, fieldName: string, section: number): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -160,7 +163,7 @@ export class VisualisationComponent implements OnInit{
   updateEndDateOptions(fieldName: string, section: number): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
-    const dateFinControl = this.visualisationForm.get('Datefin' + fieldName.substring(fieldName.length - 1));
+    const dateFinControl = this.visualisationForm.get(`Datefin${section}`);
     const dateDebut = new Date(dateDebutValue);
     const dateFin = dateFinControl?.value ? new Date(dateFinControl.value) : null;
     console.log('Date de début (updateEndDateOptions):', dateDebutValue);
@@ -194,46 +197,44 @@ export class VisualisationComponent implements OnInit{
   }
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
-    console.log('Date to format:', date);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
   }
+
   toggleDateFin(section: number): void {
-    const dateFinControl = this.visualisationForm.get(`Datefin${section}`);
-    const presentControl = this.visualisationForm.get(`present${section}`);
+    const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
+    const dateFinControl = this.visualisationForm.get(dateFinControlName) as FormControl;
+    const presentControl = this.visualisationForm.get(`present${section}`) as FormControl;
   
-    if (presentControl?.value) {
-      dateFinControl?.patchValue('jusqu\'à présent');
-      dateFinControl?.disable({ onlySelf: true, emitEvent: false });
-    } else {
-      dateFinControl?.patchValue('', { emitEvent: false });
-      dateFinControl?.enable({ onlySelf: true, emitEvent: false });
+    if (presentControl) {
+      if (presentControl.value) {
+        dateFinControl.patchValue('jusqu\'à présent');
+        dateFinControl.disable({ onlySelf: true, emitEvent: false });
+      } else {
+        dateFinControl.enable({ onlySelf: true, emitEvent: false });
+        dateFinControl.patchValue('');
+      }
+      this.updateEndDateOptions(`Datedebut${section}`, section);
     }
   }
-  
   isDateFinChecked(section: number): boolean {
     return this.visualisationForm.get(`present${section}`)?.value === true;
   }
+  
   isDateFinDisabled(section: number): boolean {
     return this.visualisationForm.get(`present${section}`)?.value === true;
   }
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
-    console.log('Date de début (getMinimumDate):', dateDebutValue);
-    return dateDebutValue ? this.formatDateToYearMonth(dateDebutValue) : null;
+    return dateDebutValue ? this.formatDateToMonthYear(dateDebutValue) : null;
   }
-  formatDateToYearMonth(dateStr: string): string {
-    const date = new Date(dateStr);
-    console.log('Date formatée (formatDateToMonthYear):', date);
-    const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    return `${year}-${month}`;
-  }
+  
   getMaximumDate(fieldName: string): string {
     const today = new Date();
-    return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}`;
+    return this.formatDateToMonthYear(today.toISOString());
   }
+
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
