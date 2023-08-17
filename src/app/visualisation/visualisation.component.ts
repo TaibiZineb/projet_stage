@@ -17,18 +17,18 @@ export class VisualisationComponent implements OnInit{
   skillsData: any[] = [];
   currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
-   dateFinValues: string[] = [];
-   dateFinControls: { date: FormControl, present: FormControl }[] = [];
-   dateFinValuesHistorique: string[] = [''];
-dateFinValuesEducations: string[] = [''];
+  dateFinValues: string[] = [];
+  dateFinControls: { date: FormControl, present: FormControl }[] = [];
+  dateFinValuesHistorique: string[] = [''];
+  dateFinValuesEducations: string[] = [''];
 
   presentControls: FormControl[] = [];
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
-    this.currentSectionIndex = 0;
-    this.dateFinValues = [''];
+    this.dateFinValuesHistorique = [];
+    this.dateFinValues = ['', ''];
   }
   resume: Resume = {
     CandidateDetails: {
@@ -120,17 +120,15 @@ dateFinValuesEducations: string[] = [''];
   }
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
-  
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
-
     historiqueArray.controls.forEach((control: AbstractControl, index: number) => {
       const presentControl = control.get('present1') as FormControl;
       const dateFinControl = control.get('Datefin') as FormControl;
-  
       if (presentControl.value) {
         dateFinControl.setValue('jusqu\'à présent');
       } else {
-        dateFinControl.setValue(this.dateFinValues[index] || null);
+        const dateFinValue = this.dateFinValuesHistorique[index] || null;
+        dateFinControl.setValue(dateFinValue);
       }
     });
     this.dateFinValues[0] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : this.visualisationForm.get('Datefin')?.value;
@@ -201,7 +199,6 @@ dateFinValuesEducations: string[] = [''];
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
   }
-
   toggleDateFin(section: number): void {
     const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
     const dateFinControl = this.visualisationForm.get(dateFinControlName) as FormControl;
@@ -229,15 +226,14 @@ dateFinValuesEducations: string[] = [''];
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     return dateDebutValue ? this.formatDateToMonthYear(dateDebutValue) : null;
   }
-  
   getMaximumDate(fieldName: string): string {
     const today = new Date();
     return this.formatDateToMonthYear(today.toISOString());
   }
-
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
+    this.dateFinValuesHistorique.push(''); 
   }
   createHistoriqueSection(): FormGroup {
     return this.formBuilder.group({
@@ -260,8 +256,7 @@ dateFinValuesEducations: string[] = [''];
     console.log('Adding education section');
     const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
     EducationsArray.push(this.createEducationsSection());
-
-
+    this.dateFinValuesEducations.push('');
   }
   createEducationsSection(): FormGroup {
     return this.formBuilder.group({
