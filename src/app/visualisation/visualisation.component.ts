@@ -19,15 +19,13 @@ export class VisualisationComponent implements OnInit{
   isDataSubmitted: boolean = false;
   dateFinValues: string[] = [];
   dateFinControls: { date: FormControl, present: FormControl }[] = [];
-  dateFinValuesHistorique: string[] = [''];
   dateFinValuesEducations: string[] = [''];
-
   presentControls: FormControl[] = [];
+  dateFinValuesHistorique: string[] = []; 
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
-    this.dateFinValuesHistorique = [];
     this.dateFinValues = ['', ''];
   }
   resume: Resume = {
@@ -108,6 +106,18 @@ export class VisualisationComponent implements OnInit{
         villeEControl?.enable();
       }
     });
+    this.visualisationForm.get('Educations.0.DatefinF')?.valueChanges.subscribe((value) => {
+      const historiqueDateFinControl = this.visualisationForm.get('historique.0.Datefin');
+      if (!this.isDateFinChecked(1)) {  
+        historiqueDateFinControl?.setValue(value);  
+      }
+    });
+    this.visualisationForm.get('Educations.0.DatefinF')?.valueChanges.subscribe((value) => {
+      const historiqueDateFinControl = this.visualisationForm.get('historique.0.Datefin');
+      if (historiqueDateFinControl && !historiqueDateFinControl.value) {
+        historiqueDateFinControl.setValue(value);
+      }
+    });
     this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
       if (value) {
         this.visualisationForm.get('Datefin')?.setValue(null);
@@ -122,18 +132,20 @@ export class VisualisationComponent implements OnInit{
     console.log('Submitting form data:', this.visualisationForm.value);
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.controls.forEach((control: AbstractControl, index: number) => {
+      this.dateFinValuesHistorique[index] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : control.get('Datefin')?.value;
       const presentControl = control.get('present1') as FormControl;
       const dateFinControl = control.get('Datefin') as FormControl;
+  
       if (presentControl.value) {
+        console.log(`Historique ${index + 1}: Présent activé`);
         dateFinControl.setValue('jusqu\'à présent');
       } else {
-        const dateFinValue = this.dateFinValuesHistorique[index] || null;
-        dateFinControl.setValue(dateFinValue);
+        console.log(`Historique ${index + 1}: Présent désactivé`);
+
       }
     });
     this.dateFinValues[0] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : this.visualisationForm.get('Datefin')?.value;
     this.dateFinValues[1] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : this.visualisationForm.get('DatefinF')?.value;
-  
     this.submittedData = this.visualisationForm.value;
     this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
     this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
@@ -141,9 +153,10 @@ export class VisualisationComponent implements OnInit{
     this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
     this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
+    console.log('Final form data:', this.submittedData);
+    console.log('Resume:', this.resume);
     this.isDataSubmitted = true;
   }
-  
   onDateInput(event: Event, fieldName: string, section: number): void {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
@@ -157,7 +170,6 @@ export class VisualisationComponent implements OnInit{
       presentControl?.enable();
     }
   }
-  
   updateEndDateOptions(fieldName: string, section: number): void {
     console.log(`updateEndDateOptions called for ${fieldName}`);
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
@@ -218,10 +230,16 @@ export class VisualisationComponent implements OnInit{
   isDateFinChecked(section: number): boolean {
     return this.visualisationForm.get(`present${section}`)?.value === true;
   }
-  
   isDateFinDisabled(section: number): boolean {
-    return this.visualisationForm.get(`present${section}`)?.value === true;
+    const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
+    const presentControl = this.visualisationForm.get(`present${section}`);
+    const dateFinControl = this.visualisationForm.get(dateFinControlName);
+    if (presentControl === null || dateFinControl === null) {
+      return false; 
+    }
+    return presentControl?.value === true || dateFinControl?.disabled;
   }
+  
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     return dateDebutValue ? this.formatDateToMonthYear(dateDebutValue) : null;
@@ -233,7 +251,7 @@ export class VisualisationComponent implements OnInit{
   addHistoriqueSection(): void {
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.push(this.createHistoriqueSection());
-    this.dateFinValuesHistorique.push(''); 
+
   }
   createHistoriqueSection(): FormGroup {
     return this.formBuilder.group({
