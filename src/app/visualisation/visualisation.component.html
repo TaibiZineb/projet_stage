@@ -19,12 +19,16 @@
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstName" label="First Name" placeholder="Prenom" type="text" >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div *ngIf="visualisationForm.get('FirstName')?.touched && visualisationForm.get('FirstName')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                  <div *ngIf="visualisationForm.get('CandidateDetails.FirstName')?.invalid && visualisationForm.get('CandidateDetails.FirstName')?.touched">
+                    <span class="text-red-500 text-xs italic">Prenom est obligatoire.</span>
+                  </div>
                 </section>
                 <section class="w-full md:w-1/2 px-3" id="lastName" label="Last Name" placeholder="Last Name" type="text"   style="width: 50%;">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">*nom</label>
                   <input id="lastName"  formControlName="LastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div *ngIf="visualisationForm.get('LastName')?.touched && visualisationForm.get('LastName')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                  <div *ngIf="visualisationForm.get('CandidateDetails.LastName')?.invalid && visualisationForm.get('CandidateDetails.LastName')?.touched">
+                    <span class="text-red-500 text-xs italic">Nom est obligatoire.</span>
+                  </div>
                 </section>
               </div>
               <!--Email & Phone-->
@@ -32,13 +36,16 @@
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <section id="email" label="Email" placeholder="Email" type="text" value="">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* Email</label><input id="email" formControlName="Email" label="Email" placeholder="Email" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-emil">
+                    <div *ngIf="visualisationForm.get('CandidateDetails.Email')?.invalid && visualisationForm.get('CandidateDetails.Email')?.touched">
+                      <span class="text-red-500 text-xs italic">Veuillez entrer une adresse email valide.</span>
+                    </div>
                   </section>
-                  <div *ngIf="visualisationForm.get('Email')?.touched && visualisationForm.get('Email')?.errors?.['Email']" class="text-red-500 text-xs italic">Veuillez entrer une adresse email valide.</div>
+                
+                 
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-telephone">Téléphone</label>
                   <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
-                  <div *ngIf="visualisationForm.get('telephone')?.touched && visualisationForm.get('telephone')?.errors?.['pattern']" class="text-red-500">Veuillez entrer un numéro de téléphone valide dans le format demandé (ex. 0600.000.000).</div>
                 </section>
               </div>
               <!--rôle & Années d'expérience-->
@@ -46,7 +53,10 @@
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Rôle</label>
                   <input formControlName="role" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-role" type="text" placeholder="Rôle">
-                  <div *ngIf="visualisationForm.get('role')?.touched && visualisationForm.get('role')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                 
+                  <div *ngIf="visualisationForm.get('CandidateDetails.role')?.invalid && visualisationForm.get('CandidateDetails.role')?.touched">
+                    <span class="text-red-500 text-xs italic">Ce champ est obligatoire.</span>
+                  </div>
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Années d'expérience</label>
@@ -55,10 +65,11 @@
               </div>
             </section>
             <!--Historique professionnel-->
-            <section class="Historique professionnel" formArrayName="historique">
+            <section class="Historique professionnel" formArrayName="historique" *ngIf="historiqueFormArray.length > 0">
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
+                
               </div>
                 <div id="container">
                   <ng-container *ngFor="let section of historiqueFormArray.controls; let i = index">
@@ -139,12 +150,18 @@
                         <!-- École -->
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">École</label>
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*École</label>
                             <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
+                            <div *ngIf="visualisationForm.get('Nom_ecole')?.invalid && visualisationForm.get('Nom_ecole')?.touched">
+                              <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
+                            </div>
                           </div>
                           <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">Diplôme</label>
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">*Diplôme</label>
                             <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
+                            <div *ngIf="visualisationForm.get('Diplome')?.invalid && visualisationForm.get('Diplome')?.touched">
+                              <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
+                            </div>
                           </div>
                         </div>
                         <!-- ville & date debut & date fin -->
@@ -166,6 +183,9 @@
                             <div class="flex items-start">
                               <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(2)" formControlName="present2">
                               <label class="ml-2 text-sm text-gray-700" for="present2">Jusqu'à présent</label>
+                            </div>
+                            <div *ngIf="visualisationForm.get('DatefinF')?.invalid && visualisationForm.get('DatefinF')?.touched">
+                              <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
                             </div>
                           </div>
                           
@@ -240,8 +260,11 @@
                         <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                       <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Langues</label>
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Langues</label>
                           <input formControlName="titre_langue" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-Mcompétences" type="text" placeholder="Langue">
+                          <div *ngIf="visualisationForm.get('titre_langue')?.invalid && visualisationForm.get('titre_langue')?.touched">
+                          <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
+                          </div>
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
@@ -283,8 +306,11 @@
                       <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Certificat</label>
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Certificat</label>
                         <input formControlName="titre_certificat" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
+                        <div *ngIf="visualisationForm.get('titre_certificat')?.invalid && visualisationForm.get('titre_certificat')?.touched">
+                          <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
+                        </div>
                       </div>
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date</label>
@@ -312,155 +338,220 @@
       </div>
       <div class="visualisationD w-full lg:w-1/2  mx-auto px-2 mb-4 relative">
         <div class="w-full bg-gray-200 p-4 mt-2">
-          <section *ngIf=" isDataSubmitted" class=" bg-slate-50">
-            <div class="wrapper templateId2 " id="cv">
+          <section *ngIf="isDataSubmitted" class="bg-slate-50">
+            <div class="wrapper templateId2" id="cv">
               <table class="table_class header_table">
                 <tbody>
-                  <tr><td class="candidate_details text-left pt-10">
-                    <ng-container *ngIf="resume.CandidateDetails.FirstName !== ''">
-                      <h2 class="text-3xl text-blue-600 font-bold inline-block"*ngIf="resume.CandidateDetails.FirstName">{{ resume.CandidateDetails.FirstName.charAt(0).toUpperCase() + '.' || '' }}</h2></ng-container>
-                      <ng-container *ngIf="resume.CandidateDetails.LastName !== ''">
-                        <h2 class="text-3xl text-blue-600 font-bold inline-block"*ngIf="resume.CandidateDetails.LastName">{{ resume.CandidateDetails.LastName.charAt(0).toUpperCase() + '.' || '' }}</h2>
+                  <tr>
+                    <td class="candidate_details text-left pt-10">
+                      <ng-container *ngIf="resume.CandidateDetails.FirstName !== ''">
+                        <h2 class="text-3xl text-blue-600 font-bold inline-block">
+                          {{ resume.CandidateDetails.FirstName.charAt(0).toUpperCase() + '.' || '' }}
+                        </h2>
                       </ng-container>
-                    <h3 class="text-xl text-blue-500"  >{{ resume.CandidateDetails.role || '' }}</h3>
-                    <h3 class="text-xl text-slate-400 my-1 font-normal">{{ resume.CandidateDetails.Anneesexperience || '' }}</h3>
-                  </td></tr>
+                      <ng-container *ngIf="resume.CandidateDetails.LastName !== ''">
+                        <h2 class="text-3xl text-blue-600 font-bold inline-block">
+                          {{ resume.CandidateDetails.LastName.charAt(0).toUpperCase() + '.' || '' }}
+                        </h2>
+                      </ng-container>
+                      <h3 class="text-xl text-blue-500">{{ resume.CandidateDetails.role || '' }}</h3>
+                      <h3 class="text-xl text-slate-400 my-1 font-normal">{{ resume.CandidateDetails.Anneesexperience || '' }}</h3>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
               <hr class="horizontal_line bg-slate-950" />
               <table class="table_class table_container">
                 <tbody>
-                  <tr><td class="leftpart">
-                    <table class="table_class">
-                      <tbody>
-                        <!--top compétance-->
-                        <ng-container *ngIf="resume.Competences.TopSkills.length !== 0">
-                          <tr><th class="th_title text-blue-500 text-xs uppercase">top&nbsp;compétance(s)</th></tr>
-                        <tr class="top_skills" *ngFor="let topskill of resume.Competences.TopSkills" ><td>
-                          <table>
-                            <tbody>
-                              <ng-container> <tr><td class="top_skills_value flex items-center justify-center text-center border-solid border-1 border-blue-500 leading-10 space-x-15 text-blue-600">{{ topskill.titre_comp }}</td></tr></ng-container>
-                            </tbody>
-                          </table>
-                        </td></tr>
-                        </ng-container>
-                        <!--historique professionnel-->
-                        <ng-container *ngIf="resume.historiques.Position.length !== 0">
-                        <tr><th class="th_title text-blue-500 text-xs uppercase">historique&nbsp;professionnel</th></tr>
-                        <ng-container *ngFor="let position of resume.historiques.Position; let index = index">
-                        <tr><td>
-                          <table class="table_class">
-                            <tbody>
-                              <tr ><th class="text-left text-base leading-3 pt-2">{{ position.Intituleposte }}</th></tr>
-                              <tr><td class="employer_name" >{{ position.Nomentreprise }}</td></tr>
-                              <tr><td class="employment_duration">{{ position.Datedebut + ' - ' }}
-                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
-                                <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>
-                                </td>
-                              </tr>
-                              <tr><td>
-                                <div class="employment_history relative left-0 line-height-5">{{ position.Description }}</div></td></tr>
-                            </tbody>
-                          </table>
-                        </td></tr>
-                        </ng-container>
-                      </ng-container>
-                        <!--education-->
-                        <ng-container *ngIf="resume.Educations.Education.length !== 0">
-                        <tr class="tr_title"><th class="th_title text-blue-500 text-xs uppercase">éducation</th></tr>
-                        <ng-container *ngFor="let edu of resume.Educations.Education; let index = index">
-                        <tr><td>
-                          <table >
-                            <tbody>
-                              <tr><th class=" text-left text-base leading-3 pt-2">{{ edu.Diplome || '' }}</th></tr>
-                              <tr><td class="employer_name">{{ edu.Nom_ecole }}</td></tr>
-                              <tr><td class="edu_duration">{{ edu.DatedebutF + ' - ' }}
-                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValueseducations[index] }}</ng-container>
-                                <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>{{ ' - ' + edu.VilleE }}</td></tr>
-                            </tbody>
-                          </table>
-                        </td></tr>
-                      </ng-container>
-                      </ng-container>
-                      </tbody>
-                    </table>
-                  </td>
-                  <td class="rightpart">
-                    <table class="table_class">
-                      <tbody>
-                        <tr ><td>
-                          <table class="table_class">
-                            <tbody>
-                              <tr class="tr_title">
-                                <th class="th_title text-blue-500 text-xs uppercase">autre &nbsp;compétance(s)</th>
-                              </tr>
-                              <tr *ngFor="let skillgroup of skillsData; let index = index">
+                  <tr>
+                    <td class="leftpart">
+                      <table class="table_class">
+                        <tbody>
+                          <!-- Top compétances -->
+                          <ng-container *ngIf="resume.Competences.TopSkills.length > 0">
+                            <table class="table_class table_container">
+                              <tbody>
+                                <tr>
+                                  <th class="th_title text-blue-500 text-xs uppercase">top compétence(s)</th>
+                                </tr>
+                                <tr class="py-2 px-4 mb-4 mt-4">
+                                  <ng-container *ngFor="let topskill of resume.Competences.TopSkills.slice(0, 4); let innerIndex = index">
+                                    <ng-container *ngIf="(innerIndex % 2)">
+                                      <td class="w-1/2 text-center border-solid border-1 border-blue-500 py-2 px-4 mb-4 mt-4 text-blue-600">
+                                        {{ topskill.titre_comp }}
+                                      </td>
+                                    </ng-container>
+                                  </ng-container>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </ng-container>
+                          <!-- Historique professionnel -->
+                          <ng-container *ngIf="resume.historiques.Position.length > 0">
+                            <tr>
+                              <th class="th_title text-blue-500 text-xs uppercase">historique professionnel</th>
+                            </tr>
+                            <ng-container *ngFor="let position of resume.historiques.Position; let index = index">
+                              <tr>
                                 <td>
-                                  <table [attr.key]="index" class="table_class">
+                                  <table class="table_class">
                                     <tbody>
                                       <tr>
+                                        <th class="text-left text-base leading-3 pt-2">{{ position.Intituleposte }}</th>
+                                      </tr>
+                                      <tr>
+                                        <td class="employer_name">{{ position.Nomentreprise }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="employment_duration">
+                                          {{ position.Datedebut + ' - ' }}
+                                          <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
+                                          <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>
+                                        </td>
+                                      </tr>
+                                      <tr>
                                         <td>
-                                          <ul class="top_skills_table_ul w-full flex flex-row flex-wrap justify-center items-center outline-solid border-2 border-green-500 rounded ul_class">
-                                            <li *ngFor="let topskill of skillgroup.competences; let innerIndex = index">
-                                              Key: {{ skillgroup.key }}
-                                            </li>
-                                          </ul>
+                                          <div class="employment_history relative left-0 line-height-5">{{ position.Description }}</div>
                                         </td>
                                       </tr>
                                     </tbody>
                                   </table>
                                 </td>
                               </tr>
-                            </tbody>
-                          </table>
-                        </td></tr>
-                        <tr><td>
-                          <ng-container *ngIf="resume.Langues.Langue.length !== 0">
-                          <table class="table_class">
-                            <tbody>
-                              <tr>
-                                <th class="th_title text-blue-500 text-xs uppercase">langues</th>
-                              </tr>   
-                              <ng-container *ngFor="let lang of resume.Langues.Langue; let index = index">                           
-                              <tr><td>
-                                <table >
-                                  <tbody>
-                                    <tr><th class="text-left text-base leading-3 pt-2"> {{ lang.titre_langue }}</th></tr>
-                                    <tr><td class="rightpart_text" *ngIf="lang.titre_langue !== ''"> {{ lang.niveaulang }}</td></tr>
-                                  </tbody>
-                                </table>
-                              </td></tr>
                             </ng-container>
-                            </tbody>
-                          </table>
-                        </ng-container>
-                        </td></tr>
-                        <tr><td>
-                          <ng-container *ngIf="resume.certifications.Certification.length !== 0">
-                          <table class="table_class">
-                              <tbody>
-                                <tr><th class="th_title text-blue-500 text-xs uppercase">Certifications</th></tr>
-                                <ng-container *ngFor="let certif of resume.certifications.Certification; let index = index">
-                                <tr ><td>
-                                  <table class="table_class">
+                          </ng-container>
+                          <!-- Éducation -->
+                          <ng-container *ngIf="resume.Educations.Education.length > 0">
+                            <tr class="tr_title">
+                              <th class="th_title text-blue-500 text-xs uppercase">éducation</th>
+                            </tr>
+                            <ng-container *ngFor="let edu of resume.Educations.Education; let index = index">
+                              <tr>
+                                <td>
+                                  <table>
                                     <tbody>
-                                      <tr><th class=" text-left text-base leading-3 pt-2" > {{certif.titre_certificat }}</th></tr>
-                                      <tr><td > {{certif.DateCert }}</td></tr> 
+                                      <tr>
+                                        <th class="text-left text-base leading-3 pt-2">{{ edu.Diplome || '' }}</th>
+                                      </tr>
+                                      <tr>
+                                        <td class="employer_name">{{ edu.Nom_ecole }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td class="edu_duration">
+                                          {{ edu.DatedebutF + ' - ' }}
+                                          <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValueseducations[index] }}</ng-container>
+                                          <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>{{ '  ' + edu.VilleE }}
+                                        </td>
+                                      </tr>
                                     </tbody>
                                   </table>
-                                </td></tr>
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td class="rightpart">
+                      <table class="table_class">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <table class="table_class">
+                                <tbody>
+                                  <ng-container *ngIf="resume.Competences.TopSkills.length > 0">
+                                    <tr class="tr_title">
+                                      <th class="th_title text-blue-500 text-xs uppercase">autres compétences</th>
+                                    </tr>
+                                    <tr *ngFor="let topskill of resume.Competences.TopSkills; let innerIndex = index">
+                                      <td>
+                                        <table class="table_class">
+                                          <tbody>
+                                            <tr *ngIf="innerIndex >= 4">
+                                              <td>
+                                                <ul class="top_skills_table_ul w-full flex flex-row flex-wrap justify-center items-center outline-solid border-2 border-green-500 rounded">
+                                                  <li class="flex flex-wrap justify-between">
+                                                    <ng-container *ngIf="innerIndex >= 4">{{ topskill.titre_comp }}</ng-container>
+                                                  </li>
+                                                </ul>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <ng-container *ngIf="resume.Langues.Langue.length > 0">
+                                <table class="table_class">
+                                  <tbody>
+                                    <tr>
+                                      <th class="th_title text-blue-500 text-xs uppercase">langues</th>
+                                    </tr>
+                                    <ng-container *ngFor="let lang of resume.Langues.Langue; let index = index">
+                                      <tr>
+                                        <td>
+                                          <table>
+                                            <tbody>
+                                              <tr>
+                                                <th class="text-left text-base leading-3 pt-2">{{ lang.titre_langue }}</th>
+                                              </tr>
+                                              <tr>
+                                                <td class="rightpart_text" *ngIf="lang.titre_langue !== ''">{{ lang.niveaulang }}</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </ng-container>
+                                  </tbody>
+                                </table>
                               </ng-container>
-                              </tbody>
-                          </table>
-                        </ng-container>
-                        </td></tr>
-                      </tbody>
-                    </table>
-                  </td></tr>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <ng-container *ngIf="resume.certifications.Certification.length > 0">
+                                <table class="table_class">
+                                  <tbody>
+                                    <tr>
+                                      <th class="th_title text-blue-500 text-xs uppercase">Certifications</th>
+                                    </tr>
+                                    <ng-container *ngFor="let certif of resume.certifications.Certification; let index = index">
+                                      <tr>
+                                        <td>
+                                          <table class="table_class">
+                                            <tbody>
+                                              <tr>
+                                                <th class="text-left text-base leading-3 pt-2">{{ certif.titre_certificat }}</th>
+                                              </tr>
+                                              <tr>
+                                                <td>{{ certif.DateCert }}</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </ng-container>
+                                  </tbody>
+                                </table>
+                              </ng-container>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
+          
         </div>
       </div>
     </div>

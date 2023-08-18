@@ -18,7 +18,6 @@ export class VisualisationComponent implements OnInit{
   isDataSubmitted: boolean = false;
   dateFinValues: string[] = [];
   dateFinControls: { date: FormControl, present: FormControl }[] = [];
-
   presentControls: FormControl[] = [];
   dateFinValuesHistorique: string[] = [];
   dateFinValueseducations: string[] = [];
@@ -54,26 +53,15 @@ export class VisualisationComponent implements OnInit{
     OriginalCv: '',
   };
   ngOnInit(): void {
-    this.skillsData = [
-      { key: 'COMP1', value: 'Description 1' },
-      { key: 'COMP2', value: 'Description 2' },
-    ];
-    const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
         FirstName: ['',Validators.required],
         LastName: ['',Validators.required],
         Email: ['',Validators.email],
-        telephone: ['',Validators.pattern(telephonePattern)],
+        telephone: [''],
         role: ['',Validators.required],
         Anneesexperience: ['']
       }),
-      FirstName: ['',Validators.required],
-      LastName: ['',Validators.required],
-      Email: ['',Validators.email],
-      telephone: ['',Validators.pattern(telephonePattern)],
-      role: ['',Validators.required],
-      Anneesexperience: [''],
       Nomentreprise:['',Validators.required],
       Intituleposte:['',Validators.required],
       Datedebut:['',Validators.required],
@@ -81,15 +69,15 @@ export class VisualisationComponent implements OnInit{
       present1: [false],
       present2: [false],
       description:[''],
-      Nom_ecole:[''],
-      Diplome:[''],
+      Nom_ecole:['',Validators.required],
+      Diplome:['',Validators.required],
       VilleE:[''],
       DatedebutF:[''],
       DatefinF:[''],
       titre_comp:[''],
-      titre_certificat:[''],
+      titre_certificat:['',Validators.required],
       DateCert:[''],
-      titre_langue:[''],
+      titre_langue:['',Validators.required],
       niveaulang:[''],
       historique: this.formBuilder.array([this.createHistoriqueSection()]),
       Educations:  this.formBuilder.array([this.createEducationsSection()]),
@@ -126,6 +114,10 @@ export class VisualisationComponent implements OnInit{
   }
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
+    if (this.visualisationForm.invalid) {
+      this.markFormGroupTouched(this.visualisationForm);
+      return;
+    }
     const historiqueArray = this.visualisationForm.get('historique') as FormArray;
     historiqueArray.controls.forEach((control: AbstractControl, index: number) => {
       this.dateFinValuesHistorique[index] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : control.get('Datefin')?.value;
@@ -284,8 +276,8 @@ export class VisualisationComponent implements OnInit{
   }
   createEducationsSection(): FormGroup {
     return this.formBuilder.group({
-      Nom_ecole:[''],
-      Diplome:[''],
+      Nom_ecole:['',Validators.required],
+      Diplome:['',Validators.required],
       VilleE:[''],
       DatedebutF:[''],
       DatefinF:[''],
@@ -321,7 +313,7 @@ export class VisualisationComponent implements OnInit{
   }
   createLanguagesSection(): FormGroup {
     return this.formBuilder.group({
-      titre_langue:[''],
+      titre_langue:['',Validators.required],
       niveaulang:['']
     });
   }
@@ -338,7 +330,7 @@ export class VisualisationComponent implements OnInit{
   }
   createCertificatsSection(): FormGroup {
     return this.formBuilder.group({
-      titre_certificat:[''],
+      titre_certificat:['',Validators.required],
       DateCert:['']
     });
   }
@@ -348,5 +340,16 @@ export class VisualisationComponent implements OnInit{
   removeCertificatsSection(index: number) {
     const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
     CertificatsControl.removeAt(index);
+  }
+  markFormGroupTouched(formGroup: FormGroup | FormArray) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+  
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupTouched(control);
+      } else {
+        control?.markAsTouched();
+      }
+    });
   }
 }
