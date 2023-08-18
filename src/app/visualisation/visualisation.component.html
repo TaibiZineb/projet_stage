@@ -92,15 +92,13 @@
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
-                            <div class="flex items-center">
                               <input formControlName="Datefin" [disabled]="isDateFinDisabled(1)" *ngIf="!isDateFinChecked(1)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="month" [min]="getMinimumDate('Datedebut')" [max]="getMaximumDate('Datefin')"(input)="onDateInput($event, 'Datefin', 1)"  >
-                              <span *ngIf="!isDateFinChecked(1)">{{ dateFinValuesHistorique[i] }}</span>
                               <span *ngIf="isDateFinChecked(1)">jusqu'à présent</span>
-                              <label class="ml-2 text-sm text-gray-700">
-                                <input type="checkbox" class="form-checkbox h-4 w-4 " (change)="toggleDateFin(1)" formControlName="present1">Jusqu'à présent
-                              </label>
+                              <div class="flex items-center">
+                                <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(1)" formControlName="present1">
+                                <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
+                              </div>
                               <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
-                            </div>
                           </div>
                         </div>
                         <!--Description-->
@@ -356,7 +354,7 @@
                               <tr ><th class="text-left text-base leading-3 pt-2">{{ position.Intituleposte }}</th></tr>
                               <tr><td class="employer_name" >{{ position.Nomentreprise }}</td></tr>
                               <tr><td class="employment_duration">{{ position.Datedebut + ' - ' }}
-                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValues[index + historiqueFormArray.length] }}</ng-container>
+                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
                                 <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>
                                 </td>
                               </tr>
