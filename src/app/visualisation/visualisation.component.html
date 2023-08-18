@@ -375,8 +375,8 @@
                               <tr><th class=" text-left text-base leading-3 pt-2">{{ edu.Diplome || '' }}</th></tr>
                               <tr><td class="employer_name">{{ edu.Nom_ecole }}</td></tr>
                               <tr><td class="edu_duration">{{ edu.DatedebutF + ' - ' }}
-                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValues[index + EducationsFormArray.length] }}</ng-container>
-                                <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>{{ edu.VilleE }}</td></tr>
+                                <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValueseducations[index] }}</ng-container>
+                                <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>{{ ' - ' + edu.VilleE }}</td></tr>
                             </tbody>
                           </table>
                         </td></tr>

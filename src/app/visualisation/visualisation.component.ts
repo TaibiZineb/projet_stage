@@ -15,13 +15,13 @@ export class VisualisationComponent implements OnInit{
   supabase: any;
   submittedData: any = {};
   skillsData: any[] = [];
-  currentSectionIndex: number = 0;
   isDataSubmitted: boolean = false;
   dateFinValues: string[] = [];
   dateFinControls: { date: FormControl, present: FormControl }[] = [];
-  dateFinValuesEducations: string[] = [''];
+
   presentControls: FormControl[] = [];
-  dateFinValuesHistorique: string[] = []; 
+  dateFinValuesHistorique: string[] = [];
+  dateFinValueseducations: string[] = [];
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -58,7 +58,6 @@ export class VisualisationComponent implements OnInit{
       { key: 'COMP1', value: 'Description 1' },
       { key: 'COMP2', value: 'Description 2' },
     ];
-    
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
@@ -106,24 +105,21 @@ export class VisualisationComponent implements OnInit{
         villeEControl?.enable();
       }
     });
-    this.visualisationForm.get('Educations.0.DatefinF')?.valueChanges.subscribe((value) => {
-      const historiqueDateFinControl = this.visualisationForm.get('historique.0.Datefin');
-      if (!this.isDateFinChecked(1)) {  
-        historiqueDateFinControl?.setValue(value);  
-      }
-    });
-    this.visualisationForm.get('Educations.0.DatefinF')?.valueChanges.subscribe((value) => {
-      const historiqueDateFinControl = this.visualisationForm.get('historique.0.Datefin');
-      if (historiqueDateFinControl && !historiqueDateFinControl.value) {
-        historiqueDateFinControl.setValue(value);
-      }
-    });
+
     this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
       if (value) {
         this.visualisationForm.get('Datefin')?.setValue(null);
         this.visualisationForm.get('Datefin')?.disable();
       } else {
         this.visualisationForm.get('Datefin')?.enable();
+      }
+    });
+    this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.visualisationForm.get('DatefinF')?.setValue(null);
+        this.visualisationForm.get('DatefinF')?.disable();
+      } else {
+        this.visualisationForm.get('DatefinF')?.enable();
       }
     });
     console.log('Initial form values:', this.visualisationForm.value);
@@ -135,15 +131,25 @@ export class VisualisationComponent implements OnInit{
       this.dateFinValuesHistorique[index] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : control.get('Datefin')?.value;
       const presentControl = control.get('present1') as FormControl;
       const dateFinControl = control.get('Datefin') as FormControl;
-  
       if (presentControl.value) {
         console.log(`Historique ${index + 1}: Présent activé`);
         dateFinControl.setValue('jusqu\'à présent');
       } else {
         console.log(`Historique ${index + 1}: Présent désactivé`);
-
       }
     });
+    const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
+    EducationsArray.controls.forEach((control: AbstractControl, index: number) =>{
+      this.dateFinValueseducations[index] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : control.get('DatefinF')?.value;
+      const presentControl = control.get('present2') as FormControl;
+      const dateFinControl = control.get('DatefinF') as FormControl;
+      if (presentControl.value) {
+        console.log(`Educations ${index + 1}: Présent activé`);
+        dateFinControl.setValue('jusqu\'à présent');
+      } else {
+        console.log(`Educations ${index + 1}: Présent désactivé`);
+      }
+    })
     this.dateFinValues[0] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : this.visualisationForm.get('Datefin')?.value;
     this.dateFinValues[1] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : this.visualisationForm.get('DatefinF')?.value;
     this.submittedData = this.visualisationForm.value;
@@ -274,7 +280,7 @@ export class VisualisationComponent implements OnInit{
     console.log('Adding education section');
     const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
     EducationsArray.push(this.createEducationsSection());
-    this.dateFinValuesEducations.push('');
+    this.dateFinValueseducations.push('');
   }
   createEducationsSection(): FormGroup {
     return this.formBuilder.group({
