@@ -19,9 +19,10 @@
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstName" label="First Name" placeholder="Prenom" type="text" >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div *ngIf="visualisationForm.get('CandidateDetails.FirstName')?.invalid && visualisationForm.get('CandidateDetails.FirstName')?.touched">
+                  <div *ngIf="visualisationForm && visualisationForm.get('CandidateDetails.FirstName')?.invalid && visualisationForm.get('CandidateDetails.FirstName')?.touched">
                     <span class="text-red-500 text-xs italic">Prenom est obligatoire.</span>
-                  </div>
+                </div>
+                
                 </section>
                 <section class="w-full md:w-1/2 px-3" id="lastName" label="Last Name" placeholder="Last Name" type="text"   style="width: 50%;">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">*nom</label>
@@ -40,8 +41,6 @@
                       <span class="text-red-500 text-xs italic">Veuillez entrer une adresse email valide.</span>
                     </div>
                   </section>
-                
-                 
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-telephone">Téléphone</label>
@@ -65,11 +64,10 @@
               </div>
             </section>
             <!--Historique professionnel-->
-            <section class="Historique professionnel" formArrayName="historique" *ngIf="historiqueFormArray.length > 0">
+            <section class="Historique professionnel" formArrayName="historique">
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
-                
               </div>
                 <div id="container">
                   <ng-container *ngFor="let section of historiqueFormArray.controls; let i = index">
@@ -79,17 +77,29 @@
                       <button type="button" (click)="removeHistoriqueSection(i)">
                         <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                       <div class="accordion__content px-3 py-1">
-                        <!--Nom de l'entreprise & Intitulé du poste-->
                         <div class="flex flex-wrap -mx-3 mb-6">
-                          <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
-                            <input formControlName="Nomentreprise" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nomentreprise" type="text" placeholder="Nom de l'entreprise" >
-                            <div *ngIf="visualisationForm.get('Nomentreprise')?.touched && visualisationForm.get('Nomentreprise')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
-                          </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">
+                    *Nom de l'entreprise
+                </label>
+                <input formControlName="Nomentreprise"
+                      id="grid-Nomentreprise"
+                      type="text"
+                      placeholder="Nom de l'entreprise"
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                      <div *ngIf="visualisationForm.get('Nomentreprise')?.invalid && visualisationForm.get('Nomentreprise')?.touched">
+                        <span class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['required']">Le nom de l'entreprise est requis.</span>
+                      <span *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['minlength']">Le nom de l'entreprise doit avoir au moins 3 caractères.</span>
+                    </div>
+              
+              </div>
+
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
                             <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
-                            <div *ngIf="visualisationForm.get('Intituleposte')?.touched && visualisationForm.get('Intituleposte')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                            <div *ngIf="visualisationForm.get('Intituleposte')?.invalid && visualisationForm.get('Intituleposte')?.touched">
+                              <span class="text-red-500 text-xs italic">Ce champ est obligatoire.</span>
+                            </div>
                           </div>
                         </div>
                         <!--Date debut & fin-->
@@ -99,7 +109,9 @@
                             <input formControlName="Datedebut" 
                               class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
                               id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
-                            <div *ngIf="visualisationForm.get('Datedebut')?.touched && visualisationForm.get('Datedebut')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                              <div *ngIf="visualisationForm.get('Datedebut')?.invalid && visualisationForm.get('Datedebut')?.touched">
+                                <span class="text-red-500 text-xs italic">Ce champ est obligatoire.</span>
+                              </div>
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
@@ -109,9 +121,12 @@
                                 <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(1)" formControlName="present1">
                                 <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
                               </div>
-                              <div *ngIf="visualisationForm.get('Datefin')?.touched && visualisationForm.get('Datefin')?.errors?.['required']" class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+                              <div *ngIf="!isDateFinChecked(1) && historiqueFormArray.controls[i].get('Datefin')?.invalid
+                              && historiqueFormArray.controls[i].get('Datefin')?.touched"
+                            class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
+
                           </div>
-                        </div>
+                        </div>  
                         <!--Description-->
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full  px-3 mb-6 md:mb-0">
@@ -184,9 +199,9 @@
                               <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(2)" formControlName="present2">
                               <label class="ml-2 text-sm text-gray-700" for="present2">Jusqu'à présent</label>
                             </div>
-                            <div *ngIf="visualisationForm.get('DatefinF')?.invalid && visualisationForm.get('DatefinF')?.touched">
-                              <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
-                            </div>
+                            <div *ngIf="!isDateFinChecked(2) && EducationsFormArray.controls[i].get('DatefinF')?.invalid
+                              && EducationsFormArray.controls[i].get('DatefinF')?.touched"
+                            class="text-red-500 text-xs italic">Ce champ est obligatoire.</div>
                           </div>
                           
                         </div>
@@ -270,9 +285,11 @@
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
                           <select id="niveaulang" formControlName="niveaulang" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500">
                             <option value="Intermédiaire">Intermédiaire</option>
-                            <option value="Avancé(e">Avancé(e)</option>
+                            <option value="Avancé(e)">Avancé(e)</option>
                             <option value="Courant">Courant</option>
                             <option value="Bilingue">Bilingue</option>
+                            <option value="Langue maternelle">Langue maternelle</option>
+                            <option value="Débutant">Débutant</option>
                           </select>
                         </div>
                       </div>
