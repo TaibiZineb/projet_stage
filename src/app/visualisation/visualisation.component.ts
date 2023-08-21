@@ -89,9 +89,9 @@ export class VisualisationComponent implements OnInit{
      
       historique: this.formBuilder.array([this.createHistoriqueSection(data.historiques.Position[0])]),
       Educations:  this.formBuilder.array([this.createEducationsSection(data.Educations.Education[0])]),
-      Competences: this.formBuilder.array([this.createCompetencesSection()]),
-      Langues:this.formBuilder.array([this.createLanguagesSection()]),
-      Certificats:this.formBuilder.array([this.createCertificatsSection()]),
+      Competences: this.formBuilder.array([this.createCompetencesSection(data.Competences.TopSkills[0].titre_comp)]),
+      Langues:this.formBuilder.array([this.createLanguagesSection(data.Langues.Langue[0])]),
+      Certificats:this.formBuilder.array([this.createCertificatsSection(data.Certifications.Certification[0])]),
     });
     this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
       const dateFinFControl = this.visualisationForm.get('Educations.0.DatefinF');
@@ -133,14 +133,16 @@ export class VisualisationComponent implements OnInit{
     educationsArray.push(educationSection);
   }
   const CompetencesArray = this.visualisationForm.get('Competences') as FormArray;
-  data.Competences.TopSkills.forEach(skill => {
-    CompetencesArray.push(this.createCompetencesSection(skill.titre_comp));
-  });
+  for (let i = 0; i < data.Competences.TopSkills.length; i++) {
+    const competenceSection = this.createCompetencesSection(data.Competences.TopSkills[i].titre_comp);
+    CompetencesArray.push(competenceSection);
+  }
   const languesArray = this.visualisationForm.get('Langues') as FormArray;
+  for (let i = 1; i  < data.Langues.Langue.length; i++){
+    const langueSection = this.createLanguagesSection(data.Langues.Langue[i]);
+    languesArray.push(langueSection);
 
-  data.Langues.Langue.forEach(langue => {
-    languesArray.push(this.createLanguagesSection(langue));
-  });
+  }
   const certificatsArray = this.visualisationForm.get('Certificats') as FormArray;
   data.Certifications.Certification.forEach(certification => {
     certificatsArray.push(this.createCertificatsSection(certification));
@@ -148,7 +150,6 @@ export class VisualisationComponent implements OnInit{
     console.log('Initial form values:', this.visualisationForm.value);
     console.log('Nomentreprise control:', this.visualisationForm.get('Nomentreprise'));
   }
-  
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
     if (this.visualisationForm.invalid) {
@@ -338,7 +339,6 @@ export class VisualisationComponent implements OnInit{
       titre_comp: [competanceData || '']
     });
   }
- 
   get CompetencesFormArray(): FormArray {
     return this.visualisationForm.get('Competences') as FormArray;
   }
