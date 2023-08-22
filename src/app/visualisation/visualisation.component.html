@@ -78,22 +78,16 @@
                         <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                       <div class="accordion__content px-3 py-1">
                         <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">
-                    *Nom de l'entreprise
-                </label>
-                <input formControlName="Nomentreprise"
-                      id="grid-Nomentreprise"
-                      type="text"
-                      placeholder="Nom de l'entreprise"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                      <div *ngIf="visualisationForm.get('Nomentreprise')?.invalid && visualisationForm.get('Nomentreprise')?.touched">
-                        <span class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['required']">Le nom de l'entreprise est requis.</span>
-                      <span *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['minlength']">Le nom de l'entreprise doit avoir au moins 3 caractères.</span>
-                    </div>
-              
-              </div>
-
+                          <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">
+                                *Nom de l'entreprise
+                            </label>
+                            <input formControlName="Nomentreprise" id="grid-Nomentreprise"type="text" placeholder="Nom de l'entreprise"class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                            <div *ngIf="visualisationForm.get('Nomentreprise')?.invalid && visualisationForm.get('Nomentreprise')?.touched">
+                              <span class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['required']">Le nom de l'entreprise est requis.</span>
+                            <span *ngIf="visualisationForm.get('Nomentreprise')?.errors?.['minlength']">Le nom de l'entreprise doit avoir au moins 3 caractères.</span>
+                          </div>
+                          </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
                             <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
@@ -296,7 +290,6 @@
                     </details>
                   </div>
                 </ng-container>
-                
               </div>
               <div class="flex items-center">
                 <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addLanguagesSection()">
@@ -324,7 +317,7 @@
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Certificat</label>
-                        <input formControlName="titre_certificat" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
+                        <input formControlName="titre_certificat" class="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
                         <div *ngIf="visualisationForm.get('titre_certificat')?.invalid && visualisationForm.get('titre_certificat')?.touched">
                           <span class="text-red-500 text-xs italic">Ce champs est obligatoire.</span>
                         </div>
