@@ -113,16 +113,17 @@
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
                             <input formControlName="Datefin"
                                 [disabled]="isDateFinDisabled(1)"
-                                *ngIf="!isDateFinChecked(1)"
+                                *ngIf="!isDateFinCheckedForHistorique(1)"
                                 class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500"
                                 id="grid-Datefin" type="month"
                                 [min]="getMinimumDate('Datedebut')"
                                 [max]="getMaximumDate('Datefin')"
                                 (input)="onDateInput($event, 'Datefin', 1)">
-                            <span *ngIf="isDateFinChecked(1)">jusqu'à présent</span>
+                            <span *ngIf="isDateFinCheckedForHistorique(1)">jusqu'à présent</span>
                             <div class="flex items-center">
                                 <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(1)" formControlName="present1">
                                 <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
+                                <span *ngIf="isDateFinCheckedForHistorique(1)">jusqu'à présent</span>
                             </div>
                         </div>
                         </div>  
@@ -156,7 +157,7 @@
               <div id="containerEdu">
                 <ng-container *ngFor="let section of EducationsFormArray.controls; let i = index">
                   <div class="blocksEdu">
-                    <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1">
+                    <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300 p-1" open>
                       <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">{{ section.value.Nom_ecole }} </summary>
                       <button type="button" (click)="removeEducationsSection(i)">
                         <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
@@ -193,18 +194,19 @@
                             <div class="flex flex-col items-start">
                               <input formControlName="DatefinF"
                               [disabled]="isDateFinDisabled(2)"
-                              *ngIf="!isDateFinChecked(2)"
+                              *ngIf="!isDateFinCheckedForEducations(2)"
                               class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500"
                               id="grid-DatefinF"
                               type="month"
                               [min]="getMinimumDate('DatedebutF')"
                               [max]="getMaximumDate('DatefinF')"
                               (input)="onDateInput($event, 'DatefinF', 2)">
-                              <span *ngIf="isDateFinChecked(2)">Jusqu'à présent</span>
+                              <span *ngIf="isDateFinCheckedForEducations(2)">Jusqu'à présent</span>
                             </div>
                             <div class="flex items-start">
                               <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(2)" formControlName="present2">
                               <label class="ml-2 text-sm text-gray-700" for="present2">Jusqu'à présent</label>
+                              <span *ngIf="isDateFinCheckedForEducations(2)">jusqu'à présent</span>
                             </div>
                         
                           </div>
@@ -271,7 +273,7 @@
               <div id="containerLang">
                 <ng-container *ngFor="let section of LanguagesFormArray.controls; let i = index">
                   <div class="blocksLang">
-                    <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                    <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300" open>
                       <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">{{ section.value.titre_langue }} 
                       </summary>
                       <button type="button" (click)="removeLanguagesSection(i)">
@@ -318,7 +320,7 @@
               <div id="containerCertif">
                 <ng-container *ngFor="let section of CertificatsFormArray.controls; let i = index">
                 <div class="blocksCertif">
-                  <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300">
+                  <details [formGroupName]="i" class="accordion rounded border-solid border-2 border-gray-200 transition-all ease-in-out duration-300" open>
                     <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500">{{ section.value.titre_certificat}}
                     </summary>
                     <button type="button" (click)="removeCertificatsSection(i)">
@@ -418,8 +420,8 @@
                                       <tr>
                                         <td class="employment_duration">
                                           {{ position.Datedebut + ' - ' }}
-                                          <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
-                                          <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>
+                                          <ng-container *ngIf="!isDateFinCheckedForHistorique(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
+                                          <ng-container *ngIf="isDateFinCheckedForHistorique(index)">jusqu'à présent</ng-container>
                                         </td>
                                       </tr>
                                       <tr>
@@ -452,8 +454,8 @@
                                       <tr>
                                         <td class="edu_duration pt-6">
                                           {{ edu.DatedebutF + ' - ' }}
-                                          <ng-container *ngIf="!isDateFinChecked(index)">{{ dateFinValueseducations[index] }}</ng-container>
-                                          <ng-container *ngIf="isDateFinChecked(index)">jusqu'à présent</ng-container>{{ '  ' + edu.VilleE }}
+                                          <ng-container *ngIf="!isDateFinCheckedForEducations(index)">{{ dateFinValueseducations[index] }}</ng-container>
+                                          <ng-container *ngIf=" isDateFinCheckedForEducations(index)">jusqu'à présent</ng-container>{{ '  ' + edu.VilleE }}
                                         </td>
                                       </tr>
                                     </tbody>
