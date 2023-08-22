@@ -2,7 +2,7 @@ export const data= { "candidateDetails": {
     "FirstName": "Zineb",
     "LastName": "TAIBI",
     "Email": "Taibizineb96@gmail.com",
-    "role": "",
+    "role": "Stage",
     "telephone": "+33 6 52 84 19 72",
     "Anneesexperience": "20 months"
   },
@@ -16,7 +16,7 @@ export const data= { "candidateDetails": {
     "Education":[
         {"Nom_ecole":"INSTITUT SUPERIEUR VINCI","Diplome":"Licence","VilleE":"Rabat","DatedebutF":"2023-08-18","DatefinF":"jusqu\'à présent"},
         {"Nom_ecole":"INSTITUT SPÉCIALISÉ DE TECHNOLOGIE","Diplome":"someCollege","VilleE":"","DatedebutF":"2021-01-01","DatefinF":"2021-01-01"},
-        {"Nom_ecole":"FACULTÉ DES SCIENCES JURIDIQUES","Diplome":"","VilleE":"","DatedebutF":"2020-01-01","DatefinF":"2020-01-01"},{"Nom_ecole":"","Diplome":"bachelors","VilleE":"","DatedebutF":"2017-01-01","DatefinF":"2017-01-01"},]
+        {"Nom_ecole":"FACULTÉ DES SCIENCES JURIDIQUES","Diplome":"Licence","VilleE":"","DatedebutF":"2020-01-01","DatefinF":"2020-01-01"},{"Nom_ecole":"Faculté","Diplome":"bachelors","VilleE":"","DatedebutF":"2017-01-01","DatefinF":"2017-01-01"}]
     },
 "Langues":{
     "Langue":[
@@ -45,7 +45,8 @@ export const data= { "candidateDetails": {
       { "titre_comp": "C#" },
       { "titre_comp": "GIT" },
       { "titre_comp": "PHP" },
-      { "titre_comp": "Database" }
+      { "titre_comp": "Database" },
+      { "titre_comp": "angulaire" }
     ]
   },
 };

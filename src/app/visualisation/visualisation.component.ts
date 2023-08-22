@@ -22,6 +22,7 @@ export class VisualisationComponent implements OnInit{
   presentControls: FormControl[] = [];
   dateFinValuesHistorique: string[] = [];
   dateFinValueseducations: string[] = [];
+  showSubmittedData: boolean = false;
   constructor(private formBuilder: FormBuilder){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
@@ -74,15 +75,15 @@ export class VisualisationComponent implements OnInit{
       Datefin: [data.historiques.Position[0].Datefin],
       description: [''],
       present1: [false],
-      Nom_ecole:[data.Educations.Education[0].Nom_ecole],
-      Diplome:[data.Educations.Education[0].Diplome],
+      Nom_ecole:[data.Educations.Education[0].Nom_ecole,Validators.required],
+      Diplome:[data.Educations.Education[0].Diplome,Validators.required],
       VilleE:[data.Educations.Education[0].VilleE],
       DatedebutF:[data.Educations.Education[0]["DatedebutF"]],
       DatefinF:[data.Educations.Education[0]["DatefinF"]],
       titre_comp:[data.Competences.TopSkills[0].titre_comp],
-      titre_certificat:[data.Certifications.Certification[0].titre_certificat],
+      titre_certificat:[data.Certifications.Certification[0].titre_certificat,Validators.required],
       DateCert:[data.Certifications.Certification[0].DateCert],
-      titre_langue:[data.Langues.Langue[0].titre_langue],
+      titre_langue:[data.Langues.Langue[0].titre_langue,Validators.required],
       niveaulang:[data.Langues.Langue[0].niveaulang],
       present2: [false],
       historique: this.formBuilder.array([this.createHistoriqueSection(data.historiques.Position[0])]),
@@ -100,7 +101,6 @@ export class VisualisationComponent implements OnInit{
         dateFinFControl?.enable();
       }
     });
-
     this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
       const dateFinControl = this.visualisationForm.get('Datefin');
       if (value) {
@@ -110,22 +110,13 @@ export class VisualisationComponent implements OnInit{
         dateFinControl?.enable();
       }
     });
-    this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
-      const dateFinFControl = this.visualisationForm.get('Educations.0.DatefinF');
-      if (value) {
-        dateFinFControl?.setValue(null);
-        dateFinFControl?.disable();
-      } else {
-        dateFinFControl?.enable();
-      }
-    });
     const historiquesArray = this.visualisationForm.get('historique') as FormArray;
     for (let i = 1; i < data.historiques.Position.length; i++) {
       const historiqueSection = this.createHistoriqueSection(data.historiques.Position[i]);
       historiquesArray.push(historiqueSection);
     }
     const educationsArray = this.visualisationForm.get('Educations') as FormArray;
-    for (let i = 1; i  < data.Educations.Education.length; i++ ){
+    for (let i = 1; i < data.Educations.Education.length; i++) {
       const educationSection = this.createEducationsSection(data.Educations.Education[i]);
       educationsArray.push(educationSection);
     }
@@ -148,27 +139,38 @@ export class VisualisationComponent implements OnInit{
   }
   onSubmit(): void {
     console.log('Submitting form data:', this.visualisationForm.value);
-    
     if (this.visualisationForm.invalid) {
       this.markFormGroupTouched(this.visualisationForm);
+      alert('Veuillez corriger les erreurs dans le formulaire avant de soumettre.');
       return;
     }
   
-    // Mise à jour des valeurs pour les sections historiques
     this.visualisationForm.get('historique')?.value.forEach((position: any, index: number) => {
       this.dateFinValuesHistorique[index] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : position.Datefin;
     });
-  
-    // Mise à jour des valeurs pour les sections d'éducation
     this.visualisationForm.get('Educations')?.value.forEach((education: any, index: number) => {
       this.dateFinValueseducations[index] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : education.DatefinF;
     });
-  
-    // Mise à jour des valeurs pour les dates finales
-    this.dateFinValues[0] = this.isDateFinChecked(1) ? 'jusqu\'à présent' : this.visualisationForm.get('Datefin')?.value;
-    this.dateFinValues[1] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : this.visualisationForm.get('Educations.0.DatefinF')?.value;
-  
-    // Mise à jour des données soumises
+    this.dateFinValues[0] = this.isDateFinChecked(1) ? "jusqu'à présent" : ''; 
+    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+    historiqueArray.controls.forEach((control, index) => {
+      const dateFinControl = control.get('Datefin');
+      if (dateFinControl) {
+        this.dateFinValuesHistorique[index] = this.isDateFinChecked(1) ? "jusqu'à présent" : dateFinControl.value;
+      }
+    });
+    
+   
+    this.dateFinValues[1] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : '';
+
+      const educationsArray = this.visualisationForm.get('Educations') as FormArray;
+      educationsArray.controls.forEach((control, index) => {
+        const dateFinFControl = control.get('DatefinF');
+        if (dateFinFControl) {
+          this.dateFinValueseducations[index] = this.isDateFinChecked(2) ? 'jusqu\'à présent' : dateFinFControl.value;
+        }
+      });
+
     this.submittedData = this.visualisationForm.value;
     this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
     this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
@@ -181,9 +183,12 @@ export class VisualisationComponent implements OnInit{
     console.log('Resume:', this.resume);
   
     this.isDataSubmitted = true;
+    this.isDataSubmitted = true;
+    this.showSubmittedData = true;
   }
 
   onDateInput(event: Event, fieldName: string, section: number): void {
+    console.log('Date input event:', event);
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
     if (inputValue) {  
@@ -237,9 +242,8 @@ export class VisualisationComponent implements OnInit{
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     return `${year}-${month}`;
 }
-
- 
   toggleDateFin(section: number): void {
+    console.log('Toggle checkbox:', section);
     const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
     const dateFinControl = this.visualisationForm.get(dateFinControlName) as FormControl;
     const presentControl = this.visualisationForm.get(`present${section}`) as FormControl;
@@ -247,9 +251,7 @@ export class VisualisationComponent implements OnInit{
     if (presentControl) {
       if (presentControl.value) {
         dateFinControl.patchValue('jusqu\'à présent');
-        dateFinControl.disable({ onlySelf: true, emitEvent: false });
       } else {
-        dateFinControl.enable({ onlySelf: true, emitEvent: false });
         dateFinControl.patchValue('');
       }
       this.updateEndDateOptions(`Datedebut${section}`, section);
@@ -259,13 +261,20 @@ export class VisualisationComponent implements OnInit{
     return this.visualisationForm.get(`present${section}`)?.value === true;
   }
   isDateFinDisabled(section: number): boolean {
-    const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
-    const presentControl = this.visualisationForm.get(`present${section}`);
-    const dateFinControl = this.visualisationForm.get(dateFinControlName);
-    if (presentControl === null || dateFinControl === null) {
-      return false; 
+    if (section === 2) {
+      const dateFinFControl = this.visualisationForm.get('Educations.0.DatefinF');
+      return this.visualisationForm.get(`present${section}`)?.value || dateFinFControl?.disabled;
+    } else {
+      const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
+      const presentControl = this.visualisationForm.get(`present${section}`);
+      const dateFinControl = this.visualisationForm.get(dateFinControlName);
+  
+      if (presentControl === null || dateFinControl === null) {
+        return false;
+      }
+  
+      return presentControl.value || dateFinControl.disabled;
     }
-    return presentControl?.value === true || dateFinControl?.disabled;
   }
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
@@ -280,18 +289,18 @@ export class VisualisationComponent implements OnInit{
     historiqueArray.push(this.createHistoriqueSection()); 
   }
   createHistoriqueSection(position: any = {}): FormGroup {
-    const formattedDateDebut = this.formatDateToMonthYear(position.Datedebut);
+    const formattedDateDebut = this.formatDateToMonthYear(position.Datedebut) ;
     const formattedDateFin = this.formatDateToMonthYear(position.Datefin);
+    const isPresent1 = position && position.Datefin === "jusqu'à présent";
     return this.formBuilder.group({
       Nomentreprise: [position.Nomentreprise || '', Validators.required,],
       Intituleposte: [position.Intituleposte || '',Validators.required,],
       Datedebut: [formattedDateDebut, Validators.required],
-      Datefin: [formattedDateFin],
-      present1: [position.dateFin === 'jusqu\'à présent'],
+      Datefin: [isPresent1 ? "jusqu'à présent" : formattedDateFin],
+      present1:[isPresent1],
       description: [position.Description || '']
     });
   }
-
   get historiqueFormArray(): FormArray {
     return this.visualisationForm.get('historique') as FormArray;
   }
@@ -299,22 +308,34 @@ export class VisualisationComponent implements OnInit{
     const historiqueControl = this.visualisationForm.get('historique') as FormArray;
     historiqueControl.removeAt(index);
   }
-  addEducationsSection():void{
-    const EducationsArray = this.visualisationForm.get('Educations') as FormArray;
-    EducationsArray.push(this.createEducationsSection());
+  addEducationsSection(): void {
+    console.log('Adding new education section');
+    const educationSection = this.createEducationsSection();
+    console.log('New education section:', educationSection.value);
+    const educationsArray = this.visualisationForm.get('Educations') as FormArray;
+    educationsArray.push(educationSection);
+    console.log('Updated Educations array:', educationsArray.value);
   }
+  
   createEducationsSection(educationData?: any): FormGroup {
-    const formattedDateDebutF = this.formatDateToMonthYear(educationData.DatedebutF);
-    const formattedDateFinF = this.formatDateToMonthYear(educationData.DatefinF);
+    const formattedDateDebutF = educationData && educationData.DatedebutF ? this.formatDateToMonthYear(educationData.DatedebutF) : '';
+    let formattedDateFinF = educationData && educationData.DatefinF ? this.formatDateToMonthYear(educationData.DatefinF) : '';
+    const isPresent2 = educationData && educationData.DatefinF === "jusqu'à présent";
+  
+    if (isPresent2) {
+      formattedDateFinF = "jusqu'à présent";
+    }
+  
     return this.formBuilder.group({
-      Nom_ecole: [educationData ? educationData.Nom_ecole : ''],
-      Diplome: [educationData ? educationData.Diplome : ''],
+      Nom_ecole: [educationData ? educationData.Nom_ecole : '', Validators.required],
+      Diplome: [educationData ? educationData.Diplome : '', Validators.required],
       VilleE: [educationData ? educationData.VilleE : ''],
-      DatedebutF: [educationData ? formattedDateDebutF : ''],
-      DatefinF: [educationData ? formattedDateFinF  : ''],
-      present2: [educationData && educationData.DatefinF === 'jusqu\'à présent']
+      DatedebutF: [formattedDateDebutF],
+      DatefinF: [formattedDateFinF],
+      present2: [isPresent2]
     });
   }
+  
   get EducationsFormArray(): FormArray {
     return this.visualisationForm.get('Educations') as FormArray;
   }
@@ -344,7 +365,7 @@ export class VisualisationComponent implements OnInit{
   }
   createLanguagesSection(langueData: any = {}): FormGroup {
     return this.formBuilder.group({
-      titre_langue: [langueData.titre_langue || ''],
+      titre_langue: [langueData.titre_langue || '',Validators.required],
       niveaulang: [langueData.niveaulang || '']
     });
   }
@@ -360,12 +381,13 @@ export class VisualisationComponent implements OnInit{
     CertificatsArray.push(this.createCertificatsSection(certification));
   }
   createCertificatsSection(certification: any = {}): FormGroup {
-    const formattedDateCert = this.formatDateToMonthYear(certification.DateCert);
+    const formattedDateCert = certification.DateCert ? this.formatDateToMonthYear(certification.DateCert) : '';
     return this.formBuilder.group({
-      titre_certificat: [certification.titre_certificat || ''],
-      DateCert: [formattedDateCert || '']
+      titre_certificat: [certification.titre_certificat || '', Validators.required],
+      DateCert: [formattedDateCert]
     });
   }
+  
   get CertificatsFormArray(): FormArray {
     return this.visualisationForm.get('Certificats') as FormArray;
   }
@@ -383,5 +405,16 @@ export class VisualisationComponent implements OnInit{
         control?.markAsTouched();
       }
     });
+  }
+  isFieldInvalid(fieldPath: string): boolean {
+    const control = this.visualisationForm.get(fieldPath);
+    return !!control?.invalid && (!!control?.dirty || !!control?.touched);
+  }
+  chunkArray(arr: any[], size: number) {
+    const result = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
   }
 }
