@@ -151,10 +151,8 @@ export class VisualisationComponent implements OnInit{
     this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
     this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
-
     console.log('Final form data:', this.submittedData);
     console.log('Resume:', this.resume);
-
     this.isDataSubmitted = true;
     this.isDataSubmitted = true;
     this.showSubmittedData = true;
@@ -179,7 +177,6 @@ export class VisualisationComponent implements OnInit{
         this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? "jusqu'à présent" : dateFinControl.value;
       }
     });
-    
     const educationsArray = this.visualisationForm.get('Educations') as FormArray;
     educationsArray.controls.forEach((control, index) => {
       const dateFinFControl = control.get('DatefinF');
@@ -187,7 +184,6 @@ export class VisualisationComponent implements OnInit{
         this.dateFinValueseducations[index] = this.isDateFinCheckedForEducations(2) ? "jusqu'à présent" : dateFinFControl.value;
       }
     });
-
     this.submittedData = this.visualisationForm.value;
     this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
     this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
@@ -195,10 +191,8 @@ export class VisualisationComponent implements OnInit{
     this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
     this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
-  
     console.log('Final form data:', this.submittedData);
     console.log('Resume:', this.resume);
-  
     this.isDataSubmitted = true;
     this.isDataSubmitted = true;
     this.showSubmittedData = true;
@@ -223,7 +217,6 @@ export class VisualisationComponent implements OnInit{
   }
   updateEndDateOptions(fieldName: string, section: number): void {
     const dateFinControl = this.visualisationForm.get(fieldName) as FormControl;
-  
     if (dateFinControl && dateFinControl.enabled) {
       if (this.isDateFinCheckedForHistorique(section)) {
         dateFinControl.patchValue("jusqu'à présent");
@@ -232,7 +225,6 @@ export class VisualisationComponent implements OnInit{
       }
     }
   }
-  
   formatDateToMonthYear(dateStr: string): string {
     const date = new Date(dateStr);
     const year = date.getFullYear().toString();
@@ -243,7 +235,6 @@ export class VisualisationComponent implements OnInit{
     const dateFinControlName = sectionIndex === 0 ? 'Datefin' : 'DatefinF';
     const dateFinControl = this.visualisationForm.get(dateFinControlName) as FormControl;
     const presentControl = this.visualisationForm.get(`present${sectionIndex}`) as FormControl;
-  
     if (presentControl) {
       if (presentControl.value) {
         dateFinControl?.patchValue("jusqu'à présent");
@@ -253,15 +244,12 @@ export class VisualisationComponent implements OnInit{
       this.updateEndDateOptions(dateFinControlName, sectionIndex);
     }
   }
-  
   isDateFinCheckedForEducations(section: number): boolean {
     return this.EducationsFormArray.at(section).get('present2')?.value === true;
   }
-  
   isDateFinCheckedForHistorique(section: number): boolean {
     return this.historiqueFormArray.at(section).get('present1')?.value === true;
   }
-  
   isDateFinDisabled(section: number): boolean {
     if (section === 2) {
       const dateFinFControl = this.visualisationForm.get('Educations.0.DatefinF');
@@ -388,7 +376,6 @@ export class VisualisationComponent implements OnInit{
       DateCert: [formattedDateCert]
     });
   }
-  
   get CertificatsFormArray(): FormArray {
     return this.visualisationForm.get('Certificats') as FormArray;
   }
