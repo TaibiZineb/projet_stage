@@ -36,9 +36,7 @@ export const data= { "candidateDetails": {
         {"titre_certificat":"Certificat D'accomplissement: L'essentiel\tde PhpStorm.","DateCert":""},
         {"titre_certificat":"Certificat D'accomplissement: L'essentiel de GitHub.","DateCert":"20022-05-06"},
         {"titre_certificat":"Certificat D'accomplissement: L'essentiel de Sass2.","DateCert":""},
-        {"titre_certificat":"Certificat D'accomplissement: L'essentiel\tde PHP et","DateCert":""},
         {"titre_certificat":"Certificat D'accomplissement: L'essentiel\tde PHP 8.","DateCert":""},
-        {"titre_certificat":"Certificat D'accomplissement: L'essentiel de Sass.","DateCert":""},
         {"titre_certificat":"Certificat D'accomplissement: L'essentiel de Git.","DateCert":"20022-04-26"},
         {"titre_certificat":"MySQL.","DateCert":""}
     ]},
