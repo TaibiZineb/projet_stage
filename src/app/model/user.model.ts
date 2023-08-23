@@ -37,7 +37,7 @@ export interface CandidateDetails {
   FirstName: string;
   LastName: string;
   Email: string;
-  position: 'relative',
+  position: 'relative' |'autre_valeur';
   role: string;
   telephone?: string;
   Anneesexperience?: string;
