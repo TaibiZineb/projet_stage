@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { SupabaseClientService } from '../services/supabase-client.service';
 import { createClient} from '@supabase/supabase-js';
+import { AppUser} from '../model/user.model';
 
 @Component({
   selector: 'app-info-compte',
@@ -11,6 +12,12 @@ export class InfoCompteComponent implements OnInit{
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
+  users: AppUser[] = [];
+  authentificateUser: AppUser | null = null;
+  userPhotoUrl: string | null = null;
+  userWorkspaceName: string | null = null;
+  workspaceCreationDate: string | null = null;
+  userWorkspaceIcon: string | null = null;
  
   constructor(public supabaseAuth : SupabaseClientService){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
@@ -19,8 +26,21 @@ export class InfoCompteComponent implements OnInit{
   
   }
   ngOnInit(): void {
-  
-    
+    this.supabaseAuth.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.authentificateUser = user;
+        this.userPhotoUrl = user.photo;
+        this.supabaseAuth.getWorkspaceByUserId(user.id).then(workspace => {
+          if (workspace) {
+            this.userWorkspaceName = workspace.nomEspace;
+            this.userWorkspaceIcon = workspace.icon;
+           
+            
+          }
+        });
+      }
+    });
   }
+  
 
 }

@@ -1,27 +1,62 @@
 <div class="flex">
   <div class="hidden lg:flex w-1/12 px-4 py-3"></div>
-  <div class="mx-auto px-4 mb-6 relative overflow-x-auto" >
+  <div class="mx-auto px-4 mb-6 relative w-full" >
     <h1 class="text-4xl text-center font-bold text-gray-800 mb-4">Information sur le compte</h1>
-    <table class=" w-full text-sm text-left text-gray-500">
-      <thead class="bg-blue-700 text-xs text-sky-100 ">
-        <tr class="uppercase">
-          <th class="px-6 py-3">Nom</th>
-          <th class="px-6 py-3">Email</th>
-          <th class="px-6 py-3"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="text-xs text-gray-700 bg-sky-200 ">
-          <td class="px-6 py-3"></td>
-          <td class="px-6 py-3"></td>
-          <td class="px-6 py-3"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="flex justify-center mt-4">
-      <a class="justify-center mx-auto bg-blue-900 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded" routerLink="/admin/compte">
-        Retour à la page Compte</a>
+    <div class="flex mt-4 justify-end">
+      <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/compte"><svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+       </a>
     </div>
+
+    <div class="flex flex-wrap">
+        <div class="mx-auto bg-slate-100 p-4 mt-2 "> 
+          <div class="mb-150 ">
+            <div class="flex flex-wrap items-center border border-gray-300 rounded-lg">
+              <div class="mb-3 py-3 px-4 flex-grow">
+                <h3 class="text-lg font-semibold">Votre photo</h3>
+              </div>
+              <div class="py-3 px-4">
+                <img [src]="userPhotoUrl" class="rounded-full mt-1.8em object-cover" alt="image">
+              </div>
+            </div>
+            
+            
+            <div class="border border-gray-300 rounded-lg flex flex-wrap items-center">
+              <h3 class=" text-lg font-semibold mr-4 mb-3 py-3 px-4">Nom & Prenom</h3>
+              <div class="flex flex-wrap">
+                <div class="mb-3 py-3 px-4">
+                  <input id="firstName" formControlName="FirstName" label="First Name"  type="text" class="h-12 appearance-none block py-3 px-4 mb-3 bg-gray-200 text-gray-700 border rounded focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500 my-3" [value]="authentificateUser?.prenom" readonly>
+                </div>
+                <div class="mb-3 py-3 px-4">
+                  <input id="LastName" formControlName="LastName" label="last Name"  type="text" class="h-12 appearance-none block bg-gray-200 py-3 px-4 mb-3 text-gray-700 border rounded focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500 my-3" [value]="authentificateUser?.nom" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="border border-gray-300 rounded-lg flex flex-wrap items-center">
+              <h3 class="text-lg font-semibold mr-4 mb-3 py-3 px-4">Adresse Email</h3>
+              <div class="flex flex-wrap">
+                <div class="mb-3 py-3 px-4">
+                  <input id="Email" formControlName="Email" label="First Name"  type="text" class="h-12 appearance-none block py-3 px-4 mb-3 bg-gray-200 text-gray-700 border rounded focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500 my-3" [value]="authentificateUser?.email" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center border border-gray-300 rounded-lg">
+                <div class="mb-3 py-3 px-4">
+                  <h3 class="text-lg font-semibold">Espaces de travail</h3>
+                  <p class="text-xs">Quels espaces de travail vous avez rejoints</p>
+                </div>
+                <div class="flex flex-wrap mb-3 py-3 px-4">
+                  <p class="text-sm font-semibold">{{ userWorkspaceName }}</p>
+                </div>
+                <div class="flex flex-wrap mb-3 py-3 px-4">
+                  <img [src]="userWorkspaceIcon" class="h-8 w-8 rounded-full mt-1.8em object-cover" alt="icon">
+                </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+
+   
   </div>
 </div>
 <router-outlet>
