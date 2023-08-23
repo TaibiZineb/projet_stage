@@ -42,9 +42,16 @@ export class AdminTemplateComponent implements OnInit {
       navMenu?.classList.remove("active");
     }));
     console.log("ngOnInit called");
-    this.router.events.subscribe(() => {
+    this.router.events.subscribe(event => {
+      console.log('URL changed:', this.router.url);
       this.showNav = !['/admin/visualisation', '/admin/workspace'].includes(this.router.url);
+      console.log('showNav:', this.showNav);
     });
+    const isVisualisationActive = this.router.isActive('/admin/visualisation', true);
+    const isWorkspaceActive = this.router.isActive('/admin/workspace', true);
+    this.showNav = !(isVisualisationActive || isWorkspaceActive);
+
+    
   }
   handleLogout(): void {
     this.supabaseAuth.handleLogout();

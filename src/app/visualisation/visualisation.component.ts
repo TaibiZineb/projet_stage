@@ -19,7 +19,6 @@ export class VisualisationComponent implements OnInit{
   isDataSubmitted: boolean = false;
   dateFinValues: string[] = [];
   dateFinControls: { date: FormControl, present: FormControl }[] = [];
-  presentControls: FormControl[] = [];
   dateFinValuesHistorique: string[] = [];
   dateFinValueseducations: string[] = [];
   showSubmittedData: boolean = false;
@@ -73,7 +72,7 @@ export class VisualisationComponent implements OnInit{
       Intituleposte: [data.historiques.Position[0].Intituleposte,Validators.required,],
       Datedebut: [data.historiques.Position[0].Datedebut,Validators.required],
       Datefin: [data.historiques.Position[0].Datefin],
-      description: [''],
+      Description: [data.historiques.Position[0].Description],
       present1: [false],
       Nom_ecole:[data.Educations.Education[0].Nom_ecole,Validators.required],
       Diplome:[data.Educations.Education[0].Diplome,Validators.required],
@@ -207,13 +206,7 @@ export class VisualisationComponent implements OnInit{
     } else {
       this.visualisationForm.get(fieldName)?.setValue(null, { emitEvent: false });
     }
-    const presentControl = this.visualisationForm.get(`present${section}`);
-    if (inputValue) {
-      presentControl?.disable();
-      presentControl?.setValue(false);
-    } else {
-      presentControl?.enable();
-    }
+
   }
   updateEndDateOptions(fieldName: string, section: number): void {
     const dateFinControl = this.visualisationForm.get(fieldName) as FormControl;
@@ -232,40 +225,63 @@ export class VisualisationComponent implements OnInit{
     return `${year}-${month}`;
   }
   toggleDateFin(sectionIndex: number): void {
-    const dateFinControlName = sectionIndex === 0 ? 'Datefin' : 'DatefinF';
-    const dateFinControl = this.visualisationForm.get(dateFinControlName) as FormControl;
-    const presentControl = this.visualisationForm.get(`present${sectionIndex}`) as FormControl;
-    if (presentControl) {
-      if (presentControl.value) {
-        dateFinControl?.patchValue("jusqu'à présent");
+    const dateFinControl = this.historiqueFormArray.at(sectionIndex).get('Datefin') as FormControl;
+    const present1Control = this.historiqueFormArray.at(sectionIndex).get('present1') as FormControl;
+    
+    if (present1Control) {
+      if (present1Control.value) {
+        dateFinControl?.disable();
+        dateFinControl?.setValue(null);
       } else {
-        dateFinControl?.patchValue('');
+        dateFinControl?.enable();
       }
-      this.updateEndDateOptions(dateFinControlName, sectionIndex);
     }
   }
+  toggleDateFinEducations(sectionIndex: number): void {
+    const dateFinFControl = this.EducationsFormArray.at(sectionIndex).get('DatefinF') as FormControl;
+    const present2Control = this.EducationsFormArray.at(sectionIndex).get('present2') as FormControl;
+    if (present2Control) {
+      if (present2Control.value) {
+        dateFinFControl?.setValue("jusqu'à présent"); 
+        dateFinFControl?.disable(); 
+      } else {
+        dateFinFControl?.setValue(''); 
+        dateFinFControl?.enable(); 
+      }
+    }
+  }
+
   isDateFinCheckedForEducations(section: number): boolean {
     return this.EducationsFormArray.at(section).get('present2')?.value === true;
   }
   isDateFinCheckedForHistorique(section: number): boolean {
     return this.historiqueFormArray.at(section).get('present1')?.value === true;
   }
-  isDateFinDisabled(section: number): boolean {
-    if (section === 2) {
-      const dateFinFControl = this.visualisationForm.get('Educations.0.DatefinF');
-      return this.visualisationForm.get(`present${section}`)?.value || dateFinFControl?.disabled;
+  isDateFinEducationDisabled(sectionIndex: number): boolean {
+    const dateFinFControl = this.EducationsFormArray.at(sectionIndex).get('DatefinF');
+    const present2Control = this.EducationsFormArray.at(sectionIndex).get('present2');
+    
+    if (present2Control?.value) {
+      dateFinFControl?.disable();
+      return true;
     } else {
-      const dateFinControlName = section === 1 ? 'Datefin' : 'DatefinF';
-      const presentControl = this.visualisationForm.get(`present${section}`);
-      const dateFinControl = this.visualisationForm.get(dateFinControlName);
-  
-      if (presentControl === null || dateFinControl === null) {
-        return false;
-      }
-  
-      return presentControl.value || dateFinControl.disabled;
+      dateFinFControl?.enable();
+      return false;
     }
   }
+  isDateFinDisabled(sectionIndex: number): boolean {
+    const dateFinControl = this.historiqueFormArray.at(sectionIndex).get('Datefin');
+    const present1Control = this.historiqueFormArray.at(sectionIndex).get('present1');
+    
+    if (present1Control?.value) {
+      dateFinControl?.disable();
+      return true;
+    } else {
+      dateFinControl?.enable();
+      return false;
+    }
+  }
+  
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     return dateDebutValue ? this.formatDateToMonthYear(dateDebutValue) : null;
@@ -288,7 +304,7 @@ export class VisualisationComponent implements OnInit{
       Datedebut: [formattedDateDebut, Validators.required],
       Datefin: [isPresent1 ? "jusqu'à présent" : formattedDateFin],
       present1:[isPresent1],
-      description: [position.Description || '']
+      Description: [position.Description || '']
     });
   }
   get historiqueFormArray(): FormArray {

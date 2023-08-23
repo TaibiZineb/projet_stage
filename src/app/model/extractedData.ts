@@ -8,7 +8,9 @@ export const data= { "candidateDetails": {
   },
 "historiques":{
     "Position":[
-        {"Nomentreprise":"Egio Digital","Intituleposte":"Stage","Datedebut":"2022-02-25","Datefin":"2022-08-25","Description":"petit description"},{"Nomentreprise":"Barid Al Maghrib","Intituleposte":"Stage","Datedebut":"2021-04-01","Datefin":"2021-05-15","Description":""},{"Nomentreprise":"Centre de demande de Visa VFS","Intituleposte":"Stage","Datedebut":"2018-08-02","Datefin":"2018-10-29","Description":""},
+        {"Nomentreprise":"Adservio","Intituleposte":"Stage","Datedebut":"2022-04-25","Datefin":"jusqu\'à présent","Description":"petit description Adservio"},
+        {"Nomentreprise":"Egio Digital","Intituleposte":"Stage","Datedebut":"2022-02-25","Datefin":"2022-08-25","Description":"petit description"},
+        {"Nomentreprise":"Barid Al Maghrib","Intituleposte":"Stage","Datedebut":"2021-04-01","Datefin":"2021-05-15","Description":""},{"Nomentreprise":"Centre de demande de Visa VFS","Intituleposte":"Stage","Datedebut":"2018-08-02","Datefin":"2018-10-29","Description":""},
         {"Nomentreprise":"Amazon","Intituleposte":"Collaboratrice","Datedebut":"2017-10-09","Datefin":"2018-02-24","Description":""},{"Nomentreprise":"TGR Service","Intituleposte":"Stage","Datedebut":"2017-02-15","Datefin":"2017-04-14","Description":""},
     ]
 },
