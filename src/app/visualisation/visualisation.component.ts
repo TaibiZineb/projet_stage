@@ -63,19 +63,7 @@ export class VisualisationComponent implements OnInit{
   };
   ngOnInit(): void {
     console.log('Data from extractedData.ts:', data);
-    this.route.queryParams.subscribe(async params => {
-      this.fileName = params['fileName'];
-      const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        try {
-          const base64File = await this.cvParserService.encodeFileToBase64(file);
-          this.parsedResume = await this.cvParserService.parseResume(base64File);
-        } catch (error) {
-          console.error('Error encoding or parsing the file:', error);
-        }
-      }
-    });
+
     
     const positions = data.historiques.Position;
     this.visualisationForm = this.formBuilder.group({

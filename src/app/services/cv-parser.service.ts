@@ -1,12 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createClient } from '@supabase/supabase-js';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CvParserService {
-
-  constructor(private http: HttpClient) { }
+  supabaseUrl!: string;
+  supabaseKey!: string;
+  supabase: any;
+  constructor(private http: HttpClient) {
+    this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
+    this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
+    this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+   }
   async parseResume(file: any): Promise<string> {
     try {
       const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', {
@@ -30,8 +38,17 @@ export class CvParserService {
       return "Something went wrong";
     }
   }
-  addCV(cvDetails: any) {
-    return this.http.post('/api/add-cv', cvDetails); // Remplacez par votre endpoint
+  async addCV(cvDetails: any) {
+    try {
+      const { data, error } = await this.supabase.from('CV').insert([cvDetails]);
+      if (error) {
+        console.error('Error adding CV to Supabase:', error);
+      } else {
+        console.log('CV added successfully:', data);
+      }
+    } catch (error) {
+      console.error('Error adding CV to Supabase:', error);
+    }
   }
   encodeFileToBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {

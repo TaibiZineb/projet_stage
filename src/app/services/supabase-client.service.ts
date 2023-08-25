@@ -3,10 +3,11 @@ import { createClient, SupabaseClient, User, UserMetadata } from '@supabase/supa
 import { Session } from '@supabase/gotrue-js';
 import { Router } from '@angular/router';
 import { AppUser } from '../model/user.model';
-import { from, Observable, of, throwError } from 'rxjs';
+import { from, Observable, of, throwError,Observer } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Role,Workspace,WorkspaceData } from '../model/user.model';
+import { Role,Workspace,WorkspaceData,CV } from '../model/user.model';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -240,5 +241,19 @@ export class SupabaseClientService {
     }
   }
 
-  
+  async getCVList(): Promise<CV[]> {
+    try {
+        const response = await this.supabase
+            .from('CV')
+            .select('*')
+            .order('creatAt', { ascending: false });  
+        if (response.error) {
+            throw response.error;
+        }
+        return response.data || [];
+    } catch (error) {
+        console.error('Error fetching CV list:', error);
+        throw error;
+    }
+  }
 }
