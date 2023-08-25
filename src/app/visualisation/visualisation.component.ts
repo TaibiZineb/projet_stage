@@ -4,6 +4,9 @@ import { createClient} from '@supabase/supabase-js';
 import { map, startWith} from 'rxjs/operators';
 import { Resume } from'../model/user.model'; 
 import { data } from '../model/extractedData';
+import { ActivatedRoute } from '@angular/router';
+import { CvParserService } from '../services/cv-parser.service';
+
 @Component({
   selector: 'app-visualisation',
   templateUrl: './visualisation.component.html',
@@ -22,11 +25,16 @@ export class VisualisationComponent implements OnInit{
   dateFinValuesHistorique: string[] = [];
   dateFinValueseducations: string[] = [];
   showSubmittedData: boolean = false;
-  constructor(private formBuilder: FormBuilder){
+  fileName: string = '';
+  parsedResume: string = '';
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private cvParserService: CvParserService ){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.dateFinValues = ['', ''];
+    
   }
   resume: Resume = {
     CandidateDetails: {
@@ -55,6 +63,8 @@ export class VisualisationComponent implements OnInit{
   };
   ngOnInit(): void {
     console.log('Data from extractedData.ts:', data);
+
+    
     const positions = data.historiques.Position;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
@@ -421,4 +431,5 @@ export class VisualisationComponent implements OnInit{
     }
     return result;
   }
+
 }

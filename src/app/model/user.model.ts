@@ -82,3 +82,16 @@ export interface Competences {
 export interface Competence {
   titre_comp: string;
 }
+
+export interface CV{
+  id_CV: number;
+  creatAt: Date;
+  createdBy: string;
+  data: string; 
+  jobPosition: string;
+  Nom_Candidat: string;
+  originalCV: string;
+  idworkspace: number; 
+  designationStatus: string;
+  designationTemplate: string;
+}
