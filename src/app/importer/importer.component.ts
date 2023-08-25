@@ -59,25 +59,10 @@ export class ImporterComponent implements OnInit {
       };
       reader.readAsDataURL(input.files[0]);
     } else {
-      this.removeUpload();
+     
     }
   }
-  removeUpload() {
-    const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
-    fileInput.value = '';
 
-    const fileUploadContent = document.querySelector('.file-upload-content');
- 
-
-    if (fileUploadContent) {
-      fileUploadContent.classList.add('hidden');
-    }
-    this.isFileUploaded = false;
-   
-
-    this.uploadedFileName = '';
-   
-  }
   async uploadCVAndAddToDatabase(file: File) {
     try {
       const base64File = await this.cvParserService.encodeFileToBase64(file);
@@ -128,6 +113,9 @@ export class ImporterComponent implements OnInit {
     }
   
     this.readURL(event.target, user, workspace);
+    const base64File = await this.cvParserService.encodeFileToBase64(event.target.files[0]);
+    const parsedResume = await this.cvParserService.parseResume(base64File);
+    console.log('Parsed Resume:', parsedResume);
   }
   
   
@@ -135,4 +123,3 @@ export class ImporterComponent implements OnInit {
 
 
  
-

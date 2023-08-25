@@ -13,9 +13,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+          
             "allowedCommonJsDependencies": [
-              "lodash"
+              "lodash",
+              "pdf-parse"
             ],
+            
             "outputPath": "dist/catalog",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -53,8 +56,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "1.2mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -103,6 +106,7 @@
               "zone.js",
               "zone.js/testing"
             ],
+          
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
