@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 import { AppUser } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
-import * as PDFParser from 'pdf-parse';
+import * as pdfjsLib from 'pdfjs-dist';
+
 
 
 @Injectable({
@@ -20,6 +21,10 @@ export class CvParserService {
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    const workerPath = './node_modules/pdfjs-dist/build/pdf.worker.js';
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = './node_modules/pdfjs-dist/build/pdf.worker.js';
+
    }
    async parseResumeAndAddCV(base64File: string, user: AppUser, workspace: any, file: File): Promise<void> {
     try {
@@ -77,7 +82,8 @@ export class CvParserService {
     });
   }
   async parseResume(base64File: string): Promise<any> {
-
+    const pdfData = this.convertBase64ToUint8Array(base64File);
+  const extractedText = await this.extractTextFromPDF(pdfData);
     const parsedDetails = {
       jobPosition: 'Poste analysé',
       candidateName: 'Nom du candidat',
@@ -100,6 +106,37 @@ export class CvParserService {
       alert('Veuillez sélectionner un fichier avant de continuer.');
     }
   }
+  convertBase64ToUint8Array(base64String: string): Uint8Array {
+    const binaryString = atob(base64String);
+    const byteArray = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      byteArray[i] = binaryString.charCodeAt(i);
+    }
+    return byteArray;
+  }
+  async extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
+    try {
+      const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+
+      let text = '';
+  
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const pageText = await page.getTextContent();
+  
+        pageText.items.forEach(item => {
+          if ('str' in item) {
+            text += (item as any).str + ' ';
+          }
+        });
+      }
+  
+      return text;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
   private async processFile(file: File, user: AppUser, workspace: any) {
     const base64File = await this.encodeFileToBase64(file);
     const loggedInUser = await this.supabaseAuth.getCurrentUser().toPromise();
@@ -141,6 +178,20 @@ export class CvParserService {
       candidateName: 'Nom du candidat extrait',
     };
     return parsedDetails;
+  }
+  async deleteCV(cvId: number): Promise<void> {
+    try {
+      const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
+      if (error) {
+        console.error('Error deleting CV from Supabase:', error);
+        throw error;
+      } else {
+        console.log('CV deleted successfully:', data);
+      }
+    } catch (error) {
+      console.error('Error deleting CV:', error);
+      throw error;
+    }
   }
   
 }

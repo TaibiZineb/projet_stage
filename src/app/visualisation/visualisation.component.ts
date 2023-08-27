@@ -1,11 +1,13 @@
 import { Component,OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
-import { map, startWith} from 'rxjs/operators';
 import { Resume } from'../model/user.model'; 
 import { data } from '../model/extractedData';
 import { ActivatedRoute } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
+import * as pdfjs from 'pdfjs-dist';
+
+
 
 @Component({
   selector: 'app-visualisation',
@@ -62,8 +64,20 @@ export class VisualisationComponent implements OnInit{
     OriginalCv: '',
   };
   ngOnInit(): void {
-    console.log('Data from extractedData.ts:', data);
-
+    console.log('Données depuis extractedData.ts :', data);
+    this.route.queryParams.subscribe(async params => {
+      this.fileName = params['fileName'];
+      const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        try {
+          const base64File = await this.cvParserService.encodeFileToBase64(file);
+          this.parsedResume = await this.cvParserService.parseResume(base64File);
+        } catch (error) {
+          console.error('Erreur lors de l\'encodage ou de l\'analyse du fichier :', error);
+        }
+      }
+    });
     
     const positions = data.historiques.Position;
     this.visualisationForm = this.formBuilder.group({
@@ -132,7 +146,7 @@ export class VisualisationComponent implements OnInit{
       const certificatSection = this.createCertificatsSection(data.Certifications.Certification[i]);
       certificatsArray.push(certificatSection);
     }
-    console.log('Initial form values:', this.visualisationForm.value);
+    console.log('Valeurs initiales du formulaire :', this.visualisationForm.value);
     this.visualisationForm.get('historique')?.value.forEach((position: any, index: number) => {
       this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? 'jusqu\'à présent' : position.Datefin;
     });
@@ -160,7 +174,7 @@ export class VisualisationComponent implements OnInit{
     this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
     this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
-    console.log('Final form data:', this.submittedData);
+    console.log('Données finales du formulaire :', this.submittedData);
     console.log('Resume:', this.resume);
     this.isDataSubmitted = true;
     this.isDataSubmitted = true;
@@ -431,5 +445,29 @@ export class VisualisationComponent implements OnInit{
     }
     return result;
   }
+  extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
+        let text = '';
+  
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          const pageText = await page.getTextContent();
+  
+          pageText.items.forEach(item => {
+            if ('str' in item) {
+              text += (item as any).str + ' ';
+            }
+          });
+        }
+  
+        resolve(text);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  
 
 }
