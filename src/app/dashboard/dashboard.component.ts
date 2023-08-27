@@ -42,5 +42,17 @@ export class DashboardComponent {
       console.error('Error fetching CV list:', error);
     }
   }
+  async deleteCV(cvId: number) {
+    try {
+      await this.cvParserService.deleteCV(cvId);
+      this.cvList = this.cvList.filter(cv => cv.id_CV !== cvId);
+  
+      console.log('CV supprimé avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la suppression du CV :', error);
+    }
+  }
+  
+  
 
 }

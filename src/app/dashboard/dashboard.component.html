@@ -11,11 +11,8 @@
             <p class="ml-2">Analyser le CV</p> 
           </div>
         </a>
+        
       </div>
-      <h2>Nom du fichier importé : {{ fileName }}</h2>
-      <h3>Contenu du CV analysé :</h3>
-      <pre>{{ parsedResume }}</pre>
-     
       <table class=" w-full text-sm text-left text-gray-800">
           <thead class="bg-slate-300 text-xs text-gray-500 ">
             <tr class="uppercase">
@@ -24,6 +21,7 @@
               <th class="px-6 py-3">Poste</th>
               <th class="px-6 py-3">Crée par</th>
               <th class="px-6 py-3">Date</th>
+              <th class="px-6 py-3"></th>
               <th class="px-6 py-3"></th>
             </tr>
           </thead>
@@ -37,9 +35,11 @@
               <td class="px-6 py-3">
                 <a class=" bg-gray-200 hover:bg-gray-300 rounded" routerLink="/admin/visualisation"><svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.7473 20.4429H20.9999" stroke="#72849A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12.78 3.79479C13.5557 2.86779 14.95 2.73186 15.8962 3.49173C15.9485 3.53296 17.6295 4.83879 17.6295 4.83879C18.669 5.46719 18.992 6.80311 18.3494 7.82259C18.3153 7.87718 8.81195 19.7645 8.81195 19.7645C8.49578 20.1589 8.01583 20.3918 7.50291 20.3973L3.86353 20.443L3.04353 16.9723C2.92866 16.4843 3.04353 15.9718 3.3597 15.5773L12.78 3.79479Z" stroke="#72849A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.0208 6.00092L16.473 10.188" stroke="#72849A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                 </a>
-
-
-       </td>
+              </td>
+              <td class="px-6 py-3">
+                <button class=" text-white rounded p-1" (click)="deleteCV(CV.id_CV)"><svg width="17" height="18" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.7999 5.62978H3.19995V4.78272C3.19995 4.31491 3.57919 3.93567 4.04701 3.93567H11.9529C12.4207 3.93567 12.7999 4.31491 12.7999 4.78272V5.62978Z" stroke="#FF535B" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.2352 5.62976V14.3827C12.2352 14.8505 11.856 15.2297 11.3882 15.2297H4.6117C4.14389 15.2297 3.76465 14.8505 3.76465 14.3827V5.62976" stroke="#FF535B" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 3.73572V2.73572C6 2.18343 6.38376 1.73572 6.85714 1.73572H9.14286C9.61624 1.73572 10 2.18343 10 2.73572V3.73572" stroke="#FF535B" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      
+              </td>
             </tr>
           </tbody>
       </table>

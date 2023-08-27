@@ -53,7 +53,7 @@ export class ImporterComponent implements OnInit {
         };
         
         this.cvParserService.addCV(cvDetails);
-        this.router.navigate(['/admin/dashboard'], {
+        this.router.navigate(['/admin/visualisation'], {
           queryParams: { fileName: file.name }
         });
       };
@@ -92,7 +92,7 @@ export class ImporterComponent implements OnInit {
       };
   
       this.cvParserService.addCV(cvDetails);
-      this.router.navigate(['/admin/dashboard'], {
+      this.router.navigate(['/admin/visualisation'], {
         queryParams: { fileName: file.name }
       });
     } catch (error) {
