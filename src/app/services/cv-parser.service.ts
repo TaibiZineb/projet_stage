@@ -60,18 +60,16 @@ export class CvParserService {
     // Extract text from the PDF
     const extractedText = await this.extractTextFromPDF(pdfData);
     console.log('Extracted text:', extractedText);
-  
-    console.log('JSON stringified text:', JSON.stringify(extractedText));
-  
+      console.log('JSON stringified text:', JSON.stringify(extractedText));
     // Extract candidate's name using regex
-    const nameRegex = /[A-Z][a-z]*(?:\s[A-Z][a-z]*)+/;
+    const nameRegex = /[A-Z][a-zÀ-ÿ']*(?:\s[A-Z][a-zÀ-ÿ']*)+/;
     const extractedNames = extractedText.match(nameRegex);
     let candidateName = "Nom du candidat inconnu";
     if (extractedNames && extractedNames.length > 0) {
       candidateName = extractedNames[0];
       console.log(`Candidate Name: ${candidateName}`);
     }
-  
+
     // Extract candidate's email using regex
     const candidateEmailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/i;
     const matchEmail = extractedText.match(candidateEmailRegex);
@@ -84,17 +82,12 @@ export class CvParserService {
     const candidateNum = candidateNumMatch ? candidateNumMatch[0] : "Num inconnu";
     console.log("Candidate Num:", candidateNum);
     // Extract candidate's postal address using regex
-    const addressRegex = /ADRESSE:\s*([\s\S]*?)(?=COMPÉTENCES:|$)/;
+    const addressRegex = /ADRESSE:\s*([\s\S]*?)/;
     const addressMatch = extractedText.match(addressRegex);
     console.log('Address match:', addressMatch);
-    
     let postalAddress = "Adresse inconnue";
-    if (addressMatch && addressMatch[1]) {
-      postalAddress = addressMatch[1]
-        .split(/[\r\n]+/) // Split lines
-        .map(line => line.trim()) // Remove spaces around each line
-        .filter(line => line.length > 0) // Filter out empty lines
-        .join(', '); // Join lines into a single string
+    if (addressMatch) {
+      postalAddress = addressMatch[1];
       console.log('Postal Address:', postalAddress);
     } else {
       console.log('No postal address found.');
@@ -107,10 +100,10 @@ export class CvParserService {
   let educationBackground = "Formation inconnue";
   if (educationMatch && educationMatch[1]) {
     educationBackground = educationMatch[1]
-      .split(/[\r\n]+/) // Split lines
-      .map(line => line.trim()) // Remove spaces around each line
-      .filter(line => line.length > 0) // Filter out empty lines
-      .join('\n'); // Join lines with line breaks
+      .split(/[\r\n]+/) 
+      .map(line => line.trim()) 
+      .filter(line => line.length > 0) 
+      .join('\n'); 
     console.log('Education Background:', educationBackground);
   } else {
     console.log('No education background found.');
@@ -124,10 +117,10 @@ export class CvParserService {
     let competences = "Compétences inconnues";
     if (competenceMatch && competenceMatch[1]) {
       competences = competenceMatch[1]
-        .split(/[\r\n]+/) // Split les lignes
-        .map(line => line.trim()) // Retire les espaces autour de chaque ligne
-        .filter(line => line.length > 0) // Filtre les lignes vides
-        .join(', '); // Rejoint les lignes en une seule chaîne
+        .split(/[\r\n]+/) 
+        .map(line => line.trim()) 
+        .filter(line => line.length > 0) 
+        .join(', '); 
         console.log('Compétences:', competences);
     }else{
       console.log('Aucune compétence trouvée.');
@@ -140,10 +133,10 @@ export class CvParserService {
     let certifications = "Aucune certification trouvée";
     if (certificationMatch && certificationMatch[1]) {
       certifications = certificationMatch[1]
-        .split(/[\r\n]+/) // Split lines
-        .map(line => line.trim()) // Remove spaces around each line
-        .filter(line => line.length > 0) // Filter out empty lines
-        .join('\n'); // Join lines with line breaks
+        .split(/[\r\n]+/) 
+        .map(line => line.trim()) 
+        .filter(line => line.length > 0) 
+        .join('\n'); 
       console.log('Certifications:', certifications);
     } else {
       console.log('No certifications found.');
@@ -156,10 +149,10 @@ export class CvParserService {
     let skills = "Aucune compétence trouvée";
     if (skillsMatch && skillsMatch[1]) {
       skills = skillsMatch[1]
-        .split(/[,;]+/) // Split skills using comma or semicolon as delimiters
-        .map(skill => skill.trim()) // Remove spaces around each skill
-        .filter(skill => skill.length > 0) // Filter out empty skills
-        .join(', '); // Join skills with commas
+        .split(/[,;]+/) 
+        .map(skill => skill.trim()) 
+        .filter(skill => skill.length > 0) 
+        .join(', '); 
       console.log('Skills:', skills);
     } else {
       console.log('No skills found.');
@@ -312,10 +305,10 @@ export class CvParserService {
   
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
-      const parsedResume = await this.parseResume(base64File); // Utilisez la méthode pour extraire les données du CV
-      const cvDetails = { /* Créez un objet avec les données extraites */ };
-      await this.addCV(cvDetails); // Ajoutez les données à la base de données
-      return parsedResume; // Renvoie les données extraites
+      const parsedResume = await this.parseResume(base64File); 
+      const cvDetails = {  };
+      await this.addCV(cvDetails); 
+      return parsedResume; 
     } catch (error) {
       console.error('Erreur lors de l\'extraction et de l\'ajout du CV :', error);
       throw error;
