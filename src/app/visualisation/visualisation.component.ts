@@ -1,13 +1,10 @@
 import { Component,OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { Resume } from'../model/user.model'; 
 import { data } from '../model/extractedData';
 import { ActivatedRoute } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
-import * as pdfjs from 'pdfjs-dist';
-
-
 
 @Component({
   selector: 'app-visualisation',
@@ -78,7 +75,16 @@ export class VisualisationComponent implements OnInit{
         }
       }
     });
-    
+    this.cvParserService.parseResumeAndAddCV('base64File').then(parsedData => {
+      this.visualisationForm.patchValue({
+        candidateName: parsedData.candidateName,
+        jobPosition: parsedData.jobPosition,
+        candidateEmail: parsedData.candidateEmail
+
+      });
+    }).catch(error => {
+      console.error('Erreur lors de l\'extraction et de l\'ajout du CV :', error);
+    });
     const positions = data.historiques.Position;
     this.visualisationForm = this.formBuilder.group({
       CandidateDetails: this.formBuilder.group({
@@ -445,29 +451,7 @@ export class VisualisationComponent implements OnInit{
     }
     return result;
   }
-  extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
-        let text = '';
-  
-        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-          const page = await pdf.getPage(pageNum);
-          const pageText = await page.getTextContent();
-  
-          pageText.items.forEach(item => {
-            if ('str' in item) {
-              text += (item as any).str + ' ';
-            }
-          });
-        }
-  
-        resolve(text);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+
   
 
 }

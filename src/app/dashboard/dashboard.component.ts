@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { SupabaseClientService } from '../services/supabase-client.service';
 import { CV } from '../model/user.model';
-import { CvParserService } from '../services/cv-parser.service';
 import { ActivatedRoute } from '@angular/router';
+import { CvParserService } from '../services/cv-parser.service';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ export class DashboardComponent {
   cvList: CV[] = []; 
   fileName: string = '';
   parsedResume: string = '';
-  constructor(private supabaseService: SupabaseClientService, private cvParserService: CvParserService,
+  constructor( private cvParserService: CvParserService,
     private route: ActivatedRoute,
     ) {}
 
@@ -36,7 +37,7 @@ export class DashboardComponent {
 
   async fetchCVList(): Promise<void> {
     try {
-      const cvList = await this.supabaseService.getCVList();
+      const cvList = await this.cvParserService.getCVList();
       this.cvList = cvList;
     } catch (error) {
       console.error('Error fetching CV list:', error);
@@ -52,7 +53,4 @@ export class DashboardComponent {
       console.error('Erreur lors de la suppression du CV :', error);
     }
   }
-  
-  
-
 }

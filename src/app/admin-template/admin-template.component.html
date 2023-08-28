@@ -31,9 +31,10 @@
           <svg width="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.9725 6.68253V18.4205C20.9725 19.0911 20.3994 19.6348 19.6925 19.6348H9.45247C8.74555 19.6348 8.17247 19.0911 8.17247 18.4205V3.84905C8.17247 3.17842 8.74555 2.63477 9.45247 2.63477H16.7058L20.9725 6.68253Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.7725 22.6348H6.3439C5.58648 22.6348 4.97247 22.0635 4.97247 21.3588L4.98665 5.63477" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.7058 2.63477V5.43477C16.7058 6.09751 17.2789 6.63477 17.9858 6.63477H20.9725" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/dashboard">Tableau de bord</a>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-linkb text-white active" aria-current="page" routerLink="/admin/home">CV Template</a>
-        </li>
+        </li>-->
+        
      
    
         <li class="nav-item">
@@ -62,10 +63,11 @@
 				<a class="{{router.isActive('/admin/dashboard',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/dashboard">Tableau de bord.
 				</a>
 			</li>
-      <li class="hidden-link h-auto border-t list-none relative w-full py-2">
+        <!-- <li class="hidden-link h-auto border-t list-none relative w-full py-2">
 				<a class="{{router.isActive('/admin/cvtemplate',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/cvtemplate">CV Template
 				</a>
-			</li>
+			</li>-->
+     
       <li class="hidden-link h-auto border-t list-none relative w-full py-2">
 				<a class="{{router.isActive('/admin/workspace',true) ? 'text-cyan-600' : 'text-sky-300'}} hover:text-slate-300 block px-10 py-30 no-underline cursor-pointer" routerLink="/admin/workspace">Workspace
 				</a>
@@ -99,15 +101,14 @@
   
 </router-outlet>
 <!--Footer-->
-<!-- Footer container -->
-<footer
+<!--  <footer
   class="bg-gray-100 text-center text-sky-300 lg:text-left">
   <div
     class="flex items-center justify-center border-b-2 border-neutral-200 p-6 lg:justify-between">
     <div class="mr-12 hidden lg:block">
       <span>Get connected with us on social networks:</span>
     </div>
-    <!-- Social network icons container -->
+
     <div class="flex justify-center">
       <a href="#!" class="mr-6 text-sky-300e">
         <svg
@@ -165,7 +166,7 @@
           >
         </p>
       </div>
-      <!-- Contact section -->
+
       <div>
         <h6
           class="mb-4 flex justify-center font-semibold uppercase md:justify-start">
@@ -227,7 +228,6 @@
     </div>
   </div>
 
-  <!--Copyright section-->
   <div class="bg-gray-100 border-b-2 border-neutral-200 p-6 text-center">
     <span>© 2023 Copyright:</span>
     <a
@@ -236,7 +236,8 @@
       ></a
     >
   </div>
-</footer>
+</footer>-->
+
 
 
 

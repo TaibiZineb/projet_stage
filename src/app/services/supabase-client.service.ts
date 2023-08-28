@@ -241,19 +241,5 @@ export class SupabaseClientService {
     }
   }
 
-  async getCVList(): Promise<CV[]> {
-    try {
-        const response = await this.supabase
-            .from('CV')
-            .select('*')
-            .order('creatAt', { ascending: false });  
-        if (response.error) {
-            throw response.error;
-        }
-        return response.data || [];
-    } catch (error) {
-        console.error('Error fetching CV list:', error);
-        throw error;
-    }
-  }
+
 }
