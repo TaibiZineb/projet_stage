@@ -59,7 +59,6 @@ export class ImporterComponent implements OnInit {
       };
       reader.readAsDataURL(input.files[0]);
     } else {
-      // Handle the case where no file is selected
     }
   }
   
@@ -103,9 +102,7 @@ export class ImporterComponent implements OnInit {
   }
   async parseResume(base64File: string): Promise<any> {
     try {
-      console.log('Parsing resume with base64 data:', base64File);
       const extractedData = await this.cvParserService.parseResume(base64File);
-     
       return extractedData;
     } catch (error) {
       console.error('Error parsing resume:', error);
@@ -121,11 +118,11 @@ export class ImporterComponent implements OnInit {
   }
   async uploadCVAndExtractData(file: File) {
     try {
- 
       const base64File = await this.cvParserService.encodeFileToBase64(file);
       console.log('Base64 encoded file:', base64File);
       const extractedData = await this.parseResume(base64File); 
       console.log('Extracted data:', extractedData);
+
     } catch (error) {
       console.error('Error uploading and extracting CV:', error);
     }

@@ -88,10 +88,18 @@ export interface CV{
   creatAt: Date;
   createdBy: string;
   data: string; 
-  jobPosition: string;
+  role: string;
   Nom_Candidat: string;
   originalCV: string;
   idworkspace: number; 
   designationStatus: string;
   designationTemplate: string;
+}
+export interface ParsedResume{
+  firstName: string;
+  lastName: string;
+  candidateEmail: string;
+  candidateNum:string;
+  role?:string;
+  
 }

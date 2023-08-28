@@ -25,7 +25,7 @@ export class VisualisationComponent implements OnInit{
   dateFinValueseducations: string[] = [];
   showSubmittedData: boolean = false;
   fileName: string = '';
-  parsedResume: string = '';
+  parsedResume: any;
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private cvParserService: CvParserService ){
