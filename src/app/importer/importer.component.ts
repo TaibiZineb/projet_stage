@@ -123,7 +123,7 @@ export class ImporterComponent implements OnInit {
       const base64File = await this.cvParserService.encodeFileToBase64(file);
       console.log('Base64 encoded file:', base64File);
       const extractedData = await this.parseResume(base64File); 
-      //console.log('Extracted data:', extractedData);
+      console.log('Extracted data:', extractedData);
 
     } catch (error) {
       console.error('Error uploading and extracting CV:', error);

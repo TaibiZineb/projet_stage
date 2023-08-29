@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { AppUser, CV } from '../model/user.model';
+import { AppUser, CV,ParsedResume } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -71,6 +71,8 @@ export class CvParserService {
     if (match && match.length >= 3) {
       firstName = match[1];
       lastName = match[2];
+      console.log('nom:', firstName),
+      console.log('prenom: ', lastName)
     }
 
     // Extract candidate's email using regex
@@ -188,6 +190,8 @@ export class CvParserService {
     const parsedDetails = {
       jobPosition: 'Stage',
       candidateName: `${firstName} ${lastName}`,
+      firstName:firstName,
+      lastName:lastName,
       candidateEmail: candidateEmail,
       candidateNum: candidateNum,
       competences: competences,

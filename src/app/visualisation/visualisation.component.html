@@ -25,24 +25,24 @@
               <!--Nom & Prenom-->
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstName" label="First Name" placeholder="Prenom" type="text" >
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('CandidateDetails.FirstName') && visualisationForm?.get('CandidateDetails.FirstName')?.hasError('required')">Le prénom est requis.</div>
-                  <div *ngIf="isFieldInvalid('CandidateDetails.FirstName')" class="error-message">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input   formControlName="firstName" label="First Name" placeholder="prenom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                  <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('CandidateDetails.firstName') && visualisationForm?.get('CandidateDetails.firstName')?.hasError('required')">Le prénom est requis.</div>
+                  <div *ngIf="isFieldInvalid('CandidateDetails.firstName')" class="error-message">
                     Veuillez entrer un prénom valide.
                   </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.FirstName')?.hasError('minlength')">Le prénom doit comporter au moins 2 caractères.</div>
-                  <div class="text-red-500 text-xs italic" *ngIf=" visualisationForm?.get('CandidateDetails.FirstName')?.hasError('maxlength')">Le prénom ne peut pas dépasser 50 caractères.
+                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.firstName')?.hasError('minlength')">Le prénom doit comporter au moins 2 caractères.</div>
+                  <div class="text-red-500 text-xs italic" *ngIf=" visualisationForm?.get('CandidateDetails.firstName')?.hasError('maxlength')">Le prénom ne peut pas dépasser 50 caractères.
                   </div>
                 </section>
                 <section class="w-full md:w-1/2 px-3" id="lastName" label="Last Name" placeholder="Last Name" type="text"   >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">*nom</label>
-                  <input id="lastName"  formControlName="LastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div class="text-red-500 text-xs italic" *ngIf=" isFieldInvalid('CandidateDetails.LastName') && visualisationForm?.get('CandidateDetails.LastName')?.hasError('required')">Le nom est requis.
+                  <input  formControlName="lastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                  <div class="text-red-500 text-xs italic" *ngIf=" isFieldInvalid('CandidateDetails.lastName') && visualisationForm?.get('CandidateDetails.lastName')?.hasError('required')">Le nom est requis.
                   </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.LastName')?.hasError('minlength')">
+                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.lastName')?.hasError('minlength')">
                     Le prénom doit comporter au moins 2 caractères.
                   </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.LastName')?.hasError('maxlength')">
+                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.lastName')?.hasError('maxlength')">
                     Le prénom ne peut pas dépasser 50 caractères.
                   </div>
                 </section>
@@ -373,14 +373,14 @@
                 <tbody>
                   <tr>
                     <td class="candidate_details text-left pt-10">
-                      <ng-container *ngIf="resume.CandidateDetails.FirstName !== ''">
+                      <ng-container *ngIf="resume.CandidateDetails.firstName !== ''">
                           <h2 class="text-3xl text-blue-600 font-bold inline-block">
-                            {{ resume.CandidateDetails.FirstName.charAt(0).toUpperCase() + '.' || '' }}
+                            {{ resume.CandidateDetails.firstName.charAt(0).toUpperCase() + '.' || '' }}
                           </h2>
                       </ng-container>
-                      <ng-container *ngIf="resume.CandidateDetails.LastName !== ''">
+                      <ng-container *ngIf="resume.CandidateDetails.lastName !== ''">
                         <h2 class="text-3xl text-blue-600 font-bold inline-block">
-                          {{ resume.CandidateDetails.LastName.charAt(0).toUpperCase() + '.' || '' }}
+                          {{ resume.CandidateDetails.lastName.charAt(0).toUpperCase() + '.' || '' }}
                         </h2>
                       </ng-container>
                       <h3 class="text-xl text-blue-500">{{ resume.CandidateDetails.jobPosition || '' }}</h3>
@@ -409,30 +409,30 @@
                             </table>
                           </ng-container>
                           <!-- Historique professionnel -->
-                          <ng-container *ngIf="resume.historiques.Position.length > 0">
+                          <ng-container *ngIf="resume.historiques.length > 0">
                             <tr>
                               <th class="th_title text-blue-500 text-xs uppercase">historique professionnel</th>
                             </tr>
-                            <ng-container *ngFor="let position of resume.historiques.Position; let index = index">
+                            <ng-container *ngFor="let historique of resume.historiques; let index = index">
                               <tr>
                                 <td>
                                   <table class="table_class">
                                     <tbody>
                                       <tr>
-                                        <th class="text-left text-base leading-5 pt-2">{{ position.Intituleposte }}</th>
+                                        <th class="text-left text-base leading-5 pt-2">{{ historique.Intituleposte }}</th>
                                       </tr>
                                       <tr>
-                                        <td class="employer_name">{{ position.Nomentreprise }}</td>
+                                        <td class="employer_name">{{ historique.Nomentreprise }}</td>
                                       </tr>
                                       <tr>
                                         <td class="employment_duration">
-                                          {{ position.Datedebut + ' - ' }}
+                                          {{ historique.Datedebut + ' - ' }}
                                           <ng-container *ngIf="!isDateFinCheckedForHistorique(index)">{{ dateFinValuesHistorique[index] }}</ng-container>
                                           <ng-container *ngIf="isDateFinCheckedForHistorique(index)">jusqu'à présent</ng-container>
                                         </td>
                                       </tr>
                                       <tr>
-                                        <td>{{ position.Description }}</td>
+                                        <td>{{ historique.Description }}</td>
                                       </tr>
                                     </tbody>
                                   </table>

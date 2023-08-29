@@ -26,7 +26,7 @@ export interface UserRoleWorkspace {
 }
 export interface Resume {
   CandidateDetails: CandidateDetails;
-  historiques: historiques;
+  historiques: historique[];
   Educations: Educations;
   Langues: Langues;
   certifications: Certifications;
@@ -34,23 +34,23 @@ export interface Resume {
   OriginalCv: string;
 }
 export interface CandidateDetails {
-  FirstName: string;
-  LastName: string;
+  firstName: string;
+  lastName: string;
   candidateEmail: string;
   position: 'relative' |'autre_valeur';
   jobPosition: string;
   candidateNum?: string;
   Anneesexperience?: string;
 }
-export interface historiques {
-  Position: Position[];
-}
-export interface Position {
+export interface historique {
   Nomentreprise: string;
   Intituleposte: string;
   Datedebut: string;
   Datefin: string;
   Description?: string;
+}
+export interface Position {
+
 }
 export interface Educations {
   Education: Education[];
