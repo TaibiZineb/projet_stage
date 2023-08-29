@@ -36,10 +36,10 @@ export interface Resume {
 export interface CandidateDetails {
   FirstName: string;
   LastName: string;
-  Email: string;
+  candidateEmail: string;
   position: 'relative' |'autre_valeur';
-  role: string;
-  telephone?: string;
+  jobPosition: string;
+  candidateNum?: string;
   Anneesexperience?: string;
 }
 export interface historiques {
@@ -82,7 +82,6 @@ export interface Competences {
 export interface Competence {
   titre_comp: string;
 }
-
 export interface CV{
   id_CV: number;
   creatAt: Date;
@@ -96,10 +95,19 @@ export interface CV{
   designationTemplate: string;
 }
 export interface ParsedResume{
+  candidateName: any;
   firstName: string;
   lastName: string;
   candidateEmail: string;
   candidateNum:string;
   role?:string;
+  jobposition:string;
+  competences: string;
+  postalAddress: string,
+  educationBackground: string,
+  certifications: string,
+  skills:string,
+  experience:string,
+  Langues:string
   
 }

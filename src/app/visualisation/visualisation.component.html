@@ -59,7 +59,7 @@
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-telephone">Téléphone</label>
-                  <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
+                  <input formControlName="candidateNum" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
                 </section>
               </div>
               <!--rôle & Années d'expérience-->
@@ -93,16 +93,18 @@
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
                             <input formControlName="Nomentreprise" id="grid-Nomentreprise"type="text" placeholder="Nom de l'entreprise"class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                            <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Nomentreprise')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Nomentreprise')?.touched || visualisationForm.get('historique.' + i + '.Nomentreprise')?.dirty)">
+                            <!--  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Nomentreprise')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Nomentreprise')?.touched || visualisationForm.get('historique.' + i + '.Nomentreprise')?.dirty)">
                               Le Nom de l'entreprise est requis.
-                            </div>
+                            </div>-->
+                          
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
                             <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
-                            <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Intituleposte')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Intituleposte')?.touched || visualisationForm.get('historique.' + i + '.Intituleposte')?.dirty)">
+                            <!--  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Intituleposte')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Intituleposte')?.touched || visualisationForm.get('historique.' + i + '.Intituleposte')?.dirty)">
                               L'Intitulé du poste est requis.
-                            </div>
+                            </div>-->
+                          
                           </div>
                         </div>
                         <!--Date debut & fin-->
@@ -112,9 +114,10 @@
                             <input formControlName="Datedebut" 
                               class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
                               id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
-                              <div class="text-red-500 text-xs italic" *ngIf="(visualisationForm.get('historique.' + i + '.Datedebut')?.invalid && visualisationForm.get('historique.' + i + '.Datedebut')?.touched) || (visualisationForm.get('historique.' + i + '.Intituleposte')?.invalid && visualisationForm.get('historique.' + i + '.Intituleposte')?.touched)">
+                              <!--  <div class="text-red-500 text-xs italic" *ngIf="(visualisationForm.get('historique.' + i + '.Datedebut')?.invalid && visualisationForm.get('historique.' + i + '.Datedebut')?.touched) || (visualisationForm.get('historique.' + i + '.Intituleposte')?.invalid && visualisationForm.get('historique.' + i + '.Intituleposte')?.touched)">
                                 La date du debut est requise.
-                            </div>
+                            </div>-->
+                            
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
@@ -126,7 +129,7 @@
                                 [min]="getMinimumDate('Datedebut')"
                                 [max]="getMaximumDate('Datefin')"
                                 (input)="onDateInput($event, 'Datefin', 1)">
-                            <span *ngIf="isDateFinCheckedForHistorique(1)">jusqu'à présent</span>
+                            <span *ngIf="isDateFinCheckedForHistorique(i)">jusqu'à présent</span>
                             <div class="flex items-center">
                                 <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(i)" formControlName="present1">
                                 <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
@@ -174,15 +177,17 @@
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*École</label>
                             <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
-                            <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Nom_ecole') && visualisationForm.get('Educations.' + i + '.Nom_ecole')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Nom_ecole')?.touched || visualisationForm.get('Educations.' + i + '.Nom_ecole')?.dirty)">
+                            <!--<div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Nom_ecole') && visualisationForm.get('Educations.' + i + '.Nom_ecole')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Nom_ecole')?.touched || visualisationForm.get('Educations.' + i + '.Nom_ecole')?.dirty)">
                               Le champs est requis.
-                            </div>
+                            </div>-->
+                            
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">*Diplôme</label>
                             <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
-                            <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Diplome') && visualisationForm.get('Educations.' + i + '.Diplome')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Diplome')?.touched || visualisationForm.get('Educations.' + i + '.Diplome')?.dirty)"> Le champs est requis.
-                            </div>
+                            <!-- <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Diplome') && visualisationForm.get('Educations.' + i + '.Diplome')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Diplome')?.touched || visualisationForm.get('Educations.' + i + '.Diplome')?.dirty)"> Le champs est requis.
+                            </div>-->
+                           
                           </div>
                         </div>
                         <!-- ville & date debut & date fin -->
@@ -199,14 +204,14 @@
                           <div class="w-full md:w-1/3 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-datefinF">Date fin</label>
                             <div class="flex flex-col items-start">
-                              <input formControlName="DatefinF" [disabled]="isDateFinEducationDisabled(i)" *ngIf="!isDateFinCheckedForEducations(2)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')"
+                              <input formControlName="DatefinF" [disabled]="isDateFinEducationDisabled(i)" *ngIf="!isDateFinCheckedForEducations(i)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-DatefinF" type="month" [min]="getMinimumDate('DatedebutF')" [max]="getMaximumDate('DatefinF')"
                               (input)="onDateInput($event, 'DatefinF', 2)">
-                              <span *ngIf="isDateFinCheckedForEducations(2)">jusqu'à présent</span>
+                              <span *ngIf="isDateFinCheckedForEducations(i)">jusqu'à présent</span>
                             </div>
                             <div class="flex items-start">
                               <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFinEducations(i)" formControlName="present2">
                               <label class="ml-2 text-sm text-gray-700" for="present2">Jusqu'à présent</label>
-                              <span *ngIf="isDateFinCheckedForEducations(2)">jusqu'à présent</span>
+                              <span *ngIf="isDateFinCheckedForEducations(i)">jusqu'à présent</span>
                             </div>
                           </div>
                           
@@ -282,9 +287,10 @@
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Langues</label>
                           <input formControlName="titre_langue" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-Mcompétences" type="text" placeholder="Langue">
-                          <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Langues.' + i + '.titre_langue') && visualisationForm.get('Langues.' + i + '.titre_langue')?.hasError('required') && (visualisationForm.get('Langues.' + i + '.titre_langue')?.touched || visualisationForm.get('Langues.' + i + '.titre_langue')?.dirty)">
+                          <!--  <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Langues.' + i + '.titre_langue') && visualisationForm.get('Langues.' + i + '.titre_langue')?.hasError('required') && (visualisationForm.get('Langues.' + i + '.titre_langue')?.touched || visualisationForm.get('Langues.' + i + '.titre_langue')?.dirty)">
                             Le champs est requis.
-                          </div>
+                          </div>-->
+                        
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
@@ -329,9 +335,10 @@
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Certificat</label>
                         <input formControlName="titre_certificat" class="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
-                        <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Certificats.' + i + '.titre_certificat')?.hasError('required') && (visualisationForm.get('Certificats.' + i + '.titre_certificat')?.touched || visualisationForm.get('Certificats.' + i + '.titre_certificat')?.dirty)">
+                        <!-- <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Certificats.' + i + '.titre_certificat')?.hasError('required') && (visualisationForm.get('Certificats.' + i + '.titre_certificat')?.touched || visualisationForm.get('Certificats.' + i + '.titre_certificat')?.dirty)">
                           Le titre du certificat est requis.
-                        </div>
+                        </div>-->
+                       
                      
                       </div>
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -376,7 +383,7 @@
                           {{ resume.CandidateDetails.LastName.charAt(0).toUpperCase() + '.' || '' }}
                         </h2>
                       </ng-container>
-                      <h3 class="text-xl text-blue-500">{{ resume.CandidateDetails.role || '' }}</h3>
+                      <h3 class="text-xl text-blue-500">{{ resume.CandidateDetails.jobPosition || '' }}</h3>
                       <h3 class="text-xl text-slate-400 my-1 font-normal">{{ resume.CandidateDetails.Anneesexperience || '' }}</h3>
                     </td>
                   </tr>

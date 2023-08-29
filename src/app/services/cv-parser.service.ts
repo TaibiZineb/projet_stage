@@ -55,6 +55,7 @@ export class CvParserService {
     });
   }
   async parseResume(base64File: string): Promise<any> {
+    console.log('Parsing resume with base64 data:', base64File);
     const pdfData = this.convertBase64ToUint8Array(base64File);    
     // Extract text from the PDF
     const extractedText = await this.extractTextFromPDF(pdfData);
@@ -71,9 +72,6 @@ export class CvParserService {
       firstName = match[1];
       lastName = match[2];
     }
-    
-    console.log(`First Name: ${firstName}`);
-    console.log(`Last Name: ${lastName}`);
 
     // Extract candidate's email using regex
     const candidateEmailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/i;
@@ -189,7 +187,7 @@ export class CvParserService {
     // Create a parsedDetails object containing extracted information
     const parsedDetails = {
       jobPosition: 'Stage',
-      candidateName:`${firstName} ${lastName}`,
+      candidateName: `${firstName} ${lastName}`,
       candidateEmail: candidateEmail,
       candidateNum: candidateNum,
       competences: competences,
@@ -286,6 +284,7 @@ export class CvParserService {
   }
   async extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
     try {
+      console.log('Extracting text from PDF...');
       const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
       let text = '';
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
@@ -304,6 +303,9 @@ export class CvParserService {
       throw error;
     }
   }
+  
+
+  
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 

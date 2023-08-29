@@ -1,11 +1,10 @@
 import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
-import { Resume } from'../model/user.model'; 
-import { data } from '../model/extractedData';
+import { Resume,ParsedResume } from'../model/user.model'; 
 import { ActivatedRoute } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
-
+import { data } from '../model/extractedData';
 @Component({
   selector: 'app-visualisation',
   templateUrl: './visualisation.component.html',
@@ -25,7 +24,8 @@ export class VisualisationComponent implements OnInit{
   dateFinValueseducations: string[] = [];
   showSubmittedData: boolean = false;
   fileName: string = '';
-  parsedResume: any;
+  parsedResume: string = '';
+  parsedResumeJSON: string = '';
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private cvParserService: CvParserService ){
@@ -33,31 +33,25 @@ export class VisualisationComponent implements OnInit{
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.dateFinValues = ['', ''];
-    
   }
   resume: Resume = {
     CandidateDetails: {
       FirstName: '',
       LastName: '',
-      Email: '',
-      role: '',
-      position: 'relative'
-    },
+      candidateEmail: '',
+      jobPosition: '',
+      candidateNum:'',
+      position: 'relative'},
     historiques: {
-      Position: [],
-    },
+      Position: [],},
     Educations: {
-      Education: [],
-    },
+      Education: [],},
     Langues: {
-      Langue: [],
-    },
+      Langue: [],},
     certifications: {
-      Certification: [],
-    },
+      Certification: [],},
     Competences: {
-      TopSkills: [],
-    },
+      TopSkills: [],},
     OriginalCv: '',
   };
   ngOnInit(): void {
@@ -90,8 +84,8 @@ export class VisualisationComponent implements OnInit{
       CandidateDetails: this.formBuilder.group({
         FirstName: [data.candidateDetails.FirstName,[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
         LastName: [data.candidateDetails.LastName,[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-        Email: [data.candidateDetails.Email,[Validators.required, Validators.email]],
-        telephone: [data.candidateDetails.telephone],
+        candidateEmail: [data.candidateDetails.Email,[Validators.required, Validators.email]],
+        candidateNum: [data.candidateDetails.telephone],
         role: [data.candidateDetails.role,Validators.required],
         Anneesexperience: [data.candidateDetails.Anneesexperience]
       }),
@@ -280,12 +274,21 @@ export class VisualisationComponent implements OnInit{
       }
     }
   }
-
   isDateFinCheckedForEducations(section: number): boolean {
-    return this.EducationsFormArray.at(section).get('present2')?.value === true;
+    const educationsArray =this.visualisationForm.get('Educations') as FormArray;
+    if(educationsArray && educationsArray.controls[section]){
+      const educationsControl = educationsArray.at(section).get('present2') as FormControl;
+      return educationsControl?.value === true;
+    }
+    return false;
   }
   isDateFinCheckedForHistorique(section: number): boolean {
-    return this.historiqueFormArray.at(section).get('present1')?.value === true;
+    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+    if (historiqueArray && historiqueArray.controls[section]) {
+      const historiqueControl = historiqueArray.at(section).get('present1') as FormControl;
+      return historiqueControl?.value === true;
+    }
+    return false;
   }
   isDateFinEducationDisabled(sectionIndex: number): boolean {
     const dateFinFControl = this.EducationsFormArray.at(sectionIndex).get('DatefinF');
@@ -311,7 +314,6 @@ export class VisualisationComponent implements OnInit{
       return false;
     }
   }
-  
   getMinimumDate(fieldName: string): string | null {
     const dateDebutValue = this.visualisationForm.get(fieldName)?.value;
     return dateDebutValue ? this.formatDateToMonthYear(dateDebutValue) : null;
@@ -325,9 +327,9 @@ export class VisualisationComponent implements OnInit{
     historiqueArray.push(this.createHistoriqueSection()); 
   }
   createHistoriqueSection(position: any = {}): FormGroup {
-    const formattedDateDebut = this.formatDateToMonthYear(position.Datedebut) ;
-    const formattedDateFin = this.formatDateToMonthYear(position.Datefin);
-    const isPresent1 = position && position.Datefin === "jusqu'à présent";
+    const formattedDateDebut = this.formatDateToMonthYear(position.Datedebut);
+  const formattedDateFin = this.formatDateToMonthYear(position.Datefin);
+  const isPresent1 = position && position.Datefin === "jusqu'à présent";
     return this.formBuilder.group({
       Nomentreprise: [position.Nomentreprise || '', Validators.required,],
       Intituleposte: [position.Intituleposte || '',Validators.required,],
@@ -356,11 +358,9 @@ export class VisualisationComponent implements OnInit{
     const formattedDateDebutF = educationData && educationData.DatedebutF ? this.formatDateToMonthYear(educationData.DatedebutF) : '';
     let formattedDateFinF = educationData && educationData.DatefinF ? this.formatDateToMonthYear(educationData.DatefinF) : '';
     const isPresent2 = educationData && educationData.DatefinF === "jusqu'à présent";
-  
     if (isPresent2) {
       formattedDateFinF = "jusqu'à présent";
     }
-  
     return this.formBuilder.group({
       Nom_ecole: [educationData ? educationData.Nom_ecole : '', Validators.required],
       Diplome: [educationData ? educationData.Diplome : '', Validators.required],
@@ -451,7 +451,4 @@ export class VisualisationComponent implements OnInit{
     }
     return result;
   }
-
-  
-
 }
