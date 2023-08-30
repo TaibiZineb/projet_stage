@@ -49,9 +49,6 @@ export interface historique {
   Datefin: string;
   Description?: string;
 }
-export interface Position {
-
-}
 export interface Educations {
   Education: Education[];
 }
@@ -95,6 +92,7 @@ export interface CV{
   designationTemplate: string;
 }
 export interface ParsedResume{
+  Educations: string;
   candidateName: any;
   firstName: string;
   lastName: string;
@@ -104,10 +102,12 @@ export interface ParsedResume{
   jobposition:string;
   competences: string;
   postalAddress: string,
-  educationBackground: string,
-  certifications: string,
+  titre_certificat:string,
+  DateCert?:string,
+  certifications: string[],
   skills:string,
-  experience:string,
-  Langues:string
-  
+  Langues:string,
+  historiques:string [],
+  technicalSkills:string[],
+  softSkills:string[]
 }

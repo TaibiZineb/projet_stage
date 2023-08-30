@@ -55,41 +55,38 @@ export class CvParserService {
     });
   }
   async parseResume(base64File: string): Promise<any> {
+    let technicalSkills: string[] = [];
+    let softSkills: string[] = [];
+    let certifications: string[] = [];
+    let workExperiences: any[] = [];
+      let parsedDetails: ParsedResume;
     console.log('Parsing resume with base64 data:', base64File);
     const pdfData = this.convertBase64ToUint8Array(base64File);    
-    // Extract text from the PDF
     const extractedText = await this.extractTextFromPDF(pdfData);
     console.log('Extracted text:', extractedText);
       console.log('JSON stringified text:', JSON.stringify(extractedText));
-    // Extract candidate's name using regex
     const nameRegex = /([A-Za-zÀ-ÿ']+) ([A-Za-zÀ-ÿ']+)/;
     const match = extractedText.match(nameRegex);
-    
     let firstName = "Nom du candidat inconnu";
     let lastName = "Nom du candidat inconnu";
-    
     if (match && match.length >= 3) {
-      firstName = match[1];
-      lastName = match[2];
-      console.log('nom:', firstName),
-      console.log('prenom: ', lastName)
+      firstName = match[2];
+      lastName = match[1];
+      console.log('prenom:', firstName),
+      console.log('nom: ', lastName)
     }
-
-    // Extract candidate's email using regex
     const candidateEmailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/i;
     const matchEmail = extractedText.match(candidateEmailRegex);
     const candidateEmail = matchEmail ? matchEmail[0] : "Adresse e-mail inconnue";
     console.log("Candidate Email:", candidateEmail);
-  
-    // Extract candidate's phone number using regex
     const candidateNumRegex = /(?:0[67]\d{8})|(?:\+\d+)/i;
     const candidateNumMatch = extractedText.match(candidateNumRegex);
     const candidateNum = candidateNumMatch ? candidateNumMatch[0] : "Num inconnu";
     console.log("Candidate Num:", candidateNum);
-    // Extract candidate's postal address using regex
+ // Define regular expression pattern for postal address
     const addressRegex = /ADRESSE:\s*([\s\S]*?)/;
     const addressMatch = extractedText.match(addressRegex);
-    console.log('Address match:', addressMatch);
+
     let postalAddress = "Adresse inconnue";
     if (addressMatch) {
       postalAddress = addressMatch[1];
@@ -97,25 +94,24 @@ export class CvParserService {
     } else {
       console.log('No postal address found.');
     }
-    // Extract candidate's educational background using regex
-  const educationRegex = /FORMATION(?:S)?:\s*([\s\S]*?)(?=COMPÉTENCES:|$)/;
-  const educationMatch = extractedText.match(educationRegex);
-  console.log('Education match:', educationMatch);
-  
-  let educationBackground = "Formation inconnue";
-  if (educationMatch && educationMatch[1]) {
-    educationBackground = educationMatch[1]
-      .split(/[\r\n]+/) 
-      .map(line => line.trim()) 
-      .filter(line => line.length > 0) 
-      .join('\n'); 
-    console.log('Education Background:', educationBackground);
-  } else {
-    console.log('No education background found.');
-  }
 
-    // Extract candidate's competences using regex
-    const competenceRegex = /COMPÉTENCES:\s*([\s\S]*?)(?=QUALITÉS PERSONNELLES:|$)/;
+    // Extract candidate's educational background using regex
+    const educationRegex = /FORMATION(?:S)?:\s*([\s\S]*?)(?:INSTITUT|CERTIFICATIONS:|$)/;
+    const educationMatch = extractedText.match(educationRegex);
+    
+    let educationBackground = "Formation inconnue";
+    if (educationMatch && educationMatch[1]) {
+      educationBackground = educationMatch[1]
+        .split(/[\r\n]+/) 
+        .map(line => line.trim()) 
+        .filter(line => line.length > 0) 
+        .join('\n'); 
+      console.log('Education Background:', educationBackground);
+    } else {
+      console.log('No education background found.');
+    }
+    
+    const competenceRegex = /COMPÉTENCES:\s*([\s\S]*?)/;
     const competenceMatch = extractedText.match(competenceRegex);
     console.log('Competence match:', competenceMatch);
     
@@ -130,24 +126,10 @@ export class CvParserService {
     }else{
       console.log('Aucune compétence trouvée.');
     }
-  // Extract candidate's certifications using regex
-    const certificationRegex = /CERTIFICATIONS:\s*([\s\S]*?)(?=(LANGUES:|$))/;
-    const certificationMatch = extractedText.match(certificationRegex);
-    console.log('Certification match:', certificationMatch);
 
-    let certifications = "Aucune certification trouvée";
-    if (certificationMatch && certificationMatch[1]) {
-      certifications = certificationMatch[1]
-        .split(/[\r\n]+/) 
-        .map(line => line.trim()) 
-        .filter(line => line.length > 0) 
-        .join('\n'); 
-      console.log('Certifications:', certifications);
-    } else {
-      console.log('No certifications found.');
-    }
     // Extract candidate's skills using regex
-    const skillsRegex = /COMPÉTENCES:\s*([\s\S]*?)(?=(INTÉRÊTS:|$))/;
+   
+    const skillsRegex = /COMPÉTENCES:\s*([\s\S]*?)/;
     const skillsMatch = extractedText.match(skillsRegex);
     console.log('Skills match:', skillsMatch);
 
@@ -162,46 +144,99 @@ export class CvParserService {
     } else {
       console.log('No skills found.');
     }
-    // Extract candidate's experience using regex
-    const experienceRegex = /EXPÉRIENCE PROFESSIONNELLE:\s*([\s\S]*?)(?=(FORMATION:|$))/;
+    const technicalSkillsRegex = /•\s*([\s\S]+?)(?=(?:•|$))/g;
+    const technicalSkillsMatch = extractedText.match(technicalSkillsRegex);
+    if (technicalSkillsMatch) {
+      technicalSkills = technicalSkillsMatch.map(skill => skill.trim());
+      console.log('Technical Skills:', technicalSkills);
+    } else {
+      console.log('No technical skills found.');
+    }
+
+// Extract soft skills using regex
+  const softSkillsRegex = /QUALITÉS\s+PERSONNELLES:\s*([\s\S]+?)(?=(?:INSTITUT|CERTIFICATIONS:|$))/;
+  const softSkillsMatch = extractedText.match(softSkillsRegex);
+  if (softSkillsMatch) {
+    softSkills = softSkillsMatch[1].split('•').map(skill => skill.trim());
+    console.log('Soft Skills:', softSkills);
+  } else {
+    console.log('No soft skills found.');
+  }
+
+// Extract certifications using regex
+  const certificationsRegex = /CERTIFICATIONS:\s*([\s\S]*?)/;
+  const certificationsMatch = extractedText.match(certificationsRegex);
+  if (certificationsMatch) {
+    certifications = certificationsMatch[1]
+      .split(/[\r\n]+/)
+      .map(certification => certification.trim())
+      .filter(certification => certification.length > 0);
+    console.log('Certifications:', certifications);
+  } else {
+    console.log('No certifications found.');
+  }
+// Extraire les informations sur les langues
+    const languagesRegex = /LANGUES:\s*([\s\S]*?)(?=(?:BÉNÉVOLAT|SymfonyCasts:|PROJETS:|$))/;
+    const languagesMatch = extractedText.match(languagesRegex);
+
+    let languages = "Langues inconnues";
+    if (languagesMatch && languagesMatch[1]) {
+      const allLanguages = languagesMatch[1].trim();
+      const languageArray = allLanguages.split('').map(language => language.trim());
+      const validLanguages = languageArray.filter(language => {
+        const lowercaseLanguage = language.toLowerCase();
+        return ['arabe', 'français', 'espagnol', 'anglais'].some(validLanguage =>
+          lowercaseLanguage.includes(validLanguage)
+        );
+      });
+      languages = validLanguages.join(', ');
+    }
+    console.log('Langues:', languages);
+
+    const experienceRegex = /EXPÉRIENCE\s+PROFESSIONNELLE:\s*([\s\S]*?)/;
     const experienceMatch = extractedText.match(experienceRegex);
-    console.log('Experience match:', experienceMatch);
-
-    let experience = "Aucune expérience professionnelle trouvée";
-    if (experienceMatch && experienceMatch[1]) {
-      experience = experienceMatch[1];
-      console.log('Experience:', experience);
+    
+    if (experienceMatch) {
+      const experienceText = experienceMatch[1];
+      const experienceMatches = [...experienceText.matchAll(/Stage\s+au\s+sein\s+de\s+([^,]+),\s+du\s+([\d/]+)\s+au\s+([\d/]+)/g)];
+    
+      const workExperiences = experienceMatches.map(match => {
+        const company = match[1].trim();
+        const startDate = match[2];
+        const endDate = match[3];
+        const positionRegex = new RegExp(`${company},\\s*([^,]+),\\s*${startDate}\\s+au\\s+${endDate}`);
+        const positionMatch = experienceText.match(positionRegex);
+        const position = positionMatch ? positionMatch[1].trim() : "Poste inconnu";
+        return {
+          company,
+          position,
+          startDate,
+          endDate,
+        };
+      });
+      console.log('Work Experiences:', workExperiences);
     } else {
-      console.log('No experience found.');
+      console.log('No work experiences found.');
     }
-    // Extract languages from the text using regex
-    const languageRegex = /LANGUES:\s*([\s\S]*?)(?=(COMPÉTENCES:|CERTIFICATIONS:|$))/;
-    const languageMatch = extractedText.match(languageRegex);
-    console.log('Language match:', languageMatch);
-
-    let languages = "Aucune langue trouvée";
-    if (languageMatch && languageMatch[1]) {
-      languages = languageMatch[1].trim().split('\n').map(lang => lang.trim()).join(', ');
-      console.log('Languages:', languages);
-    } else {
-      console.log('No languages found.');
-    }
-    // Create a parsedDetails object containing extracted information
-    const parsedDetails = {
-      jobPosition: 'Stage',
+    parsedDetails = {
+      jobposition: 'Stage',
       candidateName: `${firstName} ${lastName}`,
-      firstName:firstName,
-      lastName:lastName,
+      firstName: firstName,
+      lastName: lastName,
       candidateEmail: candidateEmail,
       candidateNum: candidateNum,
       competences: competences,
       postalAddress: postalAddress,
-      educationBackground: educationBackground,
+      Educations: '', 
+      historiques: workExperiences, 
+      titre_certificat: '', 
+      DateCert: '',
+      technicalSkills: technicalSkills,
+      softSkills: softSkills,
       certifications: certifications,
-      skills:skills,
-      experience:experience,
-      languages:languages
-
+      skills: skills,
+     
+      Langues: languages,
     };
     console.log('Parsed details:', parsedDetails);
     return parsedDetails;
@@ -254,7 +289,7 @@ export class CvParserService {
       candidateEmail: parsedResume.candidateEmail,
       originalCV: file.name,
       idworkspace: userWorkspace.idWorkspace,
-      designationStatus: 'En attente',
+      designationStatus: '',
       designationTemplate: 'Modèle 1'
     };
   
@@ -274,6 +309,11 @@ export class CvParserService {
   }
   async deleteCV(cvId: number): Promise<void> {
     try {
+      const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
+      if (!shouldDelete) {
+        return; 
+      }
+  
       const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
       if (error) {
         console.error('Error deleting CV from Supabase:', error);
@@ -286,6 +326,7 @@ export class CvParserService {
       throw error;
     }
   }
+  
   async extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
     try {
       console.log('Extracting text from PDF...');
@@ -307,9 +348,6 @@ export class CvParserService {
       throw error;
     }
   }
-  
-
-  
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 

@@ -48,7 +48,7 @@ export class ImporterComponent implements OnInit {
           Nom_Candidat: extractedData.candidateName,
           originalCV: file.name,
           idworkspace: userWorkspace.idWorkspace,
-          designationStatus: 'En attente',
+          designationStatus: 'Valide',
           designationTemplate: 'Modèle 1'
         };
 
@@ -90,7 +90,7 @@ export class ImporterComponent implements OnInit {
         Nom_Candidat: parsedResume.candidateName, 
         originalCV: file.name,
         idworkspace: workspace.idWorkspace,
-        designationStatus: 'En attente',
+        designationStatus: 'Valide',
         designationTemplate: 'Modèle 1'
       };
       this.cvParserService.addCV(cvDetails);

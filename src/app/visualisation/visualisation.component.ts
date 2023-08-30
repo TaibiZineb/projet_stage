@@ -54,20 +54,24 @@ export class VisualisationComponent implements OnInit{
     OriginalCv: '',
   };
   parsedResume: ParsedResume = {
-    candidateName: '', 
+    Educations: '',
+    candidateName: '',
     firstName: '',
     lastName: '',
     candidateEmail: '',
-    candidateNum: '',
-    role: '',
-    jobposition: '',
+    candidateNum:'',
+    role:'',
+    jobposition:'',
     competences: '',
     postalAddress: '',
-    educationBackground: '',
-    certifications: '',
-    skills: '',
-    experience: '',
-    Langues: '',
+    titre_certificat:'',
+    DateCert:'',
+    certifications: [''],
+    skills:'',
+    Langues:'',
+     historiques:[''],
+     technicalSkills:[''],
+     softSkills:['']
   };
   
   ngOnInit(): void {
@@ -82,8 +86,8 @@ export class VisualisationComponent implements OnInit{
           
           this.visualisationForm = this.formBuilder.group({
             CandidateDetails: this.formBuilder.group({
-              lastName: [this.parsedResume.candidateName.split(' ')[0], [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-              firstName: [this.parsedResume.candidateName.split(' ')[1], [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+              firstName: [this.parsedResume.candidateName.split(' ')[0], [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+              lastName: [this.parsedResume.candidateName.split(' ')[1], [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
               candidateEmail: [this.parsedResume.candidateEmail, [Validators.required, Validators.email]],
               candidateNum: [this.parsedResume.candidateNum],
               role: [this.parsedResume.role, Validators.required],
@@ -92,27 +96,31 @@ export class VisualisationComponent implements OnInit{
             }),
             
 
-            historique: this.formBuilder.group({
-              Nomentreprise: ['', Validators.required],
-              Intituleposte: ['', Validators.required],
-              Datedebut: ['', Validators.required],
-              Datefin: [''],
-              Description: [''],
-              present1: [false],
+            historiques: this.formBuilder.group({
+              Position: this.formBuilder.array([]) 
             }),
-          
-            Educations:this.formBuilder.group({
-              Education: this.formBuilder.array([]), 
-            }),
-            Competances:this.formBuilder.group({
-              competance:this.formBuilder.array([])
-            }),
-            Langues:this.formBuilder.group({
-
-            }),
-            certifications:this.formBuilder.group({
-
-            })
+            Nomentreprise: [this.parsedResume,Validators.required,],
+            Intituleposte: ['',Validators.required,],
+            Datedebut: [,Validators.required],
+            Datefin: [''],
+            Description: [''],
+            present1: [false],
+            Nom_ecole:[''],
+            Diplome:['',Validators.required],
+            VilleE:[''],
+            DatedebutF:[''],
+            DatefinF:[''],
+            titre_comp:['',Validators.required],
+            titre_certificat:['',Validators.required],
+            DateCert:[''],
+            titre_langue:['',Validators.required],
+            niveaulang:[''],
+            present2: [false],
+            historique: this.formBuilder.array([this.createHistoriqueSection()]),
+            Educations:  this.formBuilder.array([this.createEducationsSection()]),
+            Competences: this.formBuilder.array([this.createCompetencesSection()]),
+            Langues:this.formBuilder.array([this.createLanguagesSection()]),
+            Certificats:this.formBuilder.array([this.createCertificatsSection()]),
           });
         } catch (error) {
           console.error('Erreur lors de l\'encodage ou de l\'analyse du fichier :', error);
