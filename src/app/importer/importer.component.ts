@@ -67,9 +67,9 @@ export class ImporterComponent implements OnInit {
     try {
       console.log('Uploading and extracting data from CV:', file.name);
       const base64File = await this.cvParserService.encodeFileToBase64(file);
-      //console.log('Base64 encoded file:', base64File);
+      console.log('Base64 encoded file:', base64File);
       const extractedData = await this.parseResume(base64File); 
-      //console.log('Extracted data:', extractedData);
+      console.log('Extracted data:', extractedData);
       const user = await this.supabaseAuth.getCurrentUser().toPromise();
       if (!user) {
         console.error('No user is currently logged in.');

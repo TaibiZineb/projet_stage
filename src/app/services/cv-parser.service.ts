@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { AppUser, CV,ParsedResume } from '../model/user.model';
+import { AppUser, CV,Competence,ParsedResume, Resume } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
-import * as pdfjsLib from 'pdfjs-dist';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,7 @@ export class CvParserService {
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
-    const workerPath = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = workerPath;
+
    }
 
   async addCV(cvDetails: any) {
@@ -54,192 +53,15 @@ export class CvParserService {
       reader.onerror = (error) => reject(error);
     });
   }
-  async parseResume(base64File: string): Promise<any> {
-    let technicalSkills: string[] = [];
-    let softSkills: string[] = [];
-    let certifications: string[] = [];
-    let workExperiences: any[] = [];
-      let parsedDetails: ParsedResume;
-    console.log('Parsing resume with base64 data:', base64File);
-    const pdfData = this.convertBase64ToUint8Array(base64File);    
-    const extractedText = await this.extractTextFromPDF(pdfData);
-    console.log('Extracted text:', extractedText);
-      console.log('JSON stringified text:', JSON.stringify(extractedText));
-    const nameRegex = /([A-Za-zÀ-ÿ']+) ([A-Za-zÀ-ÿ']+)/;
-    const match = extractedText.match(nameRegex);
-    let firstName = "Nom du candidat inconnu";
-    let lastName = "Nom du candidat inconnu";
-    if (match && match.length >= 3) {
-      firstName = match[2];
-      lastName = match[1];
-      console.log('prenom:', firstName),
-      console.log('nom: ', lastName)
-    }
-    const candidateEmailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/i;
-    const matchEmail = extractedText.match(candidateEmailRegex);
-    const candidateEmail = matchEmail ? matchEmail[0] : "Adresse e-mail inconnue";
-    console.log("Candidate Email:", candidateEmail);
-    const candidateNumRegex = /(?:0[67]\d{8})|(?:\+\d+)/i;
-    const candidateNumMatch = extractedText.match(candidateNumRegex);
-    const candidateNum = candidateNumMatch ? candidateNumMatch[0] : "Num inconnu";
-    console.log("Candidate Num:", candidateNum);
- // Define regular expression pattern for postal address
-    const addressRegex = /ADRESSE:\s*([\s\S]*?)/;
-    const addressMatch = extractedText.match(addressRegex);
-
-    let postalAddress = "Adresse inconnue";
-    if (addressMatch) {
-      postalAddress = addressMatch[1];
-      console.log('Postal Address:', postalAddress);
-    } else {
-      console.log('No postal address found.');
-    }
-
-    // Extract candidate's educational background using regex
-    const educationRegex = /FORMATION(?:S)?:\s*([\s\S]*?)(?:INSTITUT|CERTIFICATIONS:|$)/;
-    const educationMatch = extractedText.match(educationRegex);
-    
-    let educationBackground = "Formation inconnue";
-    if (educationMatch && educationMatch[1]) {
-      educationBackground = educationMatch[1]
-        .split(/[\r\n]+/) 
-        .map(line => line.trim()) 
-        .filter(line => line.length > 0) 
-        .join('\n'); 
-      console.log('Education Background:', educationBackground);
-    } else {
-      console.log('No education background found.');
-    }
-    
-    const competenceRegex = /COMPÉTENCES:\s*([\s\S]*?)/;
-    const competenceMatch = extractedText.match(competenceRegex);
-    console.log('Competence match:', competenceMatch);
-    
-    let competences = "Compétences inconnues";
-    if (competenceMatch && competenceMatch[1]) {
-      competences = competenceMatch[1]
-        .split(/[\r\n]+/) 
-        .map(line => line.trim()) 
-        .filter(line => line.length > 0) 
-        .join(', '); 
-        console.log('Compétences:', competences);
-    }else{
-      console.log('Aucune compétence trouvée.');
-    }
-
-    // Extract candidate's skills using regex
-   
-    const skillsRegex = /COMPÉTENCES:\s*([\s\S]*?)/;
-    const skillsMatch = extractedText.match(skillsRegex);
-    console.log('Skills match:', skillsMatch);
-
-    let skills = "Aucune compétence trouvée";
-    if (skillsMatch && skillsMatch[1]) {
-      skills = skillsMatch[1]
-        .split(/[,;]+/) 
-        .map(skill => skill.trim()) 
-        .filter(skill => skill.length > 0) 
-        .join(', '); 
-      console.log('Skills:', skills);
-    } else {
-      console.log('No skills found.');
-    }
-    const technicalSkillsRegex = /•\s*([\s\S]+?)(?=(?:•|$))/g;
-    const technicalSkillsMatch = extractedText.match(technicalSkillsRegex);
-    if (technicalSkillsMatch) {
-      technicalSkills = technicalSkillsMatch.map(skill => skill.trim());
-      console.log('Technical Skills:', technicalSkills);
-    } else {
-      console.log('No technical skills found.');
-    }
-
-// Extract soft skills using regex
-  const softSkillsRegex = /QUALITÉS\s+PERSONNELLES:\s*([\s\S]+?)(?=(?:INSTITUT|CERTIFICATIONS:|$))/;
-  const softSkillsMatch = extractedText.match(softSkillsRegex);
-  if (softSkillsMatch) {
-    softSkills = softSkillsMatch[1].split('•').map(skill => skill.trim());
-    console.log('Soft Skills:', softSkills);
-  } else {
-    console.log('No soft skills found.');
-  }
-
-// Extract certifications using regex
-  const certificationsRegex = /CERTIFICATIONS:\s*([\s\S]*?)/;
-  const certificationsMatch = extractedText.match(certificationsRegex);
-  if (certificationsMatch) {
-    certifications = certificationsMatch[1]
-      .split(/[\r\n]+/)
-      .map(certification => certification.trim())
-      .filter(certification => certification.length > 0);
-    console.log('Certifications:', certifications);
-  } else {
-    console.log('No certifications found.');
-  }
-// Extraire les informations sur les langues
-    const languagesRegex = /LANGUES:\s*([\s\S]*?)(?=(?:BÉNÉVOLAT|SymfonyCasts:|PROJETS:|$))/;
-    const languagesMatch = extractedText.match(languagesRegex);
-
-    let languages = "Langues inconnues";
-    if (languagesMatch && languagesMatch[1]) {
-      const allLanguages = languagesMatch[1].trim();
-      const languageArray = allLanguages.split('').map(language => language.trim());
-      const validLanguages = languageArray.filter(language => {
-        const lowercaseLanguage = language.toLowerCase();
-        return ['arabe', 'français', 'espagnol', 'anglais'].some(validLanguage =>
-          lowercaseLanguage.includes(validLanguage)
-        );
-      });
-      languages = validLanguages.join(', ');
-    }
-    console.log('Langues:', languages);
-
-    const experienceRegex = /EXPÉRIENCE\s+PROFESSIONNELLE:\s*([\s\S]*?)/;
-    const experienceMatch = extractedText.match(experienceRegex);
-    
-    if (experienceMatch) {
-      const experienceText = experienceMatch[1];
-      const experienceMatches = [...experienceText.matchAll(/Stage\s+au\s+sein\s+de\s+([^,]+),\s+du\s+([\d/]+)\s+au\s+([\d/]+)/g)];
-    
-      const workExperiences = experienceMatches.map(match => {
-        const company = match[1].trim();
-        const startDate = match[2];
-        const endDate = match[3];
-        const positionRegex = new RegExp(`${company},\\s*([^,]+),\\s*${startDate}\\s+au\\s+${endDate}`);
-        const positionMatch = experienceText.match(positionRegex);
-        const position = positionMatch ? positionMatch[1].trim() : "Poste inconnu";
-        return {
-          company,
-          position,
-          startDate,
-          endDate,
-        };
-      });
-      console.log('Work Experiences:', workExperiences);
-    } else {
-      console.log('No work experiences found.');
-    }
-    parsedDetails = {
-      jobposition: 'Stage',
-      candidateName: `${firstName} ${lastName}`,
-      firstName: firstName,
-      lastName: lastName,
-      candidateEmail: candidateEmail,
-      candidateNum: candidateNum,
-      competences: competences,
-      postalAddress: postalAddress,
-      Educations: '', 
-      historiques: workExperiences, 
-      titre_certificat: '', 
-      DateCert: '',
-      technicalSkills: technicalSkills,
-      softSkills: softSkills,
-      certifications: certifications,
-      skills: skills,
-     
-      Langues: languages,
-    };
-    console.log('Parsed details:', parsedDetails);
-    return parsedDetails;
+  async parseResume(base64File: string): Promise<any>{
+    try {
+      const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Sovren-AccountId': '17097504', 'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
+        body: JSON.stringify({ DocumentAsBase64String: base64File, DocumentLastModified: (new Date()).toISOString().substring(0, 10)}) }) 
+        const data = await response.json()  
+        return data.Value?.ResumeData; } 
+        catch (error) { console.log(`error when parseResume: ${error}`); return "Something went wrong";    }
   }
   async readURL(input: any, user: AppUser, workspace: any) {
     if (input.files && input.files[0]) {
@@ -327,27 +149,7 @@ export class CvParserService {
     }
   }
   
-  async extractTextFromPDF(pdfData: Uint8Array): Promise<string> {
-    try {
-      console.log('Extracting text from PDF...');
-      const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
-      let text = '';
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
-        const pageText = await page.getTextContent();
-        pageText.items.forEach(item => {
-          if ('str' in item) {
-            text += (item as any).str + ' ';
-          }
-        });
-      }
-      console.log('Extracted text from PDF:', text); 
-      return text;
-    } catch (error) {
-      console.error('Error extracting text from PDF:', error); 
-      throw error;
-    }
-  }
+ 
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 
@@ -374,4 +176,80 @@ export class CvParserService {
         throw error;
     }
   }
+
+fromSovren = async (resume: Resume, data: any) => {
+    resume.CandidateDetails.FirstName =
+        data.ContactInformation?.CandidateName?.GivenName || "";
+    resume.CandidateDetails.LastName =
+        data.ContactInformation?.CandidateName?.FamilyName || "";
+    resume.CandidateDetails.Email =
+        data.ContactInformation?.EmailAddresses?.[0]?.toString() || "";
+    resume.CandidateDetails.telephone =
+        data.ContactInformation?.Telephones?.[0]?.Normalized || "";
+    resume.CandidateDetails.role = "";
+    resume.CandidateDetails.Anneesexperience =
+        (data.EmploymentHistory?.ExperienceSummary?.MonthsOfWorkExperience || " ") +
+        " months";
+    data.Education &&
+        data.Education.EducationDetails &&
+        data.Education.EducationDetails.map((edu: any) =>
+            resume.Educations.Education.push({
+              Nom_ecole: edu?.SchoolName?.Normalized || "",
+                Diplome: edu?.Degree?.Type || "",
+                VilleE: "",
+                DatedebutF: edu.LastEducationDate
+                    ? edu.LastEducationDate.isCurrentDate
+                        ? "Present"
+                        : edu.LastEducationDate.Date
+                    : "",
+                DatefinF: edu.LastEducationDate
+                    ? edu.LastEducationDate.isCurrentDate
+                        ? "Present"
+                        : edu.LastEducationDate.Date
+                    : "",
+            })
+        );
+    data.EmploymentHistory &&
+        data.EmploymentHistory.Positions &&
+        data.EmploymentHistory.Positions.map((pos: any) =>
+            resume.historiques.Position.push({
+              Nomentreprise: pos?.Employer?.Name?.Normalized || "",
+              Intituleposte: pos?.JopTitle?.Normalized || "",
+              Datedebut: pos?.StartDate?.Date || "",
+              Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
+              Description: pos?.Description || "",
+            })
+        );
+    data.Certifications &&
+        data.Certifications.map((cer: any) =>
+            resume.certifications.Certification.push({
+              titre_certificat: cer?.Name || "",
+              DateCert: "",
+            })
+        );
+    data.LanguageCompetencies &&
+        data.LanguageCompetencies.map((lan: any) =>
+            resume.Langues.Langue.push({
+              titre_langue: lan?.Language || "",
+              niveaulang: "Proficiant/Fluent",
+            })
+        );
+    resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
+  
+
+  };
+  getTopSkills = (data: any) => {
+    const skills =
+      data?.Taxonomies?.flatMap((taxonomy: any) =>
+        taxonomy?.SubTaxonomies?.flatMap(
+          (subTaxonomy: any) => subTaxonomy?.Skills
+        )
+      )
+        ?.filter((skill: any) => skill?.ExistsInText)
+        ?.sort((a: any, b: any) => b?.PercentOfOverall - a?.PercentOfOverall)
+        ?.slice(0, 4)
+        ?.map((skill: any) => ({ Name: skill?.Name })) || [];
+    return skills as Competence[];
+  };
+
 }
