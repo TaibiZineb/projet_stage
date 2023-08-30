@@ -26,25 +26,13 @@
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstName" label="First Name" placeholder="Prenom" type="text" >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('CandidateDetails.FirstName') && visualisationForm?.get('CandidateDetails.FirstName')?.hasError('required')">Le prénom est requis.</div>
-                  <div *ngIf="isFieldInvalid('CandidateDetails.FirstName')" class="error-message">
-                    Veuillez entrer un prénom valide.
-                  </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.FirstName')?.hasError('minlength')">Le prénom doit comporter au moins 2 caractères.</div>
-                  <div class="text-red-500 text-xs italic" *ngIf=" visualisationForm?.get('CandidateDetails.FirstName')?.hasError('maxlength')">Le prénom ne peut pas dépasser 50 caractères.
-                  </div>
+                
+                  
                 </section>
                 <section class="w-full md:w-1/2 px-3" id="lastName" label="Last Name" placeholder="Last Name" type="text"   >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">*nom</label>
                   <input id="lastName"  formControlName="LastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                  <div class="text-red-500 text-xs italic" *ngIf=" isFieldInvalid('CandidateDetails.LastName') && visualisationForm?.get('CandidateDetails.LastName')?.hasError('required')">Le nom est requis.
-                  </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.LastName')?.hasError('minlength')">
-                    Le prénom doit comporter au moins 2 caractères.
-                  </div>
-                  <div class="text-red-500 text-xs italic" *ngIf="visualisationForm?.get('CandidateDetails.LastName')?.hasError('maxlength')">
-                    Le prénom ne peut pas dépasser 50 caractères.
-                  </div>
+                
                 </section>
               </div>
               <!--Email & Phone-->
@@ -52,9 +40,7 @@
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <section id="email" label="Email" placeholder="Email" type="text" value="">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* Email</label><input id="email" formControlName="Email" label="Email" placeholder="Email" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-emil">
-                    <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('CandidateDetails.Email') && visualisationForm.get('CandidateDetails.Email')?.hasError('required')">L'email est requis.</div>
-                    <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('CandidateDetails.Email')?.hasError('email')">L'email doit être une adresse email valide.
-                    </div>
+                   
                   </section>
                 </section>
                 <section class="w-full md:w-1/2 px-3">
@@ -67,7 +53,7 @@
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Rôle</label>
                   <input formControlName="role" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-role" type="text" placeholder="Rôle">
-                  <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('CandidateDetails.role') && visualisationForm.get('CandidateDetails.role')?.hasError('required')">Le Role est requis.</div>
+                
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Années d'expérience</label>
@@ -93,16 +79,12 @@
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
                             <input formControlName="Nomentreprise" id="grid-Nomentreprise"type="text" placeholder="Nom de l'entreprise"class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
-                            <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Nomentreprise')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Nomentreprise')?.touched || visualisationForm.get('historique.' + i + '.Nomentreprise')?.dirty)">
-                              Le Nom de l'entreprise est requis.
-                            </div>
+                           
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
                             <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
-                            <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('historique.' + i + '.Intituleposte')?.hasError('required') && (visualisationForm.get('historique.' + i + '.Intituleposte')?.touched || visualisationForm.get('historique.' + i + '.Intituleposte')?.dirty)">
-                              L'Intitulé du poste est requis.
-                            </div>
+                           
                           </div>
                         </div>
                         <!--Date debut & fin-->
@@ -112,9 +94,7 @@
                             <input formControlName="Datedebut" 
                               class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
                               id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
-                              <div class="text-red-500 text-xs italic" *ngIf="(visualisationForm.get('historique.' + i + '.Datedebut')?.invalid && visualisationForm.get('historique.' + i + '.Datedebut')?.touched) || (visualisationForm.get('historique.' + i + '.Intituleposte')?.invalid && visualisationForm.get('historique.' + i + '.Intituleposte')?.touched)">
-                                La date du debut est requise.
-                            </div>
+                           
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
@@ -174,15 +154,12 @@
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*École</label>
                             <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
-                            <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Nom_ecole') && visualisationForm.get('Educations.' + i + '.Nom_ecole')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Nom_ecole')?.touched || visualisationForm.get('Educations.' + i + '.Nom_ecole')?.dirty)">
-                              Le champs est requis.
-                            </div>
+                            
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">*Diplôme</label>
                             <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
-                            <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Educations.' + i + '.Diplome') && visualisationForm.get('Educations.' + i + '.Diplome')?.hasError('required') && (visualisationForm.get('Educations.' + i + '.Diplome')?.touched || visualisationForm.get('Educations.' + i + '.Diplome')?.dirty)"> Le champs est requis.
-                            </div>
+                           
                           </div>
                         </div>
                         <!-- ville & date debut & date fin -->
@@ -282,9 +259,7 @@
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">  
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Langues</label>
                           <input formControlName="titre_langue" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-300 rounded py-3 px-4 mb-3 leading-tight hover:border-2 hover:border-blue-500" id="grid-Mcompétences" type="text" placeholder="Langue">
-                          <div class="text-red-500 text-xs italic" *ngIf="isFieldInvalid('Langues.' + i + '.titre_langue') && visualisationForm.get('Langues.' + i + '.titre_langue')?.hasError('required') && (visualisationForm.get('Langues.' + i + '.titre_langue')?.touched || visualisationForm.get('Langues.' + i + '.titre_langue')?.dirty)">
-                            Le champs est requis.
-                          </div>
+                         
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Niveau</label>
@@ -329,9 +304,7 @@
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Certificat</label>
                         <input formControlName="titre_certificat" class="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-titre_certificat" type="text" placeholder="certificat">
-                        <div class="text-red-500 text-xs italic" *ngIf="visualisationForm.get('Certificats.' + i + '.titre_certificat')?.hasError('required') && (visualisationForm.get('Certificats.' + i + '.titre_certificat')?.touched || visualisationForm.get('Certificats.' + i + '.titre_certificat')?.dirty)">
-                          Le titre du certificat est requis.
-                        </div>
+                       
                      
                       </div>
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">

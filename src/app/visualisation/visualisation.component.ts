@@ -440,10 +440,7 @@ export class VisualisationComponent implements OnInit{
       }
     });
   }
-  isFieldInvalid(fieldPath: string): boolean {
-    const control = this.visualisationForm.get(fieldPath);
-    return !!control?.invalid && (!!control?.dirty || !!control?.touched);
-  }
+
   chunkArray(arr: any[], size: number) {
     const result = [];
     for (let i = 0; i < arr.length; i += size) {

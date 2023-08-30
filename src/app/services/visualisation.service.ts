@@ -25,7 +25,7 @@ export class VisualisationService {
     CandidateDetails: {
       FirstName: '',
       LastName: '',
-      Email: '',
+      candidateEmail: '',
       role: '',
       position: 'relative'
     },
