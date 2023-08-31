@@ -31,7 +31,7 @@ Educations: Educations;
 Langues: Langues;
 certifications: Certifications;
 Competences: Competences;
-OriginalCv: string;
+
 }
 export interface CandidateDetails {
 FirstName: string;

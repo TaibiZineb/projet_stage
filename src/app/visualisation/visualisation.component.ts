@@ -55,23 +55,27 @@ export class VisualisationComponent implements OnInit{
     Competences: {
       TopSkills: [],
     },
-    OriginalCv: '',
+  
   };
   ngOnInit(): void {
     
     this.route.queryParams.subscribe(async params => {
       this.fileName = params['fileName'];
+        console.log('File name:', this.fileName);
       const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
+        console.log('Selected file:', file);
         try {
           const base64File = await this.cvParserService.encodeFileToBase64(file);
+          console.log('Base64 encoded file:', base64File);
           const extractedData = await this.cvParserService.parseResume(base64File);
-  
+          console.log('Extracted data:', extractedData);
           if (extractedData && extractedData.historiques && extractedData.historiques.Position) {
             console.log('Extracted data:', extractedData);
-             // Vérifier les données extraites
-            this.initialization(extractedData);
+            const resume =this.cvParserService.fromSovren(extractedData);
+            console.log('resume Object:', resume);
+            this.initialization(resume);
           } else {
             console.error('Extracted data is missing required properties.');
           }

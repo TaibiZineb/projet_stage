@@ -4,8 +4,6 @@ import { createClient } from '@supabase/supabase-js';
 import { AppUser, CV,Competence, Resume } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -121,14 +119,7 @@ export class CvParserService {
     });
   }
   
-  async parseCVContent(base64File: string): Promise<any>{
-    const parsedDetails = {
-      jobPosition: 'Poste extrait ttyy',
-      Nom_Candidat : 'Nom du candidat extrait',
-      candidateEmail:'',
-    };
-    return parsedDetails;
-  }
+ 
   async deleteCV(cvId: number): Promise<void> {
     try {
       const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
@@ -175,7 +166,24 @@ export class CvParserService {
     }
   }
 
-  fromSovren = async (resume: Resume, data: any) => {
+  fromSovren = async ( data: any) => {
+    
+    const resume: Resume= {
+      CandidateDetails: {
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        role: "",
+        position:'relative',
+        telephone: "",
+        Anneesexperience: "",
+      },
+      historiques: { Position: [] },
+      Educations: { Education: [] },
+      Langues: { Langue: [] },
+      certifications: { Certification: [] },
+      Competences: { TopSkills: [] },
+    }
     resume.CandidateDetails.FirstName =
         data.ContactInformation?.CandidateName?.GivenName || "";
     resume.CandidateDetails.LastName =
@@ -236,7 +244,7 @@ export class CvParserService {
             })
         );
     resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
-  
+  return resume;
 
   };
   getTopSkills = (data: any) => {
