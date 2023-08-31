@@ -82,36 +82,15 @@ TopSkills: Competence[];
 export interface Competence {
 titre_comp: string;
 }
-
 export interface CV{
 id_CV: number;
 creatAt: Date;
 createdBy: string;
 data: string; 
 jobPosition: string;
-Nom_Candidat: string;
+Nom_Candidat : string;
 originalCV: string;
 idworkspace: number; 
 designationStatus: string;
 designationTemplate: string;
-}
-export interface ParsedResume{
-  Educations: string;
-  candidateName: any;
-  firstName: string;
-  lastName: string;
-  candidateEmail: string;
-  candidateNum:string;
-  role?:string;
-  jobposition:string;
-  competences: string;
-  postalAddress: string,
-  titre_certificat:string,
-  DateCert?:string,
-  certifications: string[],
-  skills:string,
-  Langues:string,
-  historiques:string [],
-  technicalSkills:string[],
-  softSkills:string[]
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { AppUser, CV,Competence,ParsedResume, Resume } from '../model/user.model';
+import { AppUser, CV,Competence, Resume } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
 
@@ -98,17 +98,17 @@ export class CvParserService {
       console.error('L\'utilisateur n\'a pas d\'espace de travail associé.');
       return;
     }
-    const parsedResume = await this.parseResume(base64File);
-    console.log('Données du CV analysé:', JSON.stringify(parsedResume));
+    const extractedData= await this.parseResume(base64File);
+    console.log('Données du CV analysé:', JSON.stringify(extractedData));
   
     const cvDetails = {
       id_CV: Date.now(),
       creatAt: new Date(),
       createdBy: `${user.prenom} ${user.nom}`,
       data: base64File,
-      jobPosition: parsedResume.jobPosition,
-      candidateName: parsedResume.candidateName,
-      candidateEmail: parsedResume.candidateEmail,
+      jobPosition: extractedData.jobPosition,
+      Nom_Candidat : `${extractedData.FirstName} ${extractedData.LastName}`,
+      candidateEmail: extractedData.candidateEmail,
       originalCV: file.name,
       idworkspace: userWorkspace.idWorkspace,
       designationStatus: '',
@@ -124,7 +124,7 @@ export class CvParserService {
   async parseCVContent(base64File: string): Promise<any>{
     const parsedDetails = {
       jobPosition: 'Poste extrait ttyy',
-      candidateName: 'Nom du candidat extrait',
+      Nom_Candidat : 'Nom du candidat extrait',
       candidateEmail:'',
     };
     return parsedDetails;
@@ -148,8 +148,6 @@ export class CvParserService {
       throw error;
     }
   }
-  
- 
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 
@@ -177,7 +175,7 @@ export class CvParserService {
     }
   }
 
-fromSovren = async (resume: Resume, data: any) => {
+  fromSovren = async (resume: Resume, data: any) => {
     resume.CandidateDetails.FirstName =
         data.ContactInformation?.CandidateName?.GivenName || "";
     resume.CandidateDetails.LastName =
@@ -209,9 +207,8 @@ fromSovren = async (resume: Resume, data: any) => {
                     : "",
             })
         );
-    data.EmploymentHistory &&
-        data.EmploymentHistory.Positions &&
-        data.EmploymentHistory.Positions.map((pos: any) =>
+        if (data.historiques && data.historiques.Position) {
+          data.historiques.Position.map((pos: any) =>
             resume.historiques.Position.push({
               Nomentreprise: pos?.Employer?.Name?.Normalized || "",
               Intituleposte: pos?.JopTitle?.Normalized || "",
@@ -219,7 +216,11 @@ fromSovren = async (resume: Resume, data: any) => {
               Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
               Description: pos?.Description || "",
             })
-        );
+          );
+        } else {
+          console.log('Les données ne contiennent pas de position historique.');
+        }
+      
     data.Certifications &&
         data.Certifications.map((cer: any) =>
             resume.certifications.Certification.push({

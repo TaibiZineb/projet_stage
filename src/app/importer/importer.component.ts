@@ -45,7 +45,7 @@ export class ImporterComponent implements OnInit {
           createdBy: `${user.prenom} ${user.nom}`,
           data: base64File,
           jobPosition: extractedData.jobposition,
-          Nom_Candidat: extractedData.candidateName,
+          Nom_Candidat: `${extractedData.FirstName} ${extractedData.LastName}`,
           originalCV: file.name,
           idworkspace: userWorkspace.idWorkspace,
           designationStatus: 'Valide',
@@ -80,14 +80,13 @@ export class ImporterComponent implements OnInit {
         console.error('User has no associated workspace.');
         return;
       }
-      const parsedResume = await this.parseResume(base64File);
       const cvDetails = {
         id_CV: Date.now(),
         creatAt: new Date(),
         createdBy: `${user.prenom} ${user.nom}`,
         data: base64File,
         jobPosition: 'Stage',
-        Nom_Candidat: parsedResume.candidateName, 
+        Nom_Candidat : `${extractedData.FirstName} ${extractedData.LastName}`, 
         originalCV: file.name,
         idworkspace: workspace.idWorkspace,
         designationStatus: 'Valide',
@@ -118,15 +117,5 @@ export class ImporterComponent implements OnInit {
       this.uploadCVAndAddToDatabase(file);
     }
   }
-  async uploadCVAndExtractData(file: File) {
-    try {
-      const base64File = await this.cvParserService.encodeFileToBase64(file);
-      console.log('Base64 encoded file:', base64File);
-      const extractedData = await this.parseResume(base64File); 
-      console.log('Extracted data:', extractedData);
 
-    } catch (error) {
-      console.error('Error uploading and extracting CV:', error);
-    }
-  }
 }
