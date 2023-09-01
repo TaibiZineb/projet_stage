@@ -62,14 +62,13 @@ export class ImporterComponent implements OnInit {
       // Handle case where no files are selected
     }
   }
-  
   async uploadCVAndAddToDatabase(file: File) {
     try {
       console.log('Uploading and extracting data from CV:', file.name);
       const base64File = await this.cvParserService.encodeFileToBase64(file);
       console.log('Base64 encoded file:', base64File);
       const extractedData = await this.parseResume(base64File); 
-      console.log('Extracted data:', extractedData);
+      console.log('Données extraites du CV :', extractedData);
       const user = await this.supabaseAuth.getCurrentUser().toPromise();
       if (!user) {
         console.error('No user is currently logged in.');
@@ -97,7 +96,7 @@ export class ImporterComponent implements OnInit {
         queryParams: { fileName: file.name }
       });
     } catch (error) {
-      console.error('Error uploading CV and adding to Supabase:', error);
+      console.error('Erreur lors de l\'extraction du CV :', error);
     }
   }
   async parseResume(base64File: string): Promise<any> {
@@ -109,7 +108,6 @@ export class ImporterComponent implements OnInit {
       throw error;
     }
   }
-  
   handleFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -117,5 +115,4 @@ export class ImporterComponent implements OnInit {
       this.uploadCVAndAddToDatabase(file);
     }
   }
-
 }

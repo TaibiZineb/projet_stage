@@ -17,9 +17,7 @@ export class CvParserService {
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
-
    }
-
   async addCV(cvDetails: any) {
     try {
       console.log('Détails du CV à insérer :', cvDetails);
@@ -56,10 +54,19 @@ export class CvParserService {
       const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Sovren-AccountId': '17097504', 'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
-        body: JSON.stringify({ DocumentAsBase64String: base64File, DocumentLastModified: (new Date()).toISOString().substring(0, 10)}) }) 
-        const data = await response.json()  
-        return data.Value?.ResumeData; } 
-        catch (error) { console.log(`error when parseResume: ${error}`); return "Something went wrong";    }
+        body: JSON.stringify({ 
+          DocumentAsBase64String: base64File,
+          DocumentLastModified: (new Date()).toISOString().substring(0, 10)
+        }) 
+      }) 
+      const data = await response.json();
+      console.log('Données extraites du CV :', data);
+      return data.Value?.ResumeData; 
+    } 
+    catch (error) { 
+      console.log(`error when parseResume: ${error}`); 
+      return "Something went wrong";
+    }
   }
   async readURL(input: any, user: AppUser, workspace: any) {
     if (input.files && input.files[0]) {
@@ -97,7 +104,8 @@ export class CvParserService {
       return;
     }
     const extractedData= await this.parseResume(base64File);
-    console.log('Données du CV analysé:', JSON.stringify(extractedData));
+    //console.log('Données du CV analysé:', JSON.stringify(extractedData));
+    console.log('Données du CV analysé extractedData:', extractedData);
   
     const cvDetails = {
       id_CV: Date.now(),
@@ -118,8 +126,6 @@ export class CvParserService {
       queryParams: { fileName: file.name }
     });
   }
-  
- 
   async deleteCV(cvId: number): Promise<void> {
     try {
       const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
@@ -167,7 +173,6 @@ export class CvParserService {
   }
 
   fromSovren = async ( data: any) => {
-    
     const resume: Resume= {
       CandidateDetails: {
         FirstName: "",
@@ -184,68 +189,51 @@ export class CvParserService {
       certifications: { Certification: [] },
       Competences: { TopSkills: [] },
     }
-    resume.CandidateDetails.FirstName =
-        data.ContactInformation?.CandidateName?.GivenName || "";
-    resume.CandidateDetails.LastName =
-        data.ContactInformation?.CandidateName?.FamilyName || "";
-    resume.CandidateDetails.Email =
-        data.ContactInformation?.EmailAddresses?.[0]?.toString() || "";
-    resume.CandidateDetails.telephone =
-        data.ContactInformation?.Telephones?.[0]?.Normalized || "";
+    resume.CandidateDetails.FirstName = data.ContactInformation?.CandidateName?.GivenName || "";
+    resume.CandidateDetails.LastName = data.ContactInformation?.CandidateName?.FamilyName || "";
+    resume.CandidateDetails.Email = data.ContactInformation?.EmailAddresses?.[0]?.toString() || "";
+    resume.CandidateDetails.telephone = data.ContactInformation?.Telephones?.[0]?.Normalized || "";
     resume.CandidateDetails.role = "";
-    resume.CandidateDetails.Anneesexperience =
-        (data.EmploymentHistory?.ExperienceSummary?.MonthsOfWorkExperience || " ") +
+    resume.CandidateDetails.Anneesexperience = (data.EmploymentHistory?.ExperienceSummary?.MonthsOfWorkExperience || " ") +
         " months";
-    data.Education &&
-        data.Education.EducationDetails &&
-        data.Education.EducationDetails.map((edu: any) =>
-            resume.Educations.Education.push({
-              Nom_ecole: edu?.SchoolName?.Normalized || "",
-                Diplome: edu?.Degree?.Type || "",
-                VilleE: "",
-                DatedebutF: edu.LastEducationDate
-                    ? edu.LastEducationDate.isCurrentDate
-                        ? "Present"
-                        : edu.LastEducationDate.Date
-                    : "",
-                DatefinF: edu.LastEducationDate
-                    ? edu.LastEducationDate.isCurrentDate
-                        ? "Present"
-                        : edu.LastEducationDate.Date
-                    : "",
-            })
-        );
-        if (data.historiques && data.historiques.Position) {
-          data.historiques.Position.map((pos: any) =>
-            resume.historiques.Position.push({
-              Nomentreprise: pos?.Employer?.Name?.Normalized || "",
-              Intituleposte: pos?.JopTitle?.Normalized || "",
-              Datedebut: pos?.StartDate?.Date || "",
-              Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
-              Description: pos?.Description || "",
-            })
-          );
-        } else {
-          console.log('Les données ne contiennent pas de position historique.');
-        }
-      
-    data.Certifications &&
-        data.Certifications.map((cer: any) =>
-            resume.certifications.Certification.push({
-              titre_certificat: cer?.Name || "",
-              DateCert: "",
-            })
-        );
-    data.LanguageCompetencies &&
-        data.LanguageCompetencies.map((lan: any) =>
-            resume.Langues.Langue.push({
-              titre_langue: lan?.Language || "",
-              niveaulang: "Proficiant/Fluent",
-            })
-        );
+    data.Education && data.Education.EducationDetails && data.Education.EducationDetails.map((edu: any) =>
+      resume.Educations.Education.push({
+        Nom_ecole: edu?.SchoolName?.Normalized || "",
+        Diplome: edu?.Degree?.Type || "",
+        VilleE: "",
+        DatedebutF: edu.LastEducationDate? edu.LastEducationDate.isCurrentDate? "Present": edu.LastEducationDate.Date: "",
+        DatefinF: edu.LastEducationDate? edu.LastEducationDate.isCurrentDate ? "Present": edu.LastEducationDate.Date: "",
+      })
+    );
+    if (data.EmploymentHistor && data.EmploymentHistor.Position) {
+      data.EmploymentHistor.Position.map((pos: any) =>
+        resume.historiques.Position.push({
+          Nomentreprise: pos?.Employer?.Name?.Normalized || "",
+          Intituleposte: pos?.JopTitle?.Normalized || "",
+          Datedebut: pos?.StartDate?.Date || "",
+          Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
+          Description: pos?.Description || "",
+        })
+      );
+    } else {
+      console.log('Les données ne contiennent pas de position historique.');
+    }
+    data.Certifications && data.Certifications.map((cer: any) =>
+      resume.certifications.Certification.push({
+        titre_certificat: cer?.Name || "",
+        DateCert: "",
+      })
+    );
+    data.LanguageCompetencies && data.LanguageCompetencies.map((lan: any) =>
+      resume.Langues.Langue.push({
+        titre_langue: lan?.Language || "",
+        niveaulang: "Proficiant/Fluent",
+      })
+    );
     resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
-  return resume;
-
+    console.log('Données extraites du CV Resume:', resume);
+    return resume;
+    
   };
   getTopSkills = (data: any) => {
     const skills =
@@ -260,5 +248,4 @@ export class CvParserService {
         ?.map((skill: any) => ({ Name: skill?.Name })) || [];
     return skills as Competence[];
   };
-
 }

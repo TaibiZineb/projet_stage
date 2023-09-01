@@ -30,7 +30,6 @@ export class VisualisationComponent implements OnInit{
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.dateFinValues = ['', ''];
-    
   }
   resume: Resume = {
     CandidateDetails: {
@@ -58,7 +57,6 @@ export class VisualisationComponent implements OnInit{
   
   };
   ngOnInit(): void {
-    
     this.route.queryParams.subscribe(async params => {
       this.fileName = params['fileName'];
         console.log('File name:', this.fileName);
@@ -79,7 +77,6 @@ export class VisualisationComponent implements OnInit{
           } else {
             console.error('Extracted data is missing required properties.');
           }
-  
         } catch (error) {
           console.error('Error during file encoding or parsing:', error);
         }
