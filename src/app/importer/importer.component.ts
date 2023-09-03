@@ -45,7 +45,7 @@ export class ImporterComponent implements OnInit {
           createdBy: `${user.prenom} ${user.nom}`,
           data: base64File,
           jobPosition: extractedData.jobposition,
-          Nom_Candidat: extractedData.candidateName,
+          Nom_Candidat: `${extractedData.FirstName} ${extractedData.LastName}`,
           originalCV: file.name,
           idworkspace: userWorkspace.idWorkspace,
           designationStatus: 'Valide',
@@ -62,14 +62,13 @@ export class ImporterComponent implements OnInit {
       // Handle case where no files are selected
     }
   }
-  
   async uploadCVAndAddToDatabase(file: File) {
     try {
       console.log('Uploading and extracting data from CV:', file.name);
       const base64File = await this.cvParserService.encodeFileToBase64(file);
       console.log('Base64 encoded file:', base64File);
       const extractedData = await this.parseResume(base64File); 
-      console.log('Extracted data:', extractedData);
+      console.log('Données extraites du CV :', extractedData);
       const user = await this.supabaseAuth.getCurrentUser().toPromise();
       if (!user) {
         console.error('No user is currently logged in.');
@@ -80,14 +79,13 @@ export class ImporterComponent implements OnInit {
         console.error('User has no associated workspace.');
         return;
       }
-      const parsedResume = await this.parseResume(base64File);
       const cvDetails = {
         id_CV: Date.now(),
         creatAt: new Date(),
         createdBy: `${user.prenom} ${user.nom}`,
         data: base64File,
         jobPosition: 'Stage',
-        Nom_Candidat: parsedResume.candidateName, 
+        Nom_Candidat : `${extractedData.FirstName} ${extractedData.LastName}`, 
         originalCV: file.name,
         idworkspace: workspace.idWorkspace,
         designationStatus: 'Valide',
@@ -98,7 +96,7 @@ export class ImporterComponent implements OnInit {
         queryParams: { fileName: file.name }
       });
     } catch (error) {
-      console.error('Error uploading CV and adding to Supabase:', error);
+      console.error('Erreur lors de l\'extraction du CV :', error);
     }
   }
   async parseResume(base64File: string): Promise<any> {
@@ -110,23 +108,11 @@ export class ImporterComponent implements OnInit {
       throw error;
     }
   }
-  
   handleFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       console.log('File selected:', file.name);
       this.uploadCVAndAddToDatabase(file);
-    }
-  }
-  async uploadCVAndExtractData(file: File) {
-    try {
-      const base64File = await this.cvParserService.encodeFileToBase64(file);
-      console.log('Base64 encoded file:', base64File);
-      const extractedData = await this.parseResume(base64File); 
-      console.log('Extracted data:', extractedData);
-
-    } catch (error) {
-      console.error('Error uploading and extracting CV:', error);
     }
   }
 }

@@ -1,8 +1,7 @@
 import { Component,OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
-import { Resume } from'../model/user.model'; 
-import { data } from '../model/extractedData';
+import { Resume} from'../model/user.model'; 
 import { ActivatedRoute } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 
@@ -25,7 +24,6 @@ export class VisualisationComponent implements OnInit{
   dateFinValueseducations: string[] = [];
   showSubmittedData: boolean = false;
   fileName: string = '';
-  parsedResume: string = '';
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private cvParserService: CvParserService ){
@@ -33,7 +31,39 @@ export class VisualisationComponent implements OnInit{
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     this.dateFinValues = ['', ''];
-    
+    this.visualisationForm = this.formBuilder.group({
+      CandidateDetails: this.formBuilder.group({
+        FirstName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+        LastName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+        Email: ['',[Validators.required, Validators.email]],
+        telephone: [''],
+        role: ['',Validators.required],
+        Anneesexperience: ['']
+      }),
+      historique: this.formBuilder.array([]),
+      Educations: this.formBuilder.array([]),
+      Competences: this.formBuilder.array([]),
+      Langues: this.formBuilder.array([]),
+      Certificats: this.formBuilder.array([]),
+      historiques: this.formBuilder.group({
+        Position: this.formBuilder.array([]) 
+      }),
+      Nomentreprise: ['',Validators.required,],
+      Intituleposte: ['',Validators.required,],
+      Datedebut: ['',Validators.required],
+      Datefin: [''],
+      Description: [''],
+      present1: [false],
+      Nom_ecole:['',Validators.required],
+      Diplome:['',Validators.required],
+      VilleE:[''],
+      DatedebutF:[''],
+      DatefinF:[''],
+      titre_comp:[''],
+      titre_certificat:['',Validators.required],
+      DateCert:[''],
+
+    });
   }
   resume: Resume = {
     CandidateDetails: {
@@ -58,140 +88,156 @@ export class VisualisationComponent implements OnInit{
     Competences: {
       TopSkills: [],
     },
-    OriginalCv: '',
+  
   };
   ngOnInit(): void {
-    console.log('Données depuis extractedData.ts :', data);
-    this.route.queryParams.subscribe(async params => {
+    this.route.queryParams.subscribe(async (params) => {
       this.fileName = params['fileName'];
+      console.log('File name:', this.fileName);
       const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
+        console.log('Selected file:', file);
         try {
           const base64File = await this.cvParserService.encodeFileToBase64(file);
-          this.parsedResume = await this.cvParserService.parseResume(base64File);
+          console.log('Base64 encoded file:', base64File);
+          const extractedData = await this.cvParserService.parseResume(base64File);
+          console.log('Extracted data:', extractedData);
+          console.log('Contact Information:', extractedData?.ContactInformation);
+          console.log('Employment History:', extractedData?.EmploymentHistory);
+          console.log('Skills Data:', extractedData?.SkillsData);
+          if (extractedData && extractedData.historiques && extractedData.historiques.Position) {
+            const resume = this.cvParserService.fromSovren(extractedData);
+            console.log('resume Object:', resume);
+            this.initialization(resume);
+          } else {
+            console.warn('Les données ne contiennent pas d\'historique de poste, mais nous allons quand même initialiser le formulaire avec les autres données.');
+            const resume = this.cvParserService.fromSovren(extractedData);
+            console.log('resume Object:', resume);
+            this.initialization(resume);
+          }
+          
         } catch (error) {
-          console.error('Erreur lors de l\'encodage ou de l\'analyse du fichier :', error);
+          console.error('Error during file encoding or parsing:', error);
         }
       }
     });
-    this.cvParserService.parseResumeAndAddCV('base64File').then(parsedData => {
-      this.visualisationForm.patchValue({
-        candidateName: parsedData.candidateName,
-        jobPosition: parsedData.jobPosition,
-        candidateEmail: parsedData.candidateEmail
-
-      });
-    }).catch(error => {
-      console.error('Erreur lors de l\'extraction et de l\'ajout du CV :', error);
-    });
-    const positions = data.historiques.Position;
-    this.visualisationForm = this.formBuilder.group({
-      CandidateDetails: this.formBuilder.group({
-        FirstName: [data.candidateDetails.FirstName,[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-        LastName: [data.candidateDetails.LastName,[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-        Email: [data.candidateDetails.Email,[Validators.required, Validators.email]],
-        telephone: [data.candidateDetails.telephone],
-        role: [data.candidateDetails.role,Validators.required],
-        Anneesexperience: [data.candidateDetails.Anneesexperience]
-      }),
-      historiques: this.formBuilder.group({
-        Position: this.formBuilder.array([]) 
-      }),
-      Nomentreprise: [data.historiques.Position[0].Nomentreprise,Validators.required,],
-      Intituleposte: [data.historiques.Position[0].Intituleposte,Validators.required,],
-      Datedebut: [data.historiques.Position[0].Datedebut,Validators.required],
-      Datefin: [data.historiques.Position[0].Datefin],
-      Description: [data.historiques.Position[0].Description],
-      present1: [false],
-      Nom_ecole:[data.Educations.Education[0].Nom_ecole,Validators.required],
-      Diplome:[data.Educations.Education[0].Diplome,Validators.required],
-      VilleE:[data.Educations.Education[0].VilleE],
-      DatedebutF:[data.Educations.Education[0]["DatedebutF"]],
-      DatefinF:[data.Educations.Education[0]["DatefinF"]],
-      titre_comp:[data.Competences.TopSkills[0].titre_comp],
-      titre_certificat:[data.Certifications.Certification[0].titre_certificat,Validators.required],
-      DateCert:[data.Certifications.Certification[0].DateCert],
-      titre_langue:[data.Langues.Langue[0].titre_langue,Validators.required],
-      niveaulang:[data.Langues.Langue[0].niveaulang],
-      present2: [false],
-      historique: this.formBuilder.array([this.createHistoriqueSection(data.historiques.Position[0])]),
-      Educations:  this.formBuilder.array([this.createEducationsSection(data.Educations.Education[0])]),
-      Competences: this.formBuilder.array([this.createCompetencesSection(data.Competences.TopSkills[0].titre_comp)]),
-      Langues:this.formBuilder.array([this.createLanguagesSection(data.Langues.Langue[0])]),
-      Certificats:this.formBuilder.array([this.createCertificatsSection(data.Certifications.Certification[0])]),
-    });
+  }
+  initialization(extractedData: any){
+    this.initializeFormWithCVData(extractedData);
+    this.addFormControlsToArrays(extractedData);
+    console.log(typeof this.visualisationForm);
     this.visualisationForm.get('present2')?.valueChanges.subscribe((value) => {
       this.updateEndDateOptions('DatefinF', 2);
     });
-    this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
+      this.visualisationForm.get('present1')?.valueChanges.subscribe((value) => {
       this.updateEndDateOptions('Datefin', 1);
     });
-    const historiquesArray = this.visualisationForm.get('historique') as FormArray;
-    for (let i = 1; i < data.historiques.Position.length; i++) {
-      const historiqueSection = this.createHistoriqueSection(data.historiques.Position[i]);
-      historiquesArray.push(historiqueSection);
-    }
-    const educationsArray = this.visualisationForm.get('Educations') as FormArray;
-    for (let i = 1; i < data.Educations.Education.length; i++) {
-      const educationSection = this.createEducationsSection(data.Educations.Education[i]);
-      educationsArray.push(educationSection);
-    }
-    const CompetencesArray = this.visualisationForm.get('Competences') as FormArray;
-    for (let i = 1; i < data.Competences.TopSkills.length; i++) { 
-      const competenceSection = this.createCompetencesSection(data.Competences.TopSkills[i].titre_comp);
-      CompetencesArray.push(competenceSection);
-    }
-    const languesArray = this.visualisationForm.get('Langues') as FormArray;
-    for (let i = 1; i  < data.Langues.Langue.length; i++){
-      const langueSection = this.createLanguagesSection(data.Langues.Langue[i]);
-      languesArray.push(langueSection);
-    }
-    const certificatsArray = this.visualisationForm.get('Certificats') as FormArray;
-    for(let i = 1;i < data.Certifications.Certification.length; i++ ){
-      const certificatSection = this.createCertificatsSection(data.Certifications.Certification[i]);
-      certificatsArray.push(certificatSection);
-    }
-    console.log('Valeurs initiales du formulaire :', this.visualisationForm.value);
-    this.visualisationForm.get('historique')?.value.forEach((position: any, index: number) => {
-      this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? 'jusqu\'à présent' : position.Datefin;
-    });
-    this.visualisationForm.get('Educations')?.value.forEach((education: any, index: number) => {
-      this.dateFinValueseducations[index] = this.isDateFinCheckedForEducations(2) ? 'jusqu\'à présent' : education.DatefinF;
-    });
-    this.dateFinValues[0] = this.isDateFinCheckedForHistorique(1) ? "jusqu'à présent" : ''; 
-    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
-    historiqueArray.controls.forEach((control, index) => {
-      const dateFinControl = control.get('Datefin');
-      if (dateFinControl) {
-        this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? "jusqu'à présent" : dateFinControl.value;
-      }
-    });
-    educationsArray.controls.forEach((control, index) => {
-      const dateFinFControl = control.get('DatefinF');
-      if (dateFinFControl) {
-        this.dateFinValueseducations[index] = this.isDateFinCheckedForEducations(2) ? "jusqu'à présent" : dateFinFControl.value;
-      }
-    });
-    this.submittedData = this.visualisationForm.value;
-    this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
-    this.resume.historiques.Position = this.visualisationForm.get('historique')?.value;
-    this.resume.Educations.Education = this.visualisationForm.get('Educations')?.value;
-    this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
-    this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
-    this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
-    console.log('Données finales du formulaire :', this.submittedData);
-    console.log('Resume:', this.resume);
-    this.isDataSubmitted = true;
-    this.isDataSubmitted = true;
-    this.showSubmittedData = true;
+   
+    this.updateInitialDateValues('historique', 'Datefin', this.dateFinValuesHistorique);
+    this.updateInitialDateValues('Educations', 'DatefinF', this.dateFinValueseducations);
   }
-  onSubmit(): void {
-    if (this.visualisationForm.invalid) {
-      this.markFormGroupTouched(this.visualisationForm);
-      alert('Veuillez corriger les erreurs dans le formulaire avant de soumettre.');
+  updateInitialDateValues(arrayName: string, controlName: string, dateValues: string[]) {
+    const formArray = this.visualisationForm.get(arrayName) as FormArray;
+    formArray.value.forEach((item: any, index: number) => {
+      const dateControl = formArray.at(index).get(controlName);
+      if (dateControl) {
+        dateValues[index] = this.isDateFinChecked(index, arrayName)
+          ? 'jusqu\'à présent'
+          : dateControl.value;
+      }
+    });
+  }
+  isDateFinChecked(index: number, arrayName: string): boolean {
+    return this.visualisationForm.get(`${arrayName}.${index}.DateFinChecked`)?.value;
+  }
+  initializeFormWithCVData(extractedData: any) {
+    console.log('Creating form controls with extracted data:', extractedData);
+    if (!extractedData || !extractedData.historiques || !extractedData.historiques.Position) {
+      console.error('Extracted data is missing required properties.');
       return;
     }
+    const historiques = extractedData.historiques;
+  
+    if (historiques && historiques.Position && historiques.Position.length > 0) {
+      const positions = historiques.Positions;
+      const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+      positions.forEach((position: any) => {
+        const historiqueSection = this.createHistoriqueSection(position);
+        historiqueArray.push(historiqueSection);
+      });
+    } else {
+      console.warn('Extracted data is missing employment history or positions.');
+    }
+  
+    const candidateDetails = extractedData.ContactInformation.CandidateName;
+    
+    const educations = extractedData.Education.Education;
+    const Nomentreprise = extractedData.historiques.Position.Nomentreprise;
+    const Nom_ecole = extractedData.Educations.Education.Nom_ecole;
+    const competences = extractedData.SkillsData;
+    const langues = extractedData.Langues.Langue;
+    const certifications = extractedData.certifications.Certification;
+  
+    this.visualisationForm.get('CandidateDetails.FirstName')?.setValue(candidateDetails.FirstName);
+    this.visualisationForm.get('CandidateDetails.LastName')?.setValue(candidateDetails.LastName);
+    this.visualisationForm.get('CandidateDetails.Email')?.setValue(candidateDetails.Email);
+    const historiquesArray = this.visualisationForm.get('historique') as FormArray;
+    if (historiques) {
+      historiques.forEach((historique: any) => {
+        historiquesArray.push(this.createHistoriqueSection(historique));
+      });
+    }
+    this.visualisationForm.get('Nomentreprise')?.setValue(Nomentreprise);
+  }
+  
+  addFormControlsToArrays(extractedData: any): void{
+    console.log('Adding form controls to arrays with extracted data:', extractedData);
+    const historiquesArray = this.visualisationForm.get('historique.Position') as FormArray;
+    const historiques = extractedData.historiques.Position;
+    if (historiques) {
+      historiques.forEach((historique: any) => {
+        const historiqueSection = this.createHistoriqueSection(historique);
+        historiquesArray.push(historiqueSection);
+      });
+    }
+    const educationsArray = this.visualisationForm.get('Educations.Education') as FormArray;
+    const educations = extractedData.Educations.Education;
+  if (educations) {
+    educations.forEach((education: any) => {
+      const educationSection = this.createEducationsSection(education);
+      educationsArray.push(educationSection);
+    });
+  }
+  const competencesArray = this.visualisationForm.get('Competences') as FormArray;
+  const competences = extractedData.Competences.TopSkills;
+  if (competences) {
+    competences.forEach((competence: any) => {
+      const competenceSection = this.createCompetencesSection(competence.titre_comp);
+      competencesArray.push(competenceSection);
+    });
+  }
+  const languesArray = this.visualisationForm.get('Langues') as FormArray;
+  const langues = extractedData.Langues.Langue;
+  if (langues) {
+    langues.forEach((langue: any) => {
+      const langueSection = this.createLanguagesSection(langue);
+      languesArray.push(langueSection);
+    });
+  }
+    const certificatsArray = this.visualisationForm.get('Certificats') as FormArray;
+    const certificats = extractedData.certifications.Certification;
+    if (certificats) {
+      certificats.forEach((certificat: any) => {
+        const certificatSection = this.createCertificatsSection(certificat);
+        certificatsArray.push(certificatSection);
+      });
+    }
+    
+  }
+  onSubmit(): void {
+    console.log('Vérification du formulaire soumis :', this.visualisationForm);
+
     this.visualisationForm.get('historique')?.value.forEach((position: any, index: number) => {
       this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? 'jusqu\'à présent' : position.Datefin;
     });
@@ -226,6 +272,11 @@ export class VisualisationComponent implements OnInit{
     this.isDataSubmitted = true;
     this.showSubmittedData = true;
   }
+  getHistoriqueControls(): AbstractControl[] {
+    const historiqueArray = this.visualisationForm.get('historique') as FormArray;
+    return historiqueArray.controls;
+  }
+
   onDateInput(event: Event, fieldName: string, section: number): void {
     console.log('Date input event:', event);
     const inputElement = event.target as HTMLInputElement;
@@ -282,11 +333,17 @@ export class VisualisationComponent implements OnInit{
   }
 
   isDateFinCheckedForEducations(section: number): boolean {
-    return this.EducationsFormArray.at(section).get('present2')?.value === true;
+    const educationFormArray = this.visualisationForm.get('Educations') as FormArray;
+    const control = educationFormArray.at(section)?.get('present2');
+    return control ? control.value === true : false;
   }
+  
   isDateFinCheckedForHistorique(section: number): boolean {
-    return this.historiqueFormArray.at(section).get('present1')?.value === true;
+    const historiqueFormArray = this.visualisationForm.get('historique') as FormArray;
+    const control = historiqueFormArray.at(section)?.get('present1');
+    return control ? control.value === true : false;
   }
+  
   isDateFinEducationDisabled(sectionIndex: number): boolean {
     const dateFinFControl = this.EducationsFormArray.at(sectionIndex).get('DatefinF');
     const present2Control = this.EducationsFormArray.at(sectionIndex).get('present2');
@@ -429,18 +486,6 @@ export class VisualisationComponent implements OnInit{
     const CertificatsControl = this.visualisationForm.get('Certificats') as FormArray;
     CertificatsControl.removeAt(index);
   }
-  markFormGroupTouched(formGroup: FormGroup | FormArray) {
-    Object.keys(formGroup.controls).forEach((key) => {
-      const control = formGroup.get(key);
-  
-      if (control instanceof FormGroup || control instanceof FormArray) {
-        this.markFormGroupTouched(control);
-      } else {
-        control?.markAsTouched();
-      }
-    });
-  }
-
   chunkArray(arr: any[], size: number) {
     const result = [];
     for (let i = 0; i < arr.length; i += size) {
@@ -448,7 +493,4 @@ export class VisualisationComponent implements OnInit{
     }
     return result;
   }
-
-  
-
-}
+} 
