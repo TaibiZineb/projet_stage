@@ -53,7 +53,9 @@ export class CvParserService {
     try {
       const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', { 
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Sovren-AccountId': '17097504', 'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
+        headers: { 'Content-Type': 'application/json',
+                   'Sovren-AccountId': '17097504',
+                    'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
         body: JSON.stringify({ 
           DocumentAsBase64String: base64File,
           DocumentLastModified: (new Date()).toISOString().substring(0, 10)
@@ -64,8 +66,8 @@ export class CvParserService {
       return data.Value?.ResumeData; 
     } 
     catch (error) { 
-      console.log(`error when parseResume: ${error}`); 
-      return "Something went wrong";
+      console.log('Erreur lors de la récupération des données du CV :', error); 
+      throw error;
     }
   }
   async readURL(input: any, user: AppUser, workspace: any) {
