@@ -349,10 +349,10 @@
                       <table class="table_class">
                         <tbody>
                           <!-- Top compétances -->
-                          <ng-container *ngIf="resume.Competences.TopSkills.length > 0">
+                          <ng-container *ngIf="resume.Skills .TopSkills.length > 0">
                             <table class="table_class table_container">
                               <tbody>
-                                <tr *ngFor="let topskillChunk of chunkArray(resume.Competences.TopSkills.slice(0, 4), 2)">
+                                <tr *ngFor="let topskillChunk of chunkArray(resume.Skills .TopSkills.slice(0, 4), 2)">
                                   <td *ngFor="let topskill of topskillChunk" class="w-1/2 text-center border-solid border-1 border-blue-500 py-2 px-4 mb-4 mt-4 text-blue-600">
                                     {{ topskill.titre_comp }}
                                   </td>
@@ -431,11 +431,11 @@
                             <td>
                               <table class="table_class">
                                 <tbody>
-                                  <ng-container *ngIf="resume.Competences.TopSkills.length > 0">
+                                  <ng-container *ngIf="resume.Skills .TopSkills.length > 0">
                                     <tr class="tr_title">
                                       <th class="th_title text-blue-500 text-xs uppercase">autres compétences</th>
                                     </tr>
-                                    <tr *ngFor="let topskill of resume.Competences.TopSkills; let innerIndex = index">
+                                    <tr *ngFor="let topskill of resume.Skills .TopSkills; let innerIndex = index">
                                       <td>
                                         <table class="table_class">
                                           <tbody>

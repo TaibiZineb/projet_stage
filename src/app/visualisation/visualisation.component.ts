@@ -79,7 +79,7 @@ export class VisualisationComponent implements OnInit{
       Langues: this.formBuilder.array([]),
       Certificats: this.formBuilder.array([]),
       EmploymentHistory: this.formBuilder.group({
-        Position: this.formBuilder.array([]) 
+        Positions: this.formBuilder.array([]) 
       }),
    
       Nom_ecole:['',Validators.required],
@@ -99,18 +99,15 @@ export class VisualisationComponent implements OnInit{
       LastName: '',
       Email: '',
       role: '',
-      position: 'relative'
+      Positions: 'relative'
     },
     EmploymentHistory: {Positions: []},
     Educations: { Education: [],},
     Langues: {Langue: [],},
-    certifications: {
-      Certification: [],
-    },
-    Competences: {
+    certifications: {Certification: [],},
+    Skills : {
       TopSkills: [],
     },
-  
   };
   ngOnInit(): void {
     this.route.queryParams.subscribe(async (params) => {
@@ -186,59 +183,54 @@ export class VisualisationComponent implements OnInit{
   }
   initializeFormWithCVData(extractedData: any) {
     console.log('Creating form controls with extracted data:', extractedData);
-    if (!extractedData || !extractedData.EmploymentHistory || !extractedData.EmploymentHistory.Positions) {
-      console.error('Extracted data is missing required properties.');
-      return;
-    }
-      // Vérifier si extractedData existe
+  
     if (!extractedData) {
       console.error('Extracted data is missing.');
       return;
     }
-
-  // Vérifier si extractedData.ContactInformation existe
-    if (!extractedData.ContactInformation) {
-      console.error('ContactInformation is missing.');
-      return;
-    }
-    if (!extractedData.ContactInformation.CandidateName) {
-      console.error('CandidateName is missing.');
-      return;
-    }
-    const EmploymentHistory = extractedData.EmploymentHistory;
   
-    if (extractedData && extractedData.EmploymentHistory) {
-      const positions = extractedData.EmploymentHistory.Positions;
-      const historiqueArray = this.visualisationForm.get('historiques') as FormArray;
-      positions.forEach((position: any) => {
-        const EmploymentHistoryection = this.createEmploymentHistoryection(position);
-        this.employmentHistoryData.Positions.push(EmploymentHistoryection);
-      });
-    } else {
-      console.warn('Les données ne contiennent pas d\'historique de poste.');
-    }
-    
-
-    const candidateDetails = extractedData.ContactInformation.CandidateName;
+    const candidateDetails = extractedData.ContactInformation?.CandidateName;
+    if (!candidateDetails || !candidateDetails.CandidateName || !candidateDetails.EmailAddresses) {
+      console.warn('CandidateDetails is missing or incomplete.');
+    }else {
+    const visualisationForm = this.visualisationForm;
     const FirstName = candidateDetails.GivenName;
     const LastName = candidateDetails.FamilyName;
-    const Email = extractedData.ContactInformation.EmailAddresses[0]; 
-    const educations = extractedData.Education.Education;
+    const Email = extractedData.ContactInformation.EmailAddresses?.[0] || '';
+
+    visualisationForm.get('CandidateDetails.FirstName')?.setValue(FirstName);
+    visualisationForm.get('CandidateDetails.LastName')?.setValue(LastName);
+    visualisationForm.get('CandidateDetails.Email')?.setValue(Email);
+  }
+  
+  const EmploymentHistory = extractedData.EmploymentHistory;
+  if (EmploymentHistory) {
+    let Positions = EmploymentHistory.Positions;
+    const historiqueArray = this.visualisationForm.get('historiques') as FormArray;
+  
+    const employmentHistorySection = this.createEmploymentHistoryection(EmploymentHistory);
+    historiqueArray.push(employmentHistorySection);
+  }
+    const educations = extractedData.Educations?.Education;
     const Nom_ecole = extractedData.Educations.Education.Nom_ecole;
     const competences = extractedData.SkillsData;
     const langues = extractedData.Langues.Langue;
     const certifications = extractedData.certifications.Certification;
   
-    this.visualisationForm.get('CandidateDetails.FirstName')?.setValue(FirstName);
-    this.visualisationForm.get('CandidateDetails.LastName')?.setValue(LastName);
-    this.visualisationForm.get('CandidateDetails.Email')?.setValue(Email);
-    const EmploymentHistoryArray = this.visualisationForm.get('historiques') as FormArray;
+    const visualisationForm = this.visualisationForm; 
+ 
+
+  
+    const EmploymentHistoryArray = visualisationForm.get('historiques') as FormArray;
     if (EmploymentHistory) {
       EmploymentHistory.forEach((historique: any) => {
         EmploymentHistoryArray.push(this.createEmploymentHistoryection(historique));
       });
     }
-    this.visualisationForm.get('Nomentreprise')?.setValue(extractedData.EmploymentHistory.Positions.Nomentreprise);
+  
+    const Nomentreprise = extractedData.EmploymentHistory?.Positions[0]?.Nomentreprise;
+    visualisationForm.get('Nomentreprise')?.setValue(Nomentreprise);
+    console.log('Visualisation Form Data:', this.visualisationForm.value);
   }
   addFormControlsToArrays(extractedData: any): void{
     this.addEmploymentHistoryToForm(extractedData);
@@ -247,19 +239,24 @@ export class VisualisationComponent implements OnInit{
     this.addLanguesToForm(extractedData);
     this.addCertificatsToForm(extractedData);
   }
- 
   addEmploymentHistoryToForm(extractedData: any): void {
-    const employmentHistory = extractedData.EmploymentHistory;
-    if (employmentHistory && employmentHistory.Positions) {
-      const positions = employmentHistory.Positions; 
-      const employmentHistoryArray = this.visualisationForm.get('EmploymentHistory.Positions') as FormArray; // Accédez au FormArray correct ici
-      positions.forEach((historique: any) => {
-        const employmentHistorySection = this.createEmploymentHistoryection(historique);
-        employmentHistoryArray.push(employmentHistorySection);
+    if (extractedData && extractedData.EmploymentHistory && extractedData.EmploymentHistory.Positions) {
+      const Positions = extractedData.EmploymentHistory.Positions;
+      const employmentHistoryArray = this.visualisationForm.get('EmploymentHistory.Positions') as FormArray;
+      
+      if (!employmentHistoryArray) {
+        this.visualisationForm.setControl('EmploymentHistory.Positions', this.formBuilder.array([]));
+      }
+      
+      Positions.forEach((Positions: any) => {
+        if (Positions && Positions.Nomentreprise) {
+          const employmentHistorySection = this.createEmploymentHistoryection(Positions);
+          employmentHistoryArray.push(employmentHistorySection);
+        }
       });
     }
   }
-  
+
   addEducationsToForm(extractedData: any): void {
     const educationsArray = this.visualisationForm.get('Educations.Education') as FormArray;
     const educations = extractedData.Educations;
@@ -271,40 +268,52 @@ export class VisualisationComponent implements OnInit{
     }
   }
   addCompetencesToForm(extractedData: any): void {
-    const competencesArray = this.visualisationForm.get('Competences') as FormArray;
-    const competences = extractedData.Competences;
-    if (competences && competences.TopSkills) {
-      competences.forEach((competence: any) => {
-        const competenceSection = this.createCompetencesSection(competence.titre_comp);
+    if (extractedData && extractedData.Skills && extractedData.Skills.TopSkills) {
+      const competencesArray = this.visualisationForm.get('Competences') as FormArray;
+      const topSkills = extractedData.Skills.TopSkills;
+    
+      // Assurez-vous que competencesArray est initialisé correctement
+      if (!competencesArray) {
+        this.visualisationForm.setControl('Competences', this.formBuilder.array([]));
+      }
+    
+      // Ajoutez les compétences au formulaire
+      topSkills.forEach((Skills: any) => {
+        const competenceSection = this.createCompetencesSection(Skills);
         competencesArray.push(competenceSection);
       });
+    } else {
+      console.warn('Skills.TopSkills n\'existe pas dans les données extraites.');
     }
   }
   addLanguesToForm(extractedData: any): void {
-    const languesArray = this.visualisationForm.get('Langues') as FormArray;
-    const langues = extractedData.Langues;
-    if (langues && langues.Langue) {
-      langues.forEach((langue: any) => {
-        const langueSection = this.createLanguagesSection(langue);
-        languesArray.push(langueSection);
+    const LanguesArray = this.visualisationForm.get('Langues') as FormArray;
+    const Langues = extractedData.Langues;
+    if (Array.isArray(Langues) && Langues.length > 0) {
+      Langues.forEach((Langues: any) => {
+        const langueSection = this.createLanguagesSection(Langues);
+        LanguesArray.push(langueSection);
       });
     }
   }
   addCertificatsToForm(extractedData: any): void {
     const certificatsArray = this.visualisationForm.get('Certificats') as FormArray;
     const certificats = extractedData.certifications;
-    if (certificats && certificats.Certification) {
+  
+    // Assurez-vous que certificats est un tableau avant d'essayer de l'itérer
+    if (Array.isArray(certificats) && certificats.length > 0) {
       certificats.forEach((certificat: any) => {
         const certificatSection = this.createCertificatsSection(certificat);
         certificatsArray.push(certificatSection);
       });
     }
   }
+  
   onSubmit(): void {
     console.log('Vérification du formulaire soumis :', this.visualisationForm);
 
-    this.visualisationForm.get('historiques')?.value.forEach((position: any, index: number) => {
-      this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? 'jusqu\'à présent' : position.Datefin;
+    this.visualisationForm.get('historiques')?.value.forEach((Positions: any, index: number) => {
+      this.dateFinValuesHistorique[index] = this.isDateFinCheckedForHistorique(1) ? 'jusqu\'à présent' : Positions.Datefin;
     });
     this.visualisationForm.get('Educations')?.value.forEach((education: any, index: number) => {
       this.dateFinValueseducations[index] = this.isDateFinCheckedForEducations(2) ? 'jusqu\'à présent' : education.DatefinF;
@@ -328,7 +337,7 @@ export class VisualisationComponent implements OnInit{
     this.resume.CandidateDetails = this.visualisationForm.get('CandidateDetails')?.value;
     this.resume.EmploymentHistory.Positions = this.visualisationForm.get('historiques')?.value;
     this.resume.Educations.Education = this.visualisationForm.get('Educations')?.value;
-    this.resume.Competences.TopSkills = this.visualisationForm.get('Competences')?.value;
+    this.resume.Skills .TopSkills = this.visualisationForm.get('Competences')?.value;
     this.resume.Langues.Langue = this.visualisationForm.get('Langues')?.value;
     this.resume.certifications.Certification = this.visualisationForm.get('Certificats')?.value;
     console.log('Final form data:', this.submittedData);
@@ -441,17 +450,17 @@ export class VisualisationComponent implements OnInit{
     const historiqueArray = this.visualisationForm.get('historiques') as FormArray;
     historiqueArray.push(this.createEmploymentHistoryection()); 
   }
-  createEmploymentHistoryection(position: any = {}): FormGroup {
-    const formattedDateDebut = this.formatDateToMonthYear(position.Datedebut) ;
-    const formattedDateFin = this.formatDateToMonthYear(position.Datefin);
-    const isPresent1 = position && position.Datefin === "jusqu'à présent";
+  createEmploymentHistoryection(Positions: any = {}): FormGroup {
+    const formattedDateDebut = this.formatDateToMonthYear(Positions.Datedebut) ;
+    const formattedDateFin = this.formatDateToMonthYear(Positions.Datefin);
+    const isPresent1 = Positions && Positions.Datefin === "jusqu'à présent";
     return this.formBuilder.group({
-      Nomentreprise: [position.Nomentreprise || '', Validators.required,],
-      Intituleposte: [position.Intituleposte || '',Validators.required,],
+      Nomentreprise: [Positions.Nomentreprise || '', Validators.required,],
+      Intituleposte: [Positions.Intituleposte || '',Validators.required,],
       Datedebut: [formattedDateDebut, Validators.required],
       Datefin: [isPresent1 ? "jusqu'à présent" : formattedDateFin],
       present1:[isPresent1],
-      Description: [position.Description || '']
+      Description: [Positions.Description || '']
     });
   }
   get historiqueFormArray(): FormArray {

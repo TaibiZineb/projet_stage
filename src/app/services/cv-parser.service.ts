@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { AppUser, CV,Competence, Resume } from '../model/user.model';
+import { AppUser, CV,Skills, Resume, SKill } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
 @Injectable({
@@ -179,7 +179,7 @@ export class CvParserService {
         LastName: "",
         Email: "",
         role: "",
-        position:'relative',
+        Positions:'relative',
         telephone: "",
         Anneesexperience: "",
       },
@@ -187,7 +187,7 @@ export class CvParserService {
       Educations: { Education: [] },
       Langues: { Langue: [] },
       certifications: { Certification: [] },
-      Competences: { TopSkills: [] },
+      Skills: { TopSkills: [] },
     }
     resume.CandidateDetails.FirstName = data.ContactInformation?.CandidateName?.GivenName || "";
     resume.CandidateDetails.LastName = data.ContactInformation?.CandidateName?.FamilyName || "";
@@ -231,7 +231,7 @@ export class CvParserService {
         niveaulang: "Proficiant/Fluent",
       })
     );
-    resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
+    resume.Skills.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
     console.log('Données extraites du CV Resume:', resume);
     return resume;
     
@@ -247,6 +247,6 @@ export class CvParserService {
         ?.sort((a: any, b: any) => b?.PercentOfOverall - a?.PercentOfOverall)
         ?.slice(0, 4)
         ?.map((skill: any) => ({ Name: skill?.Name })) || [];
-    return skills as Competence[];
+    return skills as SKill[];
   };
 }
