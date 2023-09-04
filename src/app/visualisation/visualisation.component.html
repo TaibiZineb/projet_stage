@@ -5,6 +5,9 @@
       <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/dashboard"><svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
        </a>
     </div>
+    <h2>Nom du fichier importé : {{ fileName }}</h2>
+    <h3>Contenu du CV analysé :</h3>
+    <pre>{{ extractedData }}</pre>
     <div class="flex flex-wrap">
       <div class="formVisualisation  w-full lg:w-1/2 mx-auto px-4 mb-6 relative">
         <div class="w-full bg-slate-100 p-4 mt-2">
@@ -18,13 +21,13 @@
               <!--Nom & Prenom-->
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstName" label="First Name" placeholder="Prenom" type="text" >
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* prenom</label><input id="firstName"  formControlName="FirstName" name="FirstName" label="First Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
                 
                   
                 </section>
                 <section class="w-full md:w-1/2 px-3" id="lastName" label="Last Name" placeholder="Last Name" type="text"   >
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">*nom</label>
-                  <input id="lastName"  formControlName="LastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                  <input id="lastName"  formControlName="LastName" name="LastName" label="Last Name" placeholder="Nom" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
                 
                 </section>
               </div>
@@ -32,51 +35,51 @@
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <section id="email" label="Email" placeholder="Email" type="text" value="">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* Email</label><input id="email" formControlName="Email" label="Email" placeholder="Email" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-emil">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">* Email</label><input id="email" formControlName="Email" name="Email" label="Email" placeholder="Email" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-emil">
                    
                   </section>
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-telephone">Téléphone</label>
-                  <input formControlName="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
+                  <input formControlName="telephone" name="telephone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="tel" placeholder="+212 66 666 66 66">
                 </section>
               </div>
               <!--rôle & Années d'expérience-->
               <div class="flex flex-wrap -mx-3 mb-6">
                 <section class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Rôle</label>
-                  <input formControlName="role" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-role" type="text" placeholder="Rôle">
+                  <input formControlName="role" name="role" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-role" type="text" placeholder="Rôle">
                 
                 </section>
                 <section class="w-full md:w-1/2 px-3">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-prenom">Années d'expérience</label>
-                  <input formControlName="Anneesexperience" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="text" placeholder="Années d'expérience">
+                  <input formControlName="Anneesexperience" name="Anneesexperience" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-telephone" type="text" placeholder="Années d'expérience">
                 </section>
               </div>
             </section>
             <!--Historique professionnel-->
-            <section class="Historique professionnel" formArrayName="historique">
+            <section class="Historique professionnel" formArrayName="historiques">
               <div class="flex flex-row">
                 <svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1667 5.58203H16.5833V4.66536C16.5833 3.65426 15.7611 2.83203 14.75 2.83203H9.25C8.23889 2.83203 7.41667 3.65426 7.41667 4.66536V5.58203H2.83333C1.82222 5.58203 1 6.40426 1 7.41536V19.332C1 20.3431 1.82222 21.1654 2.83333 21.1654H21.1667C22.1778 21.1654 23 20.3431 23 19.332V7.41536C23 6.40426 22.1778 5.58203 21.1667 5.58203ZM8.33333 4.66536C8.33333 4.16003 8.74467 3.7487 9.25 3.7487H14.75C15.2553 3.7487 15.6667 4.16003 15.6667 4.66536V5.58203H8.33333V4.66536ZM21.1667 20.2487H2.83333C2.328 20.2487 1.91667 19.8374 1.91667 19.332V12.6604C2.1874 12.8183 2.49792 12.9154 2.83333 12.9154H10.1667V14.2904C10.1667 14.5437 10.3717 14.7487 10.625 14.7487H13.375C13.6283 14.7487 13.8333 14.5437 13.8333 14.2904V12.9154H21.1667C21.5021 12.9154 21.8126 12.8183 22.0833 12.6604V19.332C22.0833 19.8374 21.672 20.2487 21.1667 20.2487ZM11.0833 13.832V11.9987H12.9167V13.832H11.0833ZM21.1667 11.9987H13.8333V11.5404C13.8333 11.287 13.6283 11.082 13.375 11.082H10.625C10.3717 11.082 10.1667 11.287 10.1667 11.5404V11.9987H2.83333C2.328 11.9987 1.91667 11.5874 1.91667 11.082V7.41536C1.91667 6.91003 2.328 6.4987 2.83333 6.4987H21.1667C21.672 6.4987 22.0833 6.91003 22.0833 7.41536V11.082C22.0833 11.5874 21.672 11.9987 21.1667 11.9987Z" stroke-width="0.916667" stroke="#0056FC"></path></svg>
                 <p class="text-blue-600 p-4 mt-2">Historique professionnel</p>
               </div>
                 <div id="container">
-                  <ng-container *ngFor="let section of getHistoriqueControls(); let i = index" [formGroupName]="i">
+                  <ng-container *ngFor="let section of historiques.controls; let i = index" [formGroupName]="i">
                   <div class="blocks">
                     <details [formGroupName]="i" class="accordion border-solid border-2 rounded border-gray-200 transition-all ease-in-out duration-300" open>
                       <summary class="accordion__title cursor-pointer text-lg font-bold text-gray-700 py-3 px-3 relative hover:text-blue-500"> {{ section.value.Intituleposte }} Chez {{ section.value.Nomentreprise }}</summary>
-                      <button type="button" (click)="removeHistoriqueSection(i)">
+                      <button type="button" (click)="removeEmploymentHistoryection(i)">
                         <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                       <div class="accordion__content px-3 py-1">
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*Nom de l'entreprise</label>
-                            <input formControlName="Nomentreprise" id="grid-Nomentreprise"type="text" placeholder="Nom de l'entreprise"class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
+                            <input formControlName="Nomentreprise" name="Nomentreprise" id="grid-Nomentreprise"type="text" placeholder="Nom de l'entreprise"class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500">
                            
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Intituleposte">*Intitulé du poste</label>
-                            <input formControlName="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
+                            <input formControlName="Intituleposte" name="Intituleposte" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Intituléposte" type="text" placeholder="Intitulé du poste" >
                            
                           </div>
                         </div>
@@ -84,24 +87,14 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datedebut">*Date de début</label>
-                            <input formControlName="Datedebut" 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" 
-                              id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
-                           
+                            <input formControlName="Datedebut" name="Datedebut" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datedebut" type="month" [max]="getMaximumDate('Datedebut')" (input)="onDateInput($event, 'Datedebut', 1)">
                           </div>
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Datefin">*Date de fin</label>
-                            <input formControlName="Datefin"
-                                [disabled]="isDateFinDisabled(i)"
-                                *ngIf="!isDateFinCheckedForHistorique(1)"
-                                class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500"
-                                id="grid-Datefin" type="month"
-                                [min]="getMinimumDate('Datedebut')"
-                                [max]="getMaximumDate('Datefin')"
-                                (input)="onDateInput($event, 'Datefin', 1)">
+                            <input formControlName="Datefin" nme="datefin"[disabled]="isDateFinDisabled(i)" *ngIf="!isDateFinCheckedForHistorique(1)" class="appearance-none block w-10/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Datefin" type="month"  [min]="getMinimumDate('Datedebut')" [max]="getMaximumDate('Datefin')" (input)="onDateInput($event, 'Datefin', 1)">
                             <span *ngIf="isDateFinCheckedForHistorique(1)">jusqu'à présent</span>
                             <div class="flex items-center">
-                                <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(i)" formControlName="present1">
+                                <input type="checkbox" class="form-checkbox h-4 w-4" (change)="toggleDateFin(i)" formControlName="present1" name="present1">
                                 <label class="ml-2 text-sm text-gray-700" for="present1">Jusqu'à présent</label>
                                 <span *ngIf="isDateFinCheckedForHistorique(1)">jusqu'à présent</span>
                             </div>
@@ -111,7 +104,7 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full  px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Description</label>
-                            <textarea id="Description" formControlName="Description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
+                            <textarea id="Description" formControlName="Description" name="Description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Brève description du rôle"></textarea>
                           </div>
                         </div>
                       </div>
@@ -120,7 +113,7 @@
                 </ng-container>
                 </div>
                 <div class="flex items-center">
-                  <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addHistoriqueSection()">
+                  <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)=" addEmploymentHistoryection()">
                     <p class="mr-2">Ajouter un nouveau</p>
                     <svg color="#0056FC" width="16px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M8 8H4.18182H8ZM8 8V4.18182V8ZM8 8H11.8182H8ZM8 8V11.8182V8ZM8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8C15 11.866 11.866 15 8 15Z" stroke="#0056FC" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -146,12 +139,12 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">*École</label>
-                            <input formControlName="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
+                            <input formControlName="Nom_ecole" name="Nom_ecole" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Nom_ecole" type="text" placeholder="Nom de l'école ou la faculté">
                             
                           </div>
                           <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-Diplome">*Diplôme</label>
-                            <input formControlName="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
+                            <input formControlName="Diplome"  name="Diplome" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-Diplome" type="text" placeholder="Diplôme">
                            
                           </div>
                         </div>
@@ -159,7 +152,7 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
                           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-VilleE">Ville</label>
-                            <input formControlName="VilleE" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-villeE" type="text" placeholder="Ville">
+                            <input formControlName="VilleE" name="" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" id="grid-villeE" type="text" placeholder="Ville">
                           </div>
                           <div class="w-full md:w-1/3 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-DatedebutF">Date début</label>
@@ -368,11 +361,11 @@
                             </table>
                           </ng-container>
                           <!-- Historique professionnel -->
-                          <ng-container *ngIf="resume.historiques.Position.length > 0">
+                          <ng-container *ngIf="resume.EmploymentHistory.Positions.length > 0">
                             <tr>
                               <th class="th_title text-blue-500 text-xs uppercase">historique professionnel</th>
                             </tr>
-                            <ng-container *ngFor="let position of resume.historiques.Position; let index = index">
+                            <ng-container *ngFor="let position of resume.EmploymentHistory.Positions; let index = index">
                               <tr>
                                 <td>
                                   <table class="table_class">

@@ -26,7 +26,7 @@ export interface UserRoleWorkspace {
 }
 export interface Resume {
 CandidateDetails: CandidateDetails;
-historiques: historiques;
+EmploymentHistory: EmploymentHistory;
 Educations: Educations;
 Langues: Langues;
 certifications: Certifications;
@@ -42,10 +42,11 @@ role: string;
 telephone?: string;
 Anneesexperience?: string;
 }
-export interface historiques {
-Position: Position[];
+export interface EmploymentHistory
+{
+  Positions: Positions[];
 }
-export interface Position {
+export interface Positions {
 Nomentreprise: string;
 Intituleposte: string;
 Datedebut: string;

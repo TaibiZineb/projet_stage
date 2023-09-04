@@ -92,7 +92,6 @@ export class CvParserService {
     }
     return byteArray;
   }
-  
   private async processFile(file: File, user: AppUser, workspace: any) {
     const base64File = await this.encodeFileToBase64(file);
     const loggedInUser = await this.supabaseAuth.getCurrentUser().toPromise();
@@ -173,7 +172,6 @@ export class CvParserService {
         throw error;
     }
   }
-
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {
@@ -185,7 +183,7 @@ export class CvParserService {
         telephone: "",
         Anneesexperience: "",
       },
-      historiques: { Position: [] },
+      EmploymentHistory: { Positions: [] },
       Educations: { Education: [] },
       Langues: { Langue: [] },
       certifications: { Certification: [] },
@@ -207,19 +205,20 @@ export class CvParserService {
         DatefinF: edu.LastEducationDate? edu.LastEducationDate.isCurrentDate ? "Present": edu.LastEducationDate.Date: "",
       })
     );
-    if (data.EmploymentHistor && data.EmploymentHistor.Position) {
-      data.EmploymentHistor.Position.map((pos: any) =>
-        resume.historiques.Position.push({
+    if (data.EmploymentHistory && data.EmploymentHistory.Positions) {
+      data.EmploymentHistory.Positions.forEach((pos: any) => {
+        resume.EmploymentHistory.Positions.push({
           Nomentreprise: pos?.Employer?.Name?.Normalized || "",
-          Intituleposte: pos?.JopTitle?.Normalized || "",
+          Intituleposte: pos?.JobTitle?.Normalized || "",
           Datedebut: pos?.StartDate?.Date || "",
-          Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
+          Datefin: pos?.EndDate?.isCurrentDate ? "Présent" : pos?.EndDate?.Date || "",
           Description: pos?.Description || "",
-        })
-      );
+        });
+      });
     } else {
       console.log('Les données ne contiennent pas de position historique.');
     }
+    
     data.Certifications && data.Certifications.map((cer: any) =>
       resume.certifications.Certification.push({
         titre_certificat: cer?.Name || "",
