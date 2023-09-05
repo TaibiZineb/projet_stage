@@ -53,9 +53,7 @@ export class CvParserService {
     try {
       const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', { 
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                   'Sovren-AccountId': '17097504',
-                    'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
+        headers: { 'Content-Type': 'application/json', 'Sovren-AccountId': '17097504', 'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
         body: JSON.stringify({ 
           DocumentAsBase64String: base64File,
           DocumentLastModified: (new Date()).toISOString().substring(0, 10)
@@ -66,8 +64,8 @@ export class CvParserService {
       return data.Value?.ResumeData; 
     } 
     catch (error) { 
-      console.log('Erreur lors de la récupération des données du CV :', error); 
-      throw error;
+      console.log(`error when parseResume: ${error}`); 
+      return "Something went wrong";
     }
   }
   async readURL(input: any, user: AppUser, workspace: any) {
@@ -173,7 +171,25 @@ export class CvParserService {
         throw error;
     }
   }
-
+  async getCVListByWorkspace(workspaceId: number): Promise<CV[]> {
+    try {
+      const response = await this.supabase
+        .from('CV')
+        .select('*')
+        .eq('idworkspace', workspaceId) 
+        .order('creatAt', { ascending: false });
+  
+      if (response.error) {
+        throw response.error;
+      }
+  
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching CV list:', error);
+      throw error;
+    }
+  }
+  
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {
@@ -207,8 +223,8 @@ export class CvParserService {
         DatefinF: edu.LastEducationDate? edu.LastEducationDate.isCurrentDate ? "Present": edu.LastEducationDate.Date: "",
       })
     );
-    if (data.EmploymentHistor && data.EmploymentHistor.Position) {
-      data.EmploymentHistor.Position.map((pos: any) =>
+    if (data.EmploymentHistory && data.EmploymentHistory.Positions) {
+      data.EmploymentHistory.Positions.map((pos: any) =>
         resume.historiques.Position.push({
           Nomentreprise: pos?.Employer?.Name?.Normalized || "",
           Intituleposte: pos?.JopTitle?.Normalized || "",

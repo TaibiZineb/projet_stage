@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 import { SupabaseClientService } from '../services/supabase-client.service';
@@ -24,6 +24,7 @@ export class ImporterComponent implements OnInit {
   }
   async readURL(input: any, user: any, workspace: any) {
     if (input.files && input.files[0]) {
+      const file: File = input.files[0];
       const reader = new FileReader();
       reader.onload = async (e: any) => {
         const file = input.files[0];
@@ -59,7 +60,6 @@ export class ImporterComponent implements OnInit {
       };
       reader.readAsDataURL(input.files[0]);
     } else {
-      // Handle case where no files are selected
     }
   }
   async uploadCVAndAddToDatabase(file: File) {

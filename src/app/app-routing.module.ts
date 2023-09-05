@@ -6,10 +6,11 @@ import { AuthentificationGuard } from './guards/authentification.guard';
 import { ImporterComponent } from './importer/importer.component';
 import { CompteComponent } from './compte/compte.component';
 import { InfoCompteComponent } from './info-compte/info-compte.component';
-import { VisualisationComponent } from './visualisation/visualisation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
+import { VisualisationComponent } from './visualisation/visualisation.component';
+
 
 
 
@@ -20,9 +21,9 @@ const routes: Routes = [
     children: [
       { path: 'importer', component: ImporterComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'visualisation', component: VisualisationComponent },
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
-      { path: 'visualisation', component: VisualisationComponent },
       { path: 'workspace', component: WorkspaceComponent },
       { path: 'cvtemplate', component: CVtemplateComponent },
     ]
