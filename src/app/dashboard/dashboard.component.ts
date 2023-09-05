@@ -21,19 +21,6 @@ export class DashboardComponent {
 
   async ngOnInit(): Promise<void> {
     await this.fetchCVList();
-    this.route.queryParams.subscribe(async params => {
-      this.fileName = params['fileName'];
-      const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        try {
-          const base64File = await this.cvParserService.encodeFileToBase64(file);
-          const extractedData = await this.cvParserService.parseResume(base64File);
-        } catch (error) {
-          console.error('Error encoding or parsing the file:', error);
-        }
-      }
-    });
   }
 
   async fetchCVList(): Promise<void> {

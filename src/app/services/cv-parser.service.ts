@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
-import { AppUser, CV,Skills, Resume, SKill } from '../model/user.model';
+import { AppUser, CV,Competence, Resume } from '../model/user.model';
 import { Router } from '@angular/router';
 import { SupabaseClientService } from './supabase-client.service';
 @Injectable({
@@ -53,9 +53,7 @@ export class CvParserService {
     try {
       const response = await fetch('https://eu-rest.resumeparsing.com/v10/parser/resume', { 
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                   'Sovren-AccountId': '17097504',
-                    'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
+        headers: { 'Content-Type': 'application/json', 'Sovren-AccountId': '17097504', 'Sovren-ServiceKey': 'i8Stm46FEsltKLqQ2VNz1MzhCnlHORAYnOUO/dP7'},
         body: JSON.stringify({ 
           DocumentAsBase64String: base64File,
           DocumentLastModified: (new Date()).toISOString().substring(0, 10)
@@ -66,8 +64,8 @@ export class CvParserService {
       return data.Value?.ResumeData; 
     } 
     catch (error) { 
-      console.log('Erreur lors de la récupération des données du CV :', error); 
-      throw error;
+      console.log(`error when parseResume: ${error}`); 
+      return "Something went wrong";
     }
   }
   async readURL(input: any, user: AppUser, workspace: any) {
@@ -92,6 +90,7 @@ export class CvParserService {
     }
     return byteArray;
   }
+  
   private async processFile(file: File, user: AppUser, workspace: any) {
     const base64File = await this.encodeFileToBase64(file);
     const loggedInUser = await this.supabaseAuth.getCurrentUser().toPromise();
@@ -177,7 +176,7 @@ export class CvParserService {
       const response = await this.supabase
         .from('CV')
         .select('*')
-        .eq('idworkspace', workspaceId) // Filter by workspace id
+        .eq('idworkspace', workspaceId) 
         .order('creatAt', { ascending: false });
   
       if (response.error) {
@@ -198,15 +197,15 @@ export class CvParserService {
         LastName: "",
         Email: "",
         role: "",
-        Positions:'relative',
+        position:'relative',
         telephone: "",
         Anneesexperience: "",
       },
-      EmploymentHistory: { Positions: [] },
+      historiques: { Position: [] },
       Educations: { Education: [] },
       Langues: { Langue: [] },
       certifications: { Certification: [] },
-      Skills: { TopSkills: [] },
+      Competences: { TopSkills: [] },
     }
     resume.CandidateDetails.FirstName = data.ContactInformation?.CandidateName?.GivenName || "";
     resume.CandidateDetails.LastName = data.ContactInformation?.CandidateName?.FamilyName || "";
@@ -225,19 +224,18 @@ export class CvParserService {
       })
     );
     if (data.EmploymentHistory && data.EmploymentHistory.Positions) {
-      data.EmploymentHistory.Positions.forEach((pos: any) => {
-        resume.EmploymentHistory.Positions.push({
+      data.EmploymentHistory.Positions.map((pos: any) =>
+        resume.historiques.Position.push({
           Nomentreprise: pos?.Employer?.Name?.Normalized || "",
-          Intituleposte: pos?.JobTitle?.Normalized || "",
+          Intituleposte: pos?.JopTitle?.Normalized || "",
           Datedebut: pos?.StartDate?.Date || "",
-          Datefin: pos?.EndDate?.isCurrentDate ? "Présent" : pos?.EndDate?.Date || "",
+          Datefin: pos.isCurrent ? "Present" : pos?.EndDate?.Date || "",
           Description: pos?.Description || "",
-        });
-      });
+        })
+      );
     } else {
       console.log('Les données ne contiennent pas de position historique.');
     }
-    
     data.Certifications && data.Certifications.map((cer: any) =>
       resume.certifications.Certification.push({
         titre_certificat: cer?.Name || "",
@@ -250,7 +248,7 @@ export class CvParserService {
         niveaulang: "Proficiant/Fluent",
       })
     );
-    resume.Skills.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
+    resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
     console.log('Données extraites du CV Resume:', resume);
     return resume;
     
@@ -266,6 +264,6 @@ export class CvParserService {
         ?.sort((a: any, b: any) => b?.PercentOfOverall - a?.PercentOfOverall)
         ?.slice(0, 4)
         ?.map((skill: any) => ({ Name: skill?.Name })) || [];
-    return skills as SKill[];
+    return skills as Competence[];
   };
 }
