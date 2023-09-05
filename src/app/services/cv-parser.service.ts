@@ -106,14 +106,15 @@ export class CvParserService {
     const extractedData= await this.parseResume(base64File);
     //console.log('Données du CV analysé:', JSON.stringify(extractedData));
     console.log('Données du CV analysé extractedData:', extractedData);
-  
+    const nomCandidat = `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`;
+    console.log('Nom du candidat :', nomCandidat);
     const cvDetails = {
       id_CV: Date.now(),
       creatAt: new Date(),
       createdBy: `${user.prenom} ${user.nom}`,
       data: base64File,
       jobPosition: extractedData.jobPosition,
-      Nom_Candidat : `${extractedData.FirstName} ${extractedData.LastName}`,
+      Nom_Candidat : `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`,
       candidateEmail: extractedData.candidateEmail,
       originalCV: file.name,
       idworkspace: userWorkspace.idWorkspace,

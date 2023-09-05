@@ -38,6 +38,7 @@ export class DashboardComponent {
       }
   
       const cvList = await this.cvParserService.getCVListByWorkspace(userWorkspace.idWorkspace);
+      console.log('Données CV renvoyées par Supabase :', cvList);
       this.cvList = cvList;
     } catch (error) {
       console.error('Error fetching CV list:', error);

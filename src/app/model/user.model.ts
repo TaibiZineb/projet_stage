@@ -46,21 +46,24 @@ export interface historiques {
 Position: Position[];
 }
 export interface Position {
-Nomentreprise: string;
-Intituleposte: string;
-Datedebut: string;
-Datefin: string;
-Description?: string;
+  Nomentreprise: string;
+  Intituleposte: string;
+  Datedebut: string;
+  Datefin: string;
+  Description?: string;
+  JusquAPresent?: boolean;
 }
 export interface Educations {
 Education: Education[];
 }
 export interface Education {
-Nom_ecole: string;
-Diplome: string;
-VilleE?: string;
-DatedebutF?: string;
-DatefinF?: string;
+  Nom_ecole: string;
+  Diplome: string;
+  VilleE?: string;
+  DatedebutF?: string;
+  DatefinF?: string;
+  JusquAPresent?: boolean;
+
 }
 export interface Langues {
 Langue: Langue[];
