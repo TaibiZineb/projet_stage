@@ -16,6 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -30,14 +31,15 @@ import { HttpClientModule } from '@angular/common/http';
     VisualisationComponent,
     DashboardComponent,
     WorkspaceComponent,
-    CVtemplateComponent,
+    CVtemplateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

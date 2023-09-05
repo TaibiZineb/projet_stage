@@ -205,8 +205,8 @@ export class CvParserService {
         DatefinF: edu.LastEducationDate? edu.LastEducationDate.isCurrentDate ? "Present": edu.LastEducationDate.Date: "",
       })
     );
-    if (data.EmploymentHistor && data.EmploymentHistor.Position) {
-      data.EmploymentHistor.Position.map((pos: any) =>
+    if (data.EmploymentHistory && data.EmploymentHistory.Positions) {
+      data.EmploymentHistory.Positions.map((pos: any) =>
         resume.historiques.Position.push({
           Nomentreprise: pos?.Employer?.Name?.Normalized || "",
           Intituleposte: pos?.JopTitle?.Normalized || "",
