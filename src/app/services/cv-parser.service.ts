@@ -172,6 +172,25 @@ export class CvParserService {
         throw error;
     }
   }
+  async getCVListByWorkspace(workspaceId: number): Promise<CV[]> {
+    try {
+      const response = await this.supabase
+        .from('CV')
+        .select('*')
+        .eq('idworkspace', workspaceId) // Filter by workspace id
+        .order('creatAt', { ascending: false });
+  
+      if (response.error) {
+        throw response.error;
+      }
+  
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching CV list:', error);
+      throw error;
+    }
+  }
+  
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {
