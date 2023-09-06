@@ -10,10 +10,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CVtemplateComponent } from './cvtemplate/cvtemplate.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
-
-
-
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
@@ -22,6 +18,7 @@ const routes: Routes = [
       { path: 'importer', component: ImporterComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'visualisation', component: VisualisationComponent },
+      { path: 'visualisation/:fileName', component: VisualisationComponent },
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'workspace', component: WorkspaceComponent },
@@ -29,7 +26,7 @@ const routes: Routes = [
     ]
   },
   
-  { path: '**', redirectTo: 'login' }, 
+  //{ path: '**', redirectTo: 'login' }, 
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

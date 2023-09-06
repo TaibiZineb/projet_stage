@@ -90,7 +90,6 @@ export class CvParserService {
     }
     return byteArray;
   }
-  
   private async processFile(file: File, user: AppUser, workspace: any) {
     const base64File = await this.encodeFileToBase64(file);
     const loggedInUser = await this.supabaseAuth.getCurrentUser().toPromise();
@@ -104,17 +103,19 @@ export class CvParserService {
       return;
     }
     const extractedData= await this.parseResume(base64File);
+    
     //console.log('Données du CV analysé:', JSON.stringify(extractedData));
     console.log('Données du CV analysé extractedData:', extractedData);
-    const nomCandidat = `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`;
-    console.log('Nom du candidat :', nomCandidat);
+    const firstName = extractedData.ContactInformation?.CandidateName?.GivenName || '';
+    const lastName = extractedData.ContactInformation?.CandidateName?.FamilyName || '';
+    
     const cvDetails = {
       id_CV: Date.now(),
       creatAt: new Date(),
       createdBy: `${user.prenom} ${user.nom}`,
       data: base64File,
       jobPosition: extractedData.jobPosition,
-      Nom_Candidat : `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`,
+      Nom_Candidat : `${firstName} ${lastName}`,
       candidateEmail: extractedData.candidateEmail,
       originalCV: file.name,
       idworkspace: userWorkspace.idWorkspace,
@@ -187,6 +188,33 @@ export class CvParserService {
       return response.data || [];
     } catch (error) {
       console.error('Error fetching CV list:', error);
+      throw error;
+    }
+  }
+  async getCVDetails(cvId: number): Promise<any> {
+    try {
+      const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
+      if (response.error) {
+        console.error('Erreur lors de la récupération des détails du CV :', response.error);
+        return null;
+      }
+      return response.data[0]; 
+    } catch (error) {
+      console.error('Erreur lors de la récupération des détails du CV :', error);
+      throw error;
+    }
+  }
+  async getCVById(cvId: number): Promise<CV | null> {
+    try {
+      const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
+      if (response.error) {
+        console.error('Error fetching CV by ID:', response.error);
+        return null;
+      }
+      const cv = response.data[0];
+      return cv || null;
+    } catch (error) {
+      console.error('Error fetching CV by ID:', error);
       throw error;
     }
   }

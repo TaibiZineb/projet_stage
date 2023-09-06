@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { Resume} from'../model/user.model'; 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 @Component({
   selector: 'app-visualisation',
@@ -28,9 +28,12 @@ export class VisualisationComponent implements OnInit{
   };
   maxDate: string = '';
   education: any;
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private cvParserService: CvParserService ){
+  cvId!: number;
+  cvDetails: any;
+  CV: any;
+  constructor(private route: ActivatedRoute,
+              private cvParserService: CvParserService,
+              private router: Router ){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -68,30 +71,80 @@ export class VisualisationComponent implements OnInit{
     this.maxDate = `${year}-${month}`;
 
     this.route.queryParams.subscribe(async params => {
-      this.fileName = params['fileName'];
-        console.log('File name:', this.fileName);
-      const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        console.log('Selected file:', file);
-        try {
-          const base64File = await this.cvParserService.encodeFileToBase64(file);
-          console.log('Base64 encoded file:', base64File);
-          const extractedData = await this.cvParserService.parseResume(base64File);
-          console.log('Extracted data:', extractedData);
-          if (extractedData) {
+      const fileName = params['fileName'];
+      console.log('File name:', fileName);
+
+      // Scenario 1: File processing
+      if (fileName) {
+        const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
+        if (fileInput.files && fileInput.files[0]) {
+          const file = fileInput.files[0];
+          console.log('Selected file:', file);
+          try {
+            const base64File = await this.cvParserService.encodeFileToBase64(file);
+            console.log('Base64 encoded file:', base64File);
+            const extractedData = await this.cvParserService.parseResume(base64File);
+            console.log('Extracted data:', extractedData);
             
-            this.cvParserService.fromSovren(extractedData)
-            .then((resume:Resume)=>this.resume=resume);
-          
-          } else {
-            console.error('Extracted data is missing required properties.');
+            if (extractedData) {
+              this.cvParserService.fromSovren(extractedData)
+                .then((resume: Resume) => {
+                  this.resume = resume;
+                  console.log('Skills data:', this.resume.Competences.TopSkills); 
+                })
+                .catch((error) => {
+                  console.error('Error during Sovren parsing:', error);
+                });
+            } else {
+              console.error('Extracted data is missing required properties.');
+            }
+          } catch (error) {
+            console.error('Error during file encoding or parsing:', error);
           }
-        } catch (error) {
-          console.error('Error during file encoding or parsing:', error);
+        }
+      }
+
+      // Scenario 2: Retrieve CV details
+      const cvId = params['cvId'];
+      if (cvId === undefined) {
+        console.error('CV ID is missing.');
+        return;
+      }
+
+      console.log('ID du CV à visualiser :', cvId);
+      this.cvParserService.getCVDetails(cvId)
+        .then((cvDetails) => {
+          console.log('Détails du CV récupérés :', cvDetails);
+          this.cvDetails = cvDetails;
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des détails du CV :', error);
+        });
+    });
+    this.route.paramMap.subscribe(async params => {
+      const cvId = params.get('id');
+      if (cvId) {
+        const cvIdNumber = parseInt(cvId, 10);
+        if (!isNaN(cvIdNumber)) {
+          try {
+            const cvData = await this.cvParserService.getCVById(cvIdNumber);
+            if (cvData) {
+              this.CV = cvData;
+            } else {
+              console.error('CV not found');
+            }
+          } catch (error) {
+            console.error('Error fetching CV:', error);
+            // Handle the error as needed
+          }
+        } else {
+          console.error('Invalid CV ID:', cvId);
+          // Handle the case where cvId is not a valid number
         }
       }
     });
+    
+    
   }
    toggleDateFin(): void {
     this.isDateFinDisabled = !this.isDateFinDisabled;
@@ -135,7 +188,7 @@ export class VisualisationComponent implements OnInit{
    }
    addCompetences(): void {
     this.resume.Competences.TopSkills.push({
-      titre_comp: '',
+      Name: '',
     });
    }
    get CompetencesFormArray(): FormArray {

@@ -83,7 +83,7 @@ export interface Competences {
 TopSkills: Competence[];
 }
 export interface Competence {
-titre_comp: string;
+  Name: string;
 }
 export interface CV{
 id_CV: number;

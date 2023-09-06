@@ -25,7 +25,7 @@ export class VisualisationService {
     CandidateDetails: {
       FirstName: '',
       LastName: '',
-      candidateEmail: '',
+      Email: '',
       role: '',
       position: 'relative'
     },
@@ -44,7 +44,6 @@ export class VisualisationService {
     Competences: {
       TopSkills: [],
     },
-    OriginalCv: '',
   };
   private initializeForm(): void{
     const telephonePattern = /^\d{4}\.\d{3}\.\d{3}$/;
