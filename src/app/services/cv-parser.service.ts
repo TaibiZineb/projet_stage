@@ -204,6 +204,21 @@ export class CvParserService {
       throw error;
     }
   }
+  async getCVById(cvId: number): Promise<CV | null> {
+    try {
+      const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
+      if (response.error) {
+        console.error('Error fetching CV by ID:', response.error);
+        return null;
+      }
+      const cv = response.data[0];
+      return cv || null;
+    } catch (error) {
+      console.error('Error fetching CV by ID:', error);
+      throw error;
+    }
+  }
+  
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {

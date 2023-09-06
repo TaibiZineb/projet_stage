@@ -196,7 +196,7 @@
             <div *ngFor="let skill of resume.Competences.TopSkills; let i = index" class="flex flex-wrap -mx-3 mb-6">
               <div class="flex flex-wrap mx-3 mb-6 px-3 rounded border-solid border-2 border-gray-200">
                 <div class="flex flex-row w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                  <input class="appearance-none flex-grow text-gray-700 border rounded py-3 px-4 mb-3 mr-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" [(ngModel)]="skill.titre_comp" placeholder="Titre de la compétence" />
+                  <input class="appearance-none flex-grow text-gray-700 border rounded py-3 px-4 mb-3 mr-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" [(ngModel)]="skill.Name" placeholder="Titre de la compétence" />
                   <button type="button" (click)="removeCompetences(i)">
                     <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                   </button>
@@ -204,6 +204,7 @@
               </div>
              
             </div>
+          
             <div class="flex items-center">
               <button class="border-solid border-2 border-gray-200 font-bold py-2 px-4 rounded mt-2 text-cyan-600 flex items-center" (click)="addCompetences()">
                 <p class="mr-2">Ajouter un nouveau</p>
@@ -339,7 +340,7 @@
                             <table class="table_class table_container">
                               <tbody>
                                 <tr *ngFor="let topskillChunk of chunkArray(resume.Competences.TopSkills.slice(0, 4), 2)">
-                                  <td *ngFor="let topskill of topskillChunk" class="w-1/2 text-center border-solid border-1 border-blue-500 py-2 px-4 mb-4 mt-4 text-blue-600">{{ topskill.titre_comp }}
+                                  <td *ngFor="let topskill of topskillChunk" class="w-1/2 text-center border-solid border-1 border-blue-500 py-2 px-4 mb-4 mt-4 text-blue-600">{{ topskill.Name }}
                                   </td>
                                 </tr>
                               </tbody>
@@ -418,7 +419,7 @@
                                             <tr *ngIf="innerIndex >= 4">
                                               <td>
                                                 <ul class="top_skills_table_ul w-full flex flex-row flex-wrap justify-center items-center outline-solid border-2 border-green-500 rounded">
-                                                  <li class="flex flex-wrap justify-between py-2 px-2"><ng-container *ngIf="innerIndex >= 4">{{ topskill.titre_comp }}</ng-container>
+                                                  <li class="flex flex-wrap justify-between py-2 px-2"><ng-container *ngIf="innerIndex >= 4">{{ topskill.Name }}</ng-container>
                                                   </li>
                                                 </ul>
                                               </td>

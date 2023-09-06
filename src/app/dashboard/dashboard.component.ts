@@ -19,6 +19,7 @@ export class DashboardComponent {
   async ngOnInit(): Promise<void> {
     await this.fetchCVList();
 
+    
   }
   async fetchCVList(): Promise<void> {
     try {
@@ -50,5 +51,10 @@ export class DashboardComponent {
     } catch (error) {
       console.error('Erreur lors de la suppression du CV :', error);
     }
+  }
+  navigateToCVDetails(fileName: string) {
+    this.router.navigate(['/admin/visualisation'], {
+      queryParams: { fileName: fileName },
+    });
   }
 }
