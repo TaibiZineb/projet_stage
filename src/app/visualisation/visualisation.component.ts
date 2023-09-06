@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
 import { Resume} from'../model/user.model'; 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 @Component({
   selector: 'app-visualisation',
@@ -28,9 +28,11 @@ export class VisualisationComponent implements OnInit{
   };
   maxDate: string = '';
   education: any;
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private cvParserService: CvParserService ){
+  cvId!: number;
+  cvDetails: any;
+  constructor(private route: ActivatedRoute,
+              private cvParserService: CvParserService,
+              private router: Router ){
     this.supabaseUrl = 'https://mljtanxsvdnervhrjnbs.supabase.co';
     this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sanRhbnhzdmRuZXJ2aHJqbmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ4NDczMDQsImV4cCI6MjAwMDQyMzMwNH0.lrhe---iFdN9RSFGgF5cYwN9S_aWpxYGur1TAvrD-ZY';
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -66,10 +68,10 @@ export class VisualisationComponent implements OnInit{
     const year = currentDate.getFullYear();
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
     this.maxDate = `${year}-${month}`;
-
     this.route.queryParams.subscribe(async params => {
+  
       this.fileName = params['fileName'];
-        console.log('File name:', this.fileName);
+      console.log('File name:', this.fileName);
       const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
@@ -80,10 +82,8 @@ export class VisualisationComponent implements OnInit{
           const extractedData = await this.cvParserService.parseResume(base64File);
           console.log('Extracted data:', extractedData);
           if (extractedData) {
-            
             this.cvParserService.fromSovren(extractedData)
-            .then((resume:Resume)=>this.resume=resume);
-          
+              .then((resume: Resume) => this.resume = resume);
           } else {
             console.error('Extracted data is missing required properties.');
           }
@@ -92,6 +92,24 @@ export class VisualisationComponent implements OnInit{
         }
       }
     });
+    this.route.queryParams.subscribe(async params => {
+      const cvId = params['cvId'];
+      if (cvId === undefined) {
+        console.error('Identifiant du CV manquant.');
+        return; // Arrêtez le traitement si l'identifiant du CV est manquant.
+      }
+      console.log('ID du CV à visualiser :', cvId);
+      this.cvParserService.getCVDetails(cvId)
+        .then((cvDetails) => {
+          console.log('Détails du CV récupérés :', cvDetails);
+          this.cvDetails = cvDetails;
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des détails du CV :', error);
+        });
+   
+    });
+
   }
    toggleDateFin(): void {
     this.isDateFinDisabled = !this.isDateFinDisabled;

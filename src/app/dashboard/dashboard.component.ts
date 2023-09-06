@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CV } from '../model/user.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 
 
@@ -14,15 +14,12 @@ export class DashboardComponent {
   cvList: CV[] = []; 
   fileName: string = '';
   workspace: any;
-
-  constructor( private cvParserService: CvParserService,
-    private route: ActivatedRoute,
-    ) {}
-
+  cvDetails: any; 
+  constructor( private cvParserService: CvParserService, private route: ActivatedRoute,private router: Router) {}
   async ngOnInit(): Promise<void> {
     await this.fetchCVList();
-  }
 
+  }
   async fetchCVList(): Promise<void> {
     try {
       const loggedInUser = await this.cvParserService.supabaseAuth.getCurrentUser().toPromise();
@@ -44,8 +41,6 @@ export class DashboardComponent {
       console.error('Error fetching CV list:', error);
     }
   }
-  
-  
   async deleteCV(cvId: number) {
     try {
       await this.cvParserService.deleteCV(cvId);
