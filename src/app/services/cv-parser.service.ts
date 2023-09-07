@@ -103,8 +103,6 @@ export class CvParserService {
       return;
     }
     const extractedData= await this.parseResume(base64File);
-    
-    //console.log('Données du CV analysé:', JSON.stringify(extractedData));
     console.log('Données du CV analysé extractedData:', extractedData);
     const firstName = extractedData.ContactInformation?.CandidateName?.GivenName || '';
     const lastName = extractedData.ContactInformation?.CandidateName?.FamilyName || '';
@@ -206,8 +204,45 @@ export class CvParserService {
       throw error;
     }
   }
+  async getResumeData(cvId: number): Promise<Resume | null> {
+    try {
+      const existingCv = await this.getCVDetails(cvId);
+      
+      if (!existingCv) {
+        console.error('Le CV existant n\'a pas été trouvé.');
+        return null;
+      }
+
+      const base64Data = existingCv.data;
+      const parsedResume = await this.parseResume(base64Data);
+
+      return parsedResume;
+    } catch (error) {
+      console.error('Erreur lors de la récupération du résumé du CV :', error);
+      throw error;
+    }
+  }
+  async EnregistrerModifications(cvDetails: any) {
+    try {
+      console.log('Détails du CV à mettre à jour :', cvDetails);
   
+      // Utilisez la méthode de mise à jour de Supabase au lieu de l'insertion
+      const { data, error } = await this.supabase.from('CV')
+        .update(cvDetails)
+        .eq('id_CV', cvDetails.id_CV);
   
+      if (error) {
+        console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
+        throw error;
+      } else {
+        console.log('Modifications enregistrées avec succès :', data);
+        return data;
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement des modifications :', error);
+      throw error;
+    }
+  }
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {

@@ -28,7 +28,6 @@ export class DashboardComponent {
         console.error('Aucun utilisateur n\'est actuellement connecté.');
         return;
       }
-      
       const userWorkspace = await this.cvParserService.supabaseAuth.getWorkspaceByUserId(loggedInUser.id);
       if (!userWorkspace) {
         console.error('L\'utilisateur n\'a pas d\'espace de travail associé.');

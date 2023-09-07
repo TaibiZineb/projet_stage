@@ -14,12 +14,9 @@ export class VisualisationComponent implements OnInit{
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
-  submittedData: any = {};
-  skillsData: any[] = [];
   dateFinValues: string[] = [];
   isDateFinDisabled: boolean = false;
   isDateFinDisabledEdu:boolean = false;
-  dateFinValueseducations: string[] = [];
   fileName: string = '';
   isPresentChecked: boolean = false;
   position: any = {
@@ -75,7 +72,7 @@ export class VisualisationComponent implements OnInit{
       const fileName = params['fileName'];
       console.log('File name:', fileName);
       console.log('ID du CV à visualiser :', cvId);
-      if (!cvId){
+      if (!cvId) {
         if (fileName) {
           const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
           if (fileInput.files && fileInput.files[0]) {
@@ -93,50 +90,41 @@ export class VisualisationComponent implements OnInit{
                     console.log('Skills data:', this.resume.Competences.TopSkills);
                   })
                   .catch((error) => {
-                    console.error('Error during Sovren parsing:', error);
+                    console.error('Erreur lors de l\'analyse Sovren :', error);
                   });
               } else {
-                console.error('Extracted data is missing required properties.');
+                console.error('Les données extraites ne contiennent pas les propriétés requises.');
               }
             } catch (error) {
-              console.error('Error during file encoding or parsing:', error);
+              console.error('Erreur lors de l\'encodage ou de l\'analyse du fichier :', error);
             }
           }
         }
-        console.log('Nouvel import de CV. Effectuez le traitement ici.');
+        console.log('Nouvelle importation de CV. Effectuez le traitement ici.');
+      } else {
+        this.cvParserService.getCVDetails(cvId)
+          .then(async (cvDetails: any) => {
+            const resumeData = cvDetails.data;
+            const extractedData = await this.cvParserService.parseResume(resumeData);
+            if (extractedData) {
+              this.cvParserService.fromSovren(extractedData)
+                .then((resume: Resume) => {
+                  this.resume = resume;
+                })
+                .catch((error) => {
+                  console.error('Erreur lors de l\'analyse Sovren :', error);
+                });
+            } else {
+              console.error('Les données extraites ne contiennent pas les propriétés requises.');
+            }
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la récupération du résumé du CV :', error);
+          });
       }
-      else {
-        const cvDetails = await this.cvParserService.getCVDetails(cvId);
-        if (cvDetails) {
-          console.log('CV Details:', cvDetails);
-          
-          // Stockez les données extraites du CV dans this.resume
-          this.resume = cvDetails;
-      
-          // Vous pouvez maintenant accéder aux données comme ceci :
-          if (this.resume && this.resume.CandidateDetails && this.resume.CandidateDetails.FirstName) {
-            // Accédez à FirstName ici sans provoquer d'erreur.
-            const firstName = this.resume.CandidateDetails.FirstName;
-            const lastName = this.resume.CandidateDetails.LastName;
-            const email = this.resume.CandidateDetails.Email;
-            // ... d'autres données du candidat
-      
-            console.log('FirstName:', firstName);
-            console.log('LastName:', lastName);
-            console.log('Email:', email);
-            // ... affichez d'autres données du candidat
-          } else {
-            // Gérez le cas où les données ne sont pas disponibles.
-            console.error('Les données du candidat ne sont pas disponibles.');
-          }
-        } else {
-          console.error('Aucun détail de CV trouvé pour cet ID.');
-        }
-      }
-      
-
     });
   }
+  
    toggleDateFin(): void {
     this.isDateFinDisabled = !this.isDateFinDisabled;
     if (this.isDateFinDisabled) {
@@ -218,5 +206,28 @@ export class VisualisationComponent implements OnInit{
     for (let i = 0; i < arr.length; i += size) {
       result.push(arr.slice(i, i + size));
     }
-    return result;}
+    return result;
+  }
+  async EnregistrerModifications() {
+    try {
+      // Rassemblez les données du formulaire dans un objet cvDetails
+      const cvDetails = {
+        // Incluez ici toutes les données du formulaire que vous souhaitez enregistrer
+        // Assurez-vous de les extraire du formulaire ou de les obtenir à partir de votre modèle de données.
+      };
+  
+      // Appelez la méthode de service pour enregistrer les modifications
+      const result = await this.cvParserService.EnregistrerModifications(cvDetails);
+  
+      // Traitez le résultat de l'enregistrement, par exemple, affichez un message de succès ou gérez les erreurs.
+      console.log('Modifications enregistrées avec succès :', result);
+  
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement des modifications :', error);
+      // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
+    }
+  }
+  
+  
+  
 }
