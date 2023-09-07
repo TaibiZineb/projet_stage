@@ -131,22 +131,24 @@ export class CvParserService {
   async deleteCV(cvId: number): Promise<void> {
     try {
       const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
-      if (!shouldDelete) {
-        return; 
-      }
-  
-      const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
-      if (error) {
-        console.error('Error deleting CV from Supabase:', error);
-        throw error;
+      if (shouldDelete) {
+        const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
+        if (error) {
+          console.error('Error deleting CV from Supabase:', error);
+          throw error;
+        } else {
+          console.log('CV deleted successfully:', data);
+        }
       } else {
-        console.log('CV deleted successfully:', data);
+        // L'utilisateur a annulé la suppression, ne rien faire.
+        console.log('Suppression du CV annulée.');
       }
     } catch (error) {
       console.error('Error deleting CV:', error);
       throw error;
     }
   }
+  
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 
@@ -196,7 +198,7 @@ export class CvParserService {
       const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
       if (response.error) {
         console.error('Erreur lors de la récupération des détails du CV :', response.error);
-        return null;
+        throw new Error('Erreur lors de la récupération des détails du CV');
       }
       return response.data[0]; 
     } catch (error) {
@@ -204,20 +206,7 @@ export class CvParserService {
       throw error;
     }
   }
-  async getCVById(cvId: number): Promise<CV | null> {
-    try {
-      const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
-      if (response.error) {
-        console.error('Error fetching CV by ID:', response.error);
-        return null;
-      }
-      const cv = response.data[0];
-      return cv || null;
-    } catch (error) {
-      console.error('Error fetching CV by ID:', error);
-      throw error;
-    }
-  }
+  
   
   fromSovren = async ( data: any) => {
     const resume: Resume= {

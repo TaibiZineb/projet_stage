@@ -44,17 +44,22 @@ export class DashboardComponent {
   }
   async deleteCV(cvId: number) {
     try {
-      await this.cvParserService.deleteCV(cvId);
-      this.cvList = this.cvList.filter(cv => cv.id_CV !== cvId);
-  
-      console.log('CV supprimé avec succès');
+      const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
+      if (shouldDelete) {
+        await this.cvParserService.deleteCV(cvId);
+        this.cvList = this.cvList.filter(cv => cv.id_CV !== cvId);
+        console.log('CV supprimé avec succès');
+      } else {
+        console.log('Suppression du CV annulée.');
+      }
     } catch (error) {
       console.error('Erreur lors de la suppression du CV :', error);
     }
   }
-  navigateToCVDetails(fileName: string) {
+  
+  navigateToCVDetails(id_CV: number, fileName: string) {
     this.router.navigate(['/admin/visualisation'], {
-      queryParams: { fileName: fileName },
+      queryParams: {  cvId: id_CV, fileName: fileName },
     });
   }
 }

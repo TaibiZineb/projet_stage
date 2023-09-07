@@ -1,22 +1,24 @@
 
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-      <a routerLink="/admin/dashboard" class="flex items-center">
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Logo" />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-600">Projet</span>
+    <a routerLink="/admin/dashboard" class="flex items-center"
+      *ngIf="!isActive('/admin/workspace')">
+      <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Logo" />
+      <span class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-600">Projet</span>
+    </a>
+    <div class="flex items-center">
+      <a class="text-sm text-cyan-600 hover:text-slate-300 border-collapse"
+        [routerLink]="['/admin/compte']"
+        *ngIf="!isActive('/admin/workspace')">
+        <img class="imagep rounded-full mr-6 object-cover" [src]="authentificateUser?.photo" alt="Photo de profil">
+        <p class="text-sm text-cyan-600 hover:text-slate-300">
+           {{ authentificateUser?.prenom }} {{ authentificateUser?.nom }}<br>
+           <span *ngIf="userWorkspace">{{ userWorkspace.nomEspace }} </span>
+        </p>
       </a>
-      <div class="flex items-center">
-        <a class="text-sm  text-cyan-600 hover:text-slate-300 border-collapse" aria-current="page" routerLink="/admin/compte">
-          <img class="imagep rounded-full mr-6 object-cover"  [src]="authentificateUser?.photo" alt="Photo de profil">
-          <p class="text-sm  text-cyan-600 hover:text-slate-300">
-            {{ authentificateUser?.prenom }} {{ authentificateUser?.nom }}<br>
-            <span *ngIf="userWorkspace">{{ userWorkspace.nomEspace }} </span>
-          </p>
-        </a>
-        <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:text-slate-300 border-separate" routerLink="login" (click)="handleLogout()">
+      <a href="#" class="text-sm  text-cyan-600 dark:text-blue-500 hover:text-slate-300 border-separate" routerLink="login" (click)="handleLogout()">
           <svg color="#72849A" width="17px" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_49077_15969)"><path d="M4.65625 8.31982H15.5665" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.9297 4.97607L15.5665 8.32098L11.9297 11.6659" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.0377 13.5256V14.7531C11.0377 15.1794 10.6888 15.525 10.2584 15.525H1.94581C1.51541 15.525 1.1665 15.1794 1.1665 14.7531V1.63079C1.1665 1.20448 1.51541 0.858887 1.94581 0.858887H10.2584C10.6888 0.858887 11.0377 1.20448 11.0377 1.63079V2.85889" stroke="#72849A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_49077_15969"><rect width="16" height="16" fill="white" transform="translate(0.5 0.192261)"></rect></clipPath></defs></svg>
-        </a>
-          
+      </a>
       </div>
   </div>
 </nav>

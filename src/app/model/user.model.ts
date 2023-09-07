@@ -80,7 +80,7 @@ titre_certificat: string;
 DateCert?: string;
 }
 export interface Competences {
-TopSkills: Competence[];
+  TopSkills: Competence[];
 }
 export interface Competence {
   Name: string;

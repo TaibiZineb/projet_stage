@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'importer', component: ImporterComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'visualisation', component: VisualisationComponent },
-      { path: 'visualisation/:fileName', component: VisualisationComponent },
+      { path: 'visualisation/:cvId/:fileName', component: VisualisationComponent },
       { path: 'compte', component: CompteComponent },
       { path: 'Infocompte', component: InfoCompteComponent },
       { path: 'workspace', component: WorkspaceComponent },
