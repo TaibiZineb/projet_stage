@@ -11,6 +11,7 @@ export class CvParserService {
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
+  base64File!: string;
   constructor(private http: HttpClient, 
               private router: Router,
               public supabaseAuth: SupabaseClientService) {
@@ -34,6 +35,23 @@ export class CvParserService {
       throw error;
     }
   }
+  async updateCV(cvDetails: any) {
+    try {
+      console.log('Détails du CV à mettre à jour :', cvDetails);
+      const { data, error } = await this.supabase.from('CV').upsert([cvDetails]);
+      if (error) {
+        console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
+        throw error;
+      } else {
+        console.log('CV mis à jour avec succès :', data);
+        return data;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
+      throw error;
+    }
+  }
+  
   encodeFileToBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -72,14 +90,6 @@ export class CvParserService {
     if (input.files && input.files[0]) {
       const file = input.files[0];
       await this.processFile(file, user, workspace);
-    }
-  }
-  async processUploadedFile(input: any, user: AppUser, workspace: any) {
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      await this.processFile(file, user, workspace);
-    } else {
-      alert('Veuillez sélectionner un fichier avant de continuer.');
     }
   }
   convertBase64ToUint8Array(base64String: string): Uint8Array {
@@ -146,7 +156,7 @@ export class CvParserService {
       throw error;
     }
   }
-  
+
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 
@@ -222,27 +232,8 @@ export class CvParserService {
       throw error;
     }
   }
-  async EnregistrerModifications(cvDetails: any) {
-    try {
-      console.log('Détails du CV à mettre à jour :', cvDetails);
-  
-      // Utilisez la méthode de mise à jour de Supabase au lieu de l'insertion
-      const { data, error } = await this.supabase.from('CV')
-        .update(cvDetails)
-        .eq('id_CV', cvDetails.id_CV);
-  
-      if (error) {
-        console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
-        throw error;
-      } else {
-        console.log('Modifications enregistrées avec succès :', data);
-        return data;
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'enregistrement des modifications :', error);
-      throw error;
-    }
-  }
+
+
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {
