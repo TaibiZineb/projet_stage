@@ -38,7 +38,10 @@ export class CvParserService {
   async updateCV(cvDetails: any) {
     try {
       console.log('Détails du CV à mettre à jour :', cvDetails);
-      const { data, error } = await this.supabase.from('CV').upsert([cvDetails]);
+      const { data, error } = await this.supabase
+        .from('CV')
+        .upsert([cvDetails], { onConflict: ['id_CV'] }); 
+  
       if (error) {
         console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
         throw error;
@@ -51,6 +54,7 @@ export class CvParserService {
       throw error;
     }
   }
+  
   
   encodeFileToBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -77,12 +81,15 @@ export class CvParserService {
           DocumentLastModified: (new Date()).toISOString().substring(0, 10)
         }) 
       }) 
+      if (!response.ok) {
+        throw new Error(`La requête a échoué avec le code de statut : ${response.status}`);
+      }
       const data = await response.json();
       console.log('Données extraites du CV :', data);
       return data.Value?.ResumeData; 
     } 
-    catch (error) { 
-      console.log(`error when parseResume: ${error}`); 
+    catch (error : any) { 
+      console.error(`Erreur lors de la requête HTTP : ${error.message}`); 
       return "Something went wrong";
     }
   }

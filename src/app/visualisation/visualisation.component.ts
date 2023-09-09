@@ -1,7 +1,7 @@
 import { Component,OnInit,ElementRef, ViewChild  } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { createClient} from '@supabase/supabase-js';
-import { Resume} from'../model/user.model'; 
+import { AppUser, CV,Competence, Resume } from '../model/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CvParserService } from '../services/cv-parser.service';
 import { SupabaseClientService } from '../services/supabase-client.service';
@@ -79,7 +79,7 @@ export class VisualisationComponent implements OnInit{
       } else {
         console.log('ID du CV à visualiser :', this.cvId);
       }
-      if (!cvId) {
+      if (!cvId && fileName) {
         if (fileName) {
           const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
           if (fileInput.files && fileInput.files[0]) {
@@ -108,7 +108,7 @@ export class VisualisationComponent implements OnInit{
           }
         }
       
-      } else {
+      } else if (cvId){
         this.cvParserService.getCVDetails(cvId)
           .then(async (cvDetails: any) => {
             const resumeData = cvDetails.data;
@@ -132,65 +132,24 @@ export class VisualisationComponent implements OnInit{
     });
   }
   async EnregistrerModifications() {
-    if (this.resume) {
-      console.log('this.resume :', this.resume); 
-      const resumeAsJson = JSON.stringify(this.resume); // Convertir l'objet en JSON
-      const base64Resume = btoa(resumeAsJson); 
-      try {
-        await this.cvParserService.updateCV(base64Resume); 
-        console.log('Modifications enregistrées avec succès.');
-      } catch (error) {
-        console.error('Erreur lors de l\'enregistrement des modifications :', error);
-      }
-    } else {
+    if (!this.resume) {
       console.error('this.resume est undefined ou null');
+      return;
     }
-  }
-  async readURL(input: any, user: any, workspace: any) {
-    if (input.files && input.files[0]) {
-      const file: File = input.files[0];
-      const reader = new FileReader();
-      reader.onload = async (e: any) => {
-        const base64File = await this.cvParserService.encodeFileToBase64(file);
-        const loggedInUser = await this.supabaseAuth.getCurrentUser().toPromise();
-        if (!loggedInUser) {
-          console.error('No user is currently logged in.');
-          return;
-        }
-        const userWorkspace = await this.supabaseAuth.getWorkspaceByUserId(loggedInUser.id);
-        if (!userWorkspace) {
-          console.error('User has no associated workspace.');
-          return;
-        }
-        const extractedData = await this.cvParserService.parseResume(base64File);
-        const nomCandidat = `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`;
-        const cvDetails = {
-          id_CV: Date.now(),
-          creatAt: new Date(),
-          createdBy: `${user.prenom} ${user.nom}`,
-          data: base64File,
-          jobPosition: extractedData.jobPosition,
-          Nom_Candidat: `${extractedData.CandidateDetails.FirstName} ${extractedData.CandidateDetails.LastName}`,
-          originalCV: file.name,
-          idworkspace: userWorkspace.idWorkspace,
-          designationStatus: 'Valide',
-          designationTemplate: 'Modèle 1'
-        };
-        await this.cvParserService.updateCV(cvDetails);
-  
-        this.router.navigate(['/admin/visualisation'], {
-          queryParams: { fileName: file.name }
-        });
-      };
-      reader.readAsDataURL(input.files[0]);
-    } else {
-    }
-  }
-  
+    console.log('this.resume :', this.resume); 
+    const resumeAsJson = JSON.stringify(this.resume); // Convertir l'objet en JSON
+    const base64Resume = btoa(resumeAsJson); 
+    console.log("base64Resume:", base64Resume);
 
-  
-  
-  
+
+
+    try {
+      await this.cvParserService.updateCV(base64Resume);
+      console.log('Modifications enregistrées avec succès.');
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement des modifications :', error);
+    }
+  }
   toggleDateFin(): void {
     this.isDateFinDisabled = !this.isDateFinDisabled;
     if (this.isDateFinDisabled) {
