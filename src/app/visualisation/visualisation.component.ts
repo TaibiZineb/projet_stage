@@ -29,6 +29,7 @@ export class VisualisationComponent implements OnInit{
   cvId!: number;
   cvDetails: any;
   CV: any;
+  user:any;
   constructor(private route: ActivatedRoute,
               private cvParserService: CvParserService,
               private router: Router,
@@ -69,18 +70,19 @@ export class VisualisationComponent implements OnInit{
     this.maxDate = `${year}-${month}`;
     this.route.queryParams.subscribe(async (params) => {
       console.log('Paramètres de l\'URL :', params);
-      const cvId = params['cvId'];
+     this.cvId = params['cvId'];
       const fileName = params['fileName'];
       console.log('File name:', fileName);
-      console.log('ID du CV à visualiser en paramètre:', cvId);
-      this.cvId = +cvId;
+      console.log('ID du CV à visualiser en paramètre:', this.cvId);
+
       if (isNaN(this.cvId)) {
-        console.error('ID du CV invalide :', cvId);
+        console.error('ID du CV invalide :', this.cvId);
       } else {
         console.log('ID du CV à visualiser :', this.cvId);
       }
-      if (!cvId && fileName) {
+      if (!this.cvId && fileName) {
         if (fileName) {
+          this.cvId= Date.now();
           const fileInput = document.querySelector('.file-upload-input') as HTMLInputElement;
           if (fileInput.files && fileInput.files[0]) {
             const file = fileInput.files[0];
@@ -89,12 +91,38 @@ export class VisualisationComponent implements OnInit{
               const base64File = await this.cvParserService.encodeFileToBase64(file);
               console.log('Base64 encoded file:', base64File);
               const extractedData = await this.cvParserService.parseResume(base64File);
+              const user = await this.supabaseAuth.getCurrentUser().toPromise();
+              if (!user) {
+                console.error('No user is currently logged in.');
+                return;
+              }
+              const workspace = await this.supabaseAuth.getWorkspaceByUserId(user.id);
+              if (!workspace) {
+                console.error('User has no associated workspace.');
+                return;
+              }
+              const firstName = extractedData.ContactInformation?.CandidateName?.GivenName || '';
+              const lastName = extractedData.ContactInformation?.CandidateName?.FamilyName || '';
+              
+            
               console.log('Extracted data:', extractedData);
               if (extractedData) {
                 this.cvParserService.fromSovren(extractedData)
                   .then((resume: Resume) => {
                     this.resume = resume;
-                    console.log('Skills data:', this.resume.Competences.TopSkills);
+                    const cvDetails = {
+                      id_CV: this.cvId,
+                      creatAt: new Date(),
+                      createdBy: `${user.prenom} ${user.nom}`,
+                      data: JSON.stringify(resume),
+                      jobPosition: 'Stage',
+                      Nom_Candidat : `${firstName} ${lastName}`, 
+                      originalCV: file.name,
+                      idworkspace: workspace.idWorkspace,
+                      designationStatus: 'Valide',
+                      designationTemplate: 'Modèle 1'
+                    };
+                    this.cvParserService.addCV(cvDetails);
                   })
                   .catch((error) => {
                     console.error('Erreur lors de l\'analyse Sovren :', error);
@@ -108,19 +136,14 @@ export class VisualisationComponent implements OnInit{
           }
         }
       
-      } else if (cvId){
-        this.cvParserService.getCVDetails(cvId)
+      } else if (this.cvId){
+        this.cvParserService.getCVDetails(this.cvId)
           .then(async (cvDetails: any) => {
             const resumeData = cvDetails.data;
-            const extractedData = await this.cvParserService.parseResume(resumeData);
-            if (extractedData) {
-              this.cvParserService.fromSovren(extractedData)
-                .then((resume: Resume) => {
-                  this.resume = resume;
-                })
-                .catch((error) => {
-                  console.error('Erreur lors de l\'analyse Sovren :', error);
-                });
+       
+            if (cvDetails.data) {
+              this.cvParserService.fromSupabase( this.resume,cvDetails.data)
+            
             } else {
               console.error('Les données extraites ne contiennent pas les propriétés requises.');
             }
@@ -137,14 +160,10 @@ export class VisualisationComponent implements OnInit{
       return;
     }
     console.log('this.resume :', this.resume); 
-    const resumeAsJson = JSON.stringify(this.resume); // Convertir l'objet en JSON
-    const base64Resume = btoa(resumeAsJson); 
-    console.log("base64Resume:", base64Resume);
-
-
+    const resumeAsJson = JSON.stringify(this.resume); 
 
     try {
-      await this.cvParserService.updateCV(base64Resume);
+      await this.cvParserService.updateCV({id_CV: this.cvId, data: resumeAsJson});
       console.log('Modifications enregistrées avec succès.');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement des modifications :', error);

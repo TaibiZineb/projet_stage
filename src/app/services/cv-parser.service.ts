@@ -317,4 +317,15 @@ export class CvParserService {
         ?.map((skill: any) => ({ Name: skill?.Name })) || [];
     return skills as Competence[];
   };
-}
+
+  fromSupabase = (  resume: Resume,  data: any ) => {  
+    const res = JSON.parse(data); 
+     resume.CandidateDetails = res.CandidateDetails;
+       resume.certifications = res.certifications;
+       resume.Educations = res.Educations; 
+      resume. historiques = res.historiques;
+        resume.Langues = res.Langues; 
+       resume.certifications = res.certifications; 
+        resume.Competences = res.Competences;
+     
+}}

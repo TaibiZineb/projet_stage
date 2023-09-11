@@ -82,22 +82,9 @@ export class ImporterComponent implements OnInit {
         console.error('User has no associated workspace.');
         return;
       }
-      const firstName = extractedData.ContactInformation?.CandidateName?.GivenName || '';
-      const lastName = extractedData.ContactInformation?.CandidateName?.FamilyName || '';
+    
 
-      const cvDetails = {
-        id_CV: Date.now(),
-        creatAt: new Date(),
-        createdBy: `${user.prenom} ${user.nom}`,
-        data: base64File,
-        jobPosition: 'Stage',
-        Nom_Candidat : `${firstName} ${lastName}`, 
-        originalCV: file.name,
-        idworkspace: workspace.idWorkspace,
-        designationStatus: 'Valide',
-        designationTemplate: 'Modèle 1'
-      };
-      this.cvParserService.addCV(cvDetails);
+
       this.router.navigate(['/admin/visualisation'], {
         queryParams: { fileName: file.name }
       });
