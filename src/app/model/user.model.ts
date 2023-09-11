@@ -25,25 +25,25 @@ export interface UserRoleWorkspace {
   idWorkspace: number;
 }
 export interface Resume {
-CandidateDetails: CandidateDetails;
-historiques: historiques;
-Educations: Educations;
-Langues: Langues;
-certifications: Certifications;
-Competences: Competences;
-
+  CandidateDetails: CandidateDetails;
+  historiques: historiques;
+  Educations: Educations;
+  Langues: Langues;
+  certifications: Certifications;
+  Competences: Competences;
+  data?: string;
 }
 export interface CandidateDetails {
-FirstName: string;
-LastName: string;
-Email: string;
-position: 'relative' |'autre_valeur';
-role: string;
-telephone?: string;
-Anneesexperience?: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  position: 'relative' |'autre_valeur';
+  role: string;
+  telephone?: string;
+  Anneesexperience?: string;
 }
 export interface historiques {
-Position: Position[];
+  Position: Position[];
 }
 export interface Position {
   Nomentreprise: string;
@@ -66,34 +66,34 @@ export interface Education {
 
 }
 export interface Langues {
-Langue: Langue[];
+  Langue: Langue[];
 }
 export interface Langue {
 titre_langue: string;
-niveaulang?: string;
+  niveaulang?: string;
 }
 export interface Certifications {
-Certification: Certification[];
+  Certification: Certification[];
 }
 export interface Certification {
-titre_certificat: string;
-DateCert?: string;
-}
+  titre_certificat: string;
+  DateCert?: string;
+  }
 export interface Competences {
-TopSkills: Competence[];
+  TopSkills: Competence[];
 }
 export interface Competence {
   Name: string;
 }
 export interface CV{
-id_CV: number;
-creatAt: Date;
-createdBy: string;
-data: string; 
-jobPosition: string;
-Nom_Candidat : string;
-originalCV: string;
-idworkspace: number; 
-designationStatus: string;
-designationTemplate: string;
+  id_CV: number;
+  creatAt: Date;
+  createdBy: string;
+  data: string; 
+  jobPosition: string;
+  Nom_Candidat : string;
+  originalCV: string;
+  idworkspace: number; 
+  designationStatus: string;
+  designationTemplate: string;
 }

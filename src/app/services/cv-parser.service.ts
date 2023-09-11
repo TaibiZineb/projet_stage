@@ -11,6 +11,7 @@ export class CvParserService {
   supabaseUrl!: string;
   supabaseKey!: string;
   supabase: any;
+  base64File!: string;
   constructor(private http: HttpClient, 
               private router: Router,
               public supabaseAuth: SupabaseClientService) {
@@ -34,6 +35,27 @@ export class CvParserService {
       throw error;
     }
   }
+  async updateCV(cvDetails: any) {
+    try {
+      console.log('Détails du CV à mettre à jour :', cvDetails);
+      const { data, error } = await this.supabase
+        .from('CV')
+        .upsert([cvDetails], { onConflict: ['id_CV'] }); 
+  
+      if (error) {
+        console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
+        throw error;
+      } else {
+        console.log('CV mis à jour avec succès :', data);
+        return data;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du CV dans Supabase :', error);
+      throw error;
+    }
+  }
+  
+  
   encodeFileToBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -59,12 +81,15 @@ export class CvParserService {
           DocumentLastModified: (new Date()).toISOString().substring(0, 10)
         }) 
       }) 
+      if (!response.ok) {
+        throw new Error(`La requête a échoué avec le code de statut : ${response.status}`);
+      }
       const data = await response.json();
       console.log('Données extraites du CV :', data);
       return data.Value?.ResumeData; 
     } 
-    catch (error) { 
-      console.log(`error when parseResume: ${error}`); 
+    catch (error : any) { 
+      console.error(`Erreur lors de la requête HTTP : ${error.message}`); 
       return "Something went wrong";
     }
   }
@@ -72,14 +97,6 @@ export class CvParserService {
     if (input.files && input.files[0]) {
       const file = input.files[0];
       await this.processFile(file, user, workspace);
-    }
-  }
-  async processUploadedFile(input: any, user: AppUser, workspace: any) {
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      await this.processFile(file, user, workspace);
-    } else {
-      alert('Veuillez sélectionner un fichier avant de continuer.');
     }
   }
   convertBase64ToUint8Array(base64String: string): Uint8Array {
@@ -103,8 +120,6 @@ export class CvParserService {
       return;
     }
     const extractedData= await this.parseResume(base64File);
-    
-    //console.log('Données du CV analysé:', JSON.stringify(extractedData));
     console.log('Données du CV analysé extractedData:', extractedData);
     const firstName = extractedData.ContactInformation?.CandidateName?.GivenName || '';
     const lastName = extractedData.ContactInformation?.CandidateName?.FamilyName || '';
@@ -131,22 +146,24 @@ export class CvParserService {
   async deleteCV(cvId: number): Promise<void> {
     try {
       const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce CV ?');
-      if (!shouldDelete) {
-        return; 
-      }
-  
-      const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
-      if (error) {
-        console.error('Error deleting CV from Supabase:', error);
-        throw error;
+      if (shouldDelete) {
+        const { data, error } = await this.supabase.from('CV').delete().eq('id_CV', cvId);
+        if (error) {
+          console.error('Error deleting CV from Supabase:', error);
+          throw error;
+        } else {
+          console.log('CV deleted successfully:', data);
+        }
       } else {
-        console.log('CV deleted successfully:', data);
+        // L'utilisateur a annulé la suppression, ne rien faire.
+        console.log('Suppression du CV annulée.');
       }
     } catch (error) {
       console.error('Error deleting CV:', error);
       throw error;
     }
   }
+
   async parseResumeAndAddCV(base64File: string): Promise<any> {
     try {
       const parsedResume = await this.parseResume(base64File); 
@@ -196,7 +213,7 @@ export class CvParserService {
       const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
       if (response.error) {
         console.error('Erreur lors de la récupération des détails du CV :', response.error);
-        return null;
+        throw new Error('Erreur lors de la récupération des détails du CV');
       }
       return response.data[0]; 
     } catch (error) {
@@ -204,21 +221,26 @@ export class CvParserService {
       throw error;
     }
   }
-  async getCVById(cvId: number): Promise<CV | null> {
+  async getResumeData(cvId: number): Promise<Resume | null> {
     try {
-      const response = await this.supabase.from('CV').select('*').eq('id_CV', cvId);
-      if (response.error) {
-        console.error('Error fetching CV by ID:', response.error);
+      const existingCv = await this.getCVDetails(cvId);
+      
+      if (!existingCv) {
+        console.error('Le CV existant n\'a pas été trouvé.');
         return null;
       }
-      const cv = response.data[0];
-      return cv || null;
+
+      const base64Data = existingCv.data;
+      const parsedResume = await this.parseResume(base64Data);
+
+      return parsedResume;
     } catch (error) {
-      console.error('Error fetching CV by ID:', error);
+      console.error('Erreur lors de la récupération du résumé du CV :', error);
       throw error;
     }
   }
-  
+
+
   fromSovren = async ( data: any) => {
     const resume: Resume= {
       CandidateDetails: {
@@ -295,4 +317,15 @@ export class CvParserService {
         ?.map((skill: any) => ({ Name: skill?.Name })) || [];
     return skills as Competence[];
   };
-}
+
+  fromSupabase = (  resume: Resume,  data: any ) => {  
+    const res = JSON.parse(data); 
+     resume.CandidateDetails = res.CandidateDetails;
+       resume.certifications = res.certifications;
+       resume.Educations = res.Educations; 
+      resume. historiques = res.historiques;
+        resume.Langues = res.Langues; 
+       resume.certifications = res.certifications; 
+        resume.Competences = res.Competences;
+     
+}}

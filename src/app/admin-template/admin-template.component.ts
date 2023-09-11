@@ -59,4 +59,8 @@ export class AdminTemplateComponent implements OnInit {
     const today = new Date();
     this.currentDate = today.toLocaleDateString('fr-FR');
   }
+  isActive(path: string): boolean {
+    return this.router.isActive(path, false);
+  }
+  
 }

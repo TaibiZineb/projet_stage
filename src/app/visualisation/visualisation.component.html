@@ -2,9 +2,21 @@
   <div class=" mx-auto px-4 mb-6 relative w-full">
     <h1 class="text-4xl text-center font-bold text-gray-800 w-full">Visualisation CVs</h1>
     <div class="flex mt-4 justify-end">
-        <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/dashboard"><svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <a class=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded" routerLink="/admin/dashboard">
+          <svg width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 19L5 12L12 5" stroke="#72849A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
          </a>
     </div>
+       <!-- Bouton Update -->
+    <div class="flex items-center mt-4 justify-end">
+      <button (click)="EnregistrerModifications()" class="bg-sky-300 btn text-gray-950 hover:text-slate-700 py-3 px-4 mb-3 hover:border-2 hover:border-blue-300 hover:bg-sky-200 justify-center text-center font-bold rounded text-sm">
+        <div class="flex items-center space-x-2"> 
+          <svg width="1rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 21V13H7V21" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 3V8H15" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <p class="text-gray-600 hover:text-gray-500">Enregistrer les modifications</p>
+        </div>
+      </button>
+    </div>
+
+
     <div class="flex flex-wrap">
       <div class="Visualisation  w-full lg:w-1/2 mx-auto px-4 mb-6 relative">
         <div class="w-full bg-slate-100 p-4 mt-2">
@@ -27,6 +39,7 @@
               <div class="w-full px-3 mb-6 md:mb-0">
               </div>
             </div> -->
+          
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <!-- <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="position">Position:</label>
@@ -38,14 +51,15 @@
                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" type="text" id="Email" [(ngModel)]="resume.CandidateDetails.Email" />
               </div>
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">Rôle:</label>
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" type="text" id="role" [(ngModel)]="resume.CandidateDetails.role" />
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="telephone">Téléphone:</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" type="text" id="telephone" [(ngModel)]="resume.CandidateDetails.telephone" />
               </div>
+            
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="telephone">Téléphone:</label>
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" type="text" id="telephone" [(ngModel)]="resume.CandidateDetails.telephone" />
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">Rôle:</label>
+                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500" type="text" id="role" [(ngModel)]="resume.CandidateDetails.role" />
               </div>
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Anneesexperience">Années d'expérience:</label>
@@ -287,7 +301,7 @@
                 </div>
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-nom">Date</label>  
-                  <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500"  [(ngModel)]="certification.DateCert" placeholder="Date de certification" />
+                  <input type="date"  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white hover:border-2 hover:border-blue-500"  [(ngModel)]="certification.DateCert" placeholder="Date de certification" />
                 </div>
                 <button type="button" (click)="removeCertificats(i)">
                   <svg width="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 7.3417H4.80005V6.07112C4.80005 5.3694 5.36891 4.80054 6.07063 4.80054H17.9294C18.6311 4.80054 19.2 5.3694 19.2 6.07112V7.3417Z" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.3528 7.34155V20.4709C18.3528 21.1726 17.7839 21.7415 17.0822 21.7415H6.91756C6.21583 21.7415 5.64697 21.1726 5.64697 20.4709V7.34155" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 4.50049V3.00049C9 2.17206 9.57563 1.50049 10.2857 1.50049H13.7143C14.4244 1.50049 15 2.17206 15 3.00049V4.50049" stroke="#FF535B" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
