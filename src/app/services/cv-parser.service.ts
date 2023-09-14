@@ -296,7 +296,7 @@ export class CvParserService {
     data.LanguageCompetencies && data.LanguageCompetencies.map((lan: any) =>
       resume.Langues.Langue.push({
         titre_langue: lan?.Language || "",
-        niveaulang: "Proficiant/Fluent",
+        niveaulang: "Débutant/Courant",
       })
     );
     resume.Competences.TopSkills = [...this.getTopSkills(data.SkillsData[0])];
@@ -318,14 +318,15 @@ export class CvParserService {
     return skills as Competence[];
   };
 
-  fromSupabase = (  resume: Resume,  data: any ) => {  
+  fromSupabase = ( resume: Resume, data: any ) => {
     const res = JSON.parse(data); 
-     resume.CandidateDetails = res.CandidateDetails;
-       resume.certifications = res.certifications;
-       resume.Educations = res.Educations; 
+      resume.CandidateDetails = res.CandidateDetails;
+      resume.certifications = res.certifications;
+      resume.Educations = res.Educations;
       resume. historiques = res.historiques;
-        resume.Langues = res.Langues; 
-       resume.certifications = res.certifications; 
-        resume.Competences = res.Competences;
+      resume.Langues = res.Langues;
+      resume.certifications = res.certifications;
+      resume.Competences = res.Competences;
      
-}}
+  }
+}
